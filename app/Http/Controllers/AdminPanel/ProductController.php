@@ -48,6 +48,7 @@ class ProductController extends AppBaseController
         $categories = Category::get()->pluck('name', 'id');
         $sizes = Size::get()->pluck('name', 'id');
         $colors = Color::get()->pluck('name', 'id');
+
         return view('adminPanel.products.create', compact('categories', 'colors', 'sizes'));
     }
 
@@ -73,26 +74,11 @@ class ProductController extends AppBaseController
                 'photo' => $photo
             ]);
         }
-        // dd(request('size_id'));
-        // dd($product);
-        // dd($request->item);
 
-        // foreach ($request->item as $key => $item) {
-        //     return ($item);
-        //     $product->items()->create($item);
-        // }
-        // return ($product);
-        // dd(request('item'));
-        // foreach (request('item') as $item) {
-        //     $product->items()->create([
-        //         'product_id' => $product->id,
-        //         'size_id' => $item->size_id,
-        //         'color_id' => $item->color_id,
-        //         'sale_price' => $item->sale_price,
-        //         'price' => $item->price,
-        //         'stock' => $item->stock,
-        //     ]);
-        // }
+        foreach ($request->item as $key => $item) {
+            $product->items()->create($item);
+        }
+
 
         Flash::success(__('messages.saved', ['model' => __('models/products.singular')]));
 
@@ -137,8 +123,10 @@ class ProductController extends AppBaseController
         }
 
         $categories = Category::get()->pluck('name', 'id');
+        $sizes = Size::get()->pluck('name', 'id');
+        $colors = Color::get()->pluck('name', 'id');
 
-        return view('adminPanel.products.edit', compact('categories', 'product'));
+        return view('adminPanel.products.edit', compact('categories', 'product', 'sizes', 'colors'));
     }
 
     /**
@@ -157,6 +145,13 @@ class ProductController extends AppBaseController
             Flash::error(__('messages.not_found', ['model' => __('models/products.singular')]));
 
             return redirect(route('adminPanel.products.index'));
+        }
+        if ($request->item) {
+            // dd($request->item[5]);
+            foreach ($request->item as $item) {
+                // dd($item['product_id']);
+                $product->items()->updateOrCreate(['product_id' => $item['product_id'], 'id' => $item['id']], $request->item);
+            }
         }
 
         $product = $this->productRepository->update($request->all(), $id);

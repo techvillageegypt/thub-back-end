@@ -24,9 +24,6 @@ class ProductItem extends Model
     use SoftDeletes;
 
 
-    public $table = 'products';
-
-
     protected $dates = ['deleted_at'];
 
     public $fillable = [

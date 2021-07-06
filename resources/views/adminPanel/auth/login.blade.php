@@ -61,7 +61,7 @@ License: You must have a valid license purchased only from themeforest(the above
                 <div class="d-flex flex-column-auto flex-column pt-lg-40 pt-15">
                     <!--begin::Aside header-->
                     <a href="{{ route('home') }}" class="text-center mb-10">
-                        <img onError="this.onerror=null;this.src='{{asset('uploads/images/original/default.png')}}';" src="{{asset('img/4go-white.png')}}" class="max-h-70px" alt="" />
+                        <img onError="this.onerror=null;this.src='{{asset('uploads/images/original/default.png')}}';" src="{{\App\Models\Option::first()->logo_thumbnail_path}}" class="max-h-70px" alt="" />
                     </a>
                     <!--end::Aside header-->
 

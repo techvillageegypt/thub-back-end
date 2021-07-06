@@ -97,9 +97,20 @@
             <h3>Product Items</h3>
             <br>
             <div id="product-items">
-                @php
-                $itemCounter = 1
-                @endphp
+                @if (isset($product->items))
+                @foreach ($product->items as $item)
+                <div class="item w-100 d-flex my-1">
+                    <input type="hidden" name="{{"item[$item->id][product_id]"}}" value="{{$product->id}}">
+                    <input type="hidden" name="{{"item[$item->id][id]"}}" value="{{$item->id}}">
+                    {!! Form::select("item[$item->id][size_id]", $sizes, $item->size_id, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Select Size']) !!}
+                    {!! Form::select("item[$item->id][color_id]", $colors, $item->color_id, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Select Color']) !!}
+                    {!! Form::number("item[$item->id][sale_price]", $item->sale_price, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Sale Price']) !!}
+                    {!! Form::number("item[$item->id][price]", $item->price, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Regular Price']) !!}
+                    {!! Form::number("item[$item->id][stock]", $item->stock, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Stock']) !!}
+                </div>
+                @endforeach
+                @else
+                @php $itemCounter = 1 @endphp
                 <div class="item w-100 d-flex my-1">
                     {!! Form::select("item[$itemCounter][size_id]", $sizes, null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Select Size']) !!}
                     {!! Form::select("item[$itemCounter][color_id]", $colors, null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Select Color']) !!}
@@ -107,12 +118,9 @@
                     {!! Form::number("item[$itemCounter][price]", null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Regular Price']) !!}
                     {!! Form::number("item[$itemCounter][stock]", null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Stock']) !!}
                 </div>
-                {{-- @php
-                $counter++
-                @endphp --}}
-                {{-- {{dd($counter)}} --}}
+                @endif
             </div>
-            <button id="add-item" class="btn btn-success col-2 my-3" itemCounter="{{$itemCounter}}">Add Item</button>
+            <span id="add-item" class="btn btn-success col-2 my-3" counter="{{isset($itemCounter) ? ++$itemCounter : ''}}">Add Item</span>
             <div class="clearfix"></div>
             <br>
             <hr>
@@ -127,7 +135,6 @@
         </div>
     </div>
 </div>
-
 
 
 
@@ -325,22 +332,32 @@
 
 
 <script>
+    var count = $('span#add-item').attr('counter');
     $(document).ready(function () {
-            let countItem = $(this).attr('itemCounter');
             $('#add-item').click(function () {
-            // console.log(countItem);
-            $('#product-items').append(`
-                        <div class="item w-100 d-flex my-1">
-                            {!! Form::select("item[${countItem}][size_id]", $sizes, null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Select Size']) !!}
-                            {!! Form::select("item[${countItem}][color_id]", $colors, null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Select Color']) !!}
-                            {!! Form::number("item[${countItem}][sale_price]", null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Sale Price']) !!}
-                            {!! Form::number("item[${countItem}][price]", null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Regular Price']) !!}
-                            {!! Form::number("item[${countItem}][stock]", null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Stock']) !!}
-                        </div>
-            `)
-            $(this).attr('itemCounter', ++countItem);
+                $('#product-items').append(`
+                    <div class="item w-100 d-flex my-1">
+                        <select name="item[${count}][size_id]" class="form-control col-2 mx-1" placeholder="Select Size">
+                    <option value="">Select Size</option>
+                    @foreach ($sizes as $key => $size)
+                    <option value="{{$key}}">{{$size}}</option>
+                    @endforeach
+                    </select>
+                    <select name="item[${count}][color_id]" class="form-control col-2 mx-1" placeholder="Select Color">
+                        <option value="">Select Color</option>
+                        @foreach ($colors as $key => $color)
+                        <option value="{{$key}}">{{$color}}</option>
+                        @endforeach
+                    </select>
+                    <input type="number" name="item[${count}][sale_price]" class="form-control col-2 mx-1" placeholder="Sale Price">
+                    <input type="number" name="item[${count}][price]" class="form-control col-2 mx-1" placeholder="Price">
+                    <input type="number" name="item[${count}][stock]" class="form-control col-2 mx-1" placeholder="Stock">
+                    </div>
+                `)
+                count++
         });
     });
+
 
 </script>
 @endsection
