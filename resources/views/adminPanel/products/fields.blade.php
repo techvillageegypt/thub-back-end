@@ -78,12 +78,9 @@
                     <h2>Drop your Files</h2>
                     <span>or</span>
                     <br />
-                    {{-- <form action="" id="form"> --}}
                     <label for="file-upload">Choose Manually</label>
                     <input type="file" name="photos[]" id="file-upload" multiple>
                     <br />
-                    {{-- <button type="submit" id="submit">Submit</button> --}}
-                    {{-- </form> --}}
                     <div id="file-count"></div>
                     <div id="file-preview">
 
@@ -99,28 +96,38 @@
             <div id="product-items">
                 @if (isset($product->items))
                 @foreach ($product->items as $item)
-                <div class="item w-100 d-flex my-1">
-                    <input type="hidden" name="{{"item[$item->id][product_id]"}}" value="{{$product->id}}">
+                <div class="item-{{$item->id}} w-100 d-flex my-1">
                     <input type="hidden" name="{{"item[$item->id][id]"}}" value="{{$item->id}}">
                     {!! Form::select("item[$item->id][size_id]", $sizes, $item->size_id, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Select Size']) !!}
                     {!! Form::select("item[$item->id][color_id]", $colors, $item->color_id, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Select Color']) !!}
                     {!! Form::number("item[$item->id][sale_price]", $item->sale_price, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Sale Price']) !!}
                     {!! Form::number("item[$item->id][price]", $item->price, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Regular Price']) !!}
                     {!! Form::number("item[$item->id][stock]", $item->stock, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Stock']) !!}
+
+
+                    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+                    <a href="{{route('adminPanel.products.destroy.item',$item->id)}}" id="item-{{$item->id}}" data-id="{{ $item->id }}" data-url="{{route('adminPanel.products.destroy.item',$item->id)}}" class="delete-item btn btn-danger">Delete</a>
+
+
+                    @php $itemCounter = $item->id @endphp
                 </div>
                 @endforeach
                 @else
-                @php $itemCounter = 1 @endphp
-                <div class="item w-100 d-flex my-1">
+                @php $itemCounter = 0 @endphp
+                <div class="item-{{$itemCounter}} w-100 d-flex my-1">
                     {!! Form::select("item[$itemCounter][size_id]", $sizes, null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Select Size']) !!}
                     {!! Form::select("item[$itemCounter][color_id]", $colors, null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Select Color']) !!}
                     {!! Form::number("item[$itemCounter][sale_price]", null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Sale Price']) !!}
                     {!! Form::number("item[$itemCounter][price]", null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Regular Price']) !!}
                     {!! Form::number("item[$itemCounter][stock]", null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Stock']) !!}
+
+                    <span id="item-{{$itemCounter}}" data-id="{{$itemCounter}}" class="remove-item btn btn-danger">Remove</span>
+
                 </div>
                 @endif
             </div>
-            <span id="add-item" class="btn btn-success col-2 my-3" counter="{{isset($itemCounter) ? ++$itemCounter : ''}}">Add Item</span>
+            <span id="add-item" class="btn btn-success col-2 my-3" counter="{{isset($itemCounter) ? ++$itemCounter : 0}}">Add Item</span>
             <div class="clearfix"></div>
             <br>
             <hr>
@@ -334,30 +341,84 @@
 <script>
     var count = $('span#add-item').attr('counter');
     $(document).ready(function () {
-            $('#add-item').click(function () {
-                $('#product-items').append(`
-                    <div class="item w-100 d-flex my-1">
-                        <select name="item[${count}][size_id]" class="form-control col-2 mx-1" placeholder="Select Size">
+
+    ////////////////////// Add Item //////////////////////
+    $('#add-item').click(function () {
+
+        $('#product-items').append(`
+            <div class="item-${count} w-100 d-flex my-1">
+                <input type="hidden" name="item[${count}][id]" value="${count}">
+                <select name="item[${count}][size_id]" class="form-control col-2 mx-1" placeholder="Select Size">
                     <option value="">Select Size</option>
                     @foreach ($sizes as $key => $size)
                     <option value="{{$key}}">{{$size}}</option>
+                @endforeach
+                </select>
+                <select name="item[${count}][color_id]" class="form-control col-2 mx-1" placeholder="Select Color">
+                    <option value="">Select Color</option>
+                    @foreach ($colors as $key => $color)
+                    <option value="{{$key}}">{{$color}}</option>
                     @endforeach
-                    </select>
-                    <select name="item[${count}][color_id]" class="form-control col-2 mx-1" placeholder="Select Color">
-                        <option value="">Select Color</option>
-                        @foreach ($colors as $key => $color)
-                        <option value="{{$key}}">{{$color}}</option>
-                        @endforeach
-                    </select>
-                    <input type="number" name="item[${count}][sale_price]" class="form-control col-2 mx-1" placeholder="Sale Price">
-                    <input type="number" name="item[${count}][price]" class="form-control col-2 mx-1" placeholder="Price">
-                    <input type="number" name="item[${count}][stock]" class="form-control col-2 mx-1" placeholder="Stock">
-                    </div>
-                `)
-                count++
-        });
+                </select>
+                <input type="number" name="item[${count}][sale_price]" class="form-control col-2 mx-1" placeholder="Sale Price">
+                <input type="number" name="item[${count}][price]" class="form-control col-2 mx-1" placeholder="Price">
+                <input type="number" name="item[${count}][stock]" class="form-control col-2 mx-1" placeholder="Stock">
+                <span id="item-${count}" data-id="${count}" class="remove-item btn btn-danger">Remove</span>
+            </div>
+        `)
+
+        count++
+
     });
 
+
+
+    ////////////////////// Delete Item //////////////////////
+    $("body").on("click",".delete-item",function(e){
+
+        if(!confirm("Do you really want to do this?")) {
+        return false;
+        }
+
+        e.preventDefault();
+        var id = $(this).data("id");
+        // var id = $(this).attr('data-id');
+        var token = $("meta[name='csrf-token']").attr("content");
+        var url = e.target;
+
+        $.ajax(
+            {
+            url: url.href, //or you can use url: "company/"+id,
+            type: 'DELETE',
+            data: {
+                _token: token,
+                    id: id
+            },
+            success: function (response){
+
+                $("#success").html(response.message)
+                Swal.fire(
+                'Remind!',
+                'Item deleted successfully!',
+                'success'
+                )
+                $('.item-'+id).remove();
+            }
+        });
+        return false;
+    });
+
+
+    ////////////////////// Remove Item //////////////////////
+    $("body").on("click",".remove-item",function(e){
+        e.preventDefault()
+        var id = $(this).data("id");
+        $('.item-'+id).remove();
+    });
+
+
+
+    });
 
 </script>
 @endsection

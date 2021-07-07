@@ -117,6 +117,8 @@ Route::group(
 
             Route::resource('products', ProductController::class);
             Route::resource('productPhotos', ProductPhotoController::class);
+
+            Route::delete('products/delete-item/{id}', 'ProductController@destroyItem')->name('products.destroy.item');
         });
     }
 );

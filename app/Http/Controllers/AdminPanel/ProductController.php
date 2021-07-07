@@ -8,6 +8,7 @@ use App\Repositories\AdminPanel\ProductRepository;
 use App\Http\Controllers\AppBaseController;
 use App\Models\Category;
 use App\Models\Color;
+use App\Models\ProductItem;
 use App\Models\Size;
 use Illuminate\Http\Request;
 use Flash;
@@ -61,14 +62,14 @@ class ProductController extends AppBaseController
      */
     public function store(Request $request)
     {
-        // dd(request('size_id'));
         $input = $request->all();
         $product = $this->productRepository->create($input);
-        // dd($request);
+
         $request->validate([
             'photo' => 'array',
             'photo.*' => 'required|image|mimes:png,jpg,jpeg',
         ]);
+
         foreach (request('photos') as $photo) {
             $product->photos()->create([
                 'photo' => $photo
@@ -146,11 +147,10 @@ class ProductController extends AppBaseController
 
             return redirect(route('adminPanel.products.index'));
         }
-        if ($request->item) {
-            // dd($request->item[5]);
-            foreach ($request->item as $item) {
-                // dd($item['product_id']);
-                $product->items()->updateOrCreate(['product_id' => $item['product_id'], 'id' => $item['id']], $request->item);
+
+        if (!empty($request->item)) {
+            foreach ($request->item as $key => $item) {
+                $product->items()->updateOrCreate(['id' => $key], $item);
             }
         }
 
@@ -185,5 +185,16 @@ class ProductController extends AppBaseController
         Flash::success(__('messages.deleted', ['model' => __('models/products.singular')]));
 
         return redirect(route('adminPanel.products.index'));
+    }
+
+    public function destroyItem($id)
+    {
+        ProductItem::find($id)->delete();
+
+        return response()->json([
+            'success' => 'Record deleted successfully!'
+        ]);
+
+        return back();
     }
 }
