@@ -17,6 +17,7 @@ class CreateDonationTypesTable extends Migration
         Schema::create('donation_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('icon');
+            $table->string('web_icon')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

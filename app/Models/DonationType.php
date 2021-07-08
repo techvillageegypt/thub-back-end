@@ -29,7 +29,8 @@ class DonationType extends Model
 
 
     public $fillable = [
-        'icon'
+        'icon',
+        'web_icon'
     ];
 
 
@@ -44,7 +45,8 @@ class DonationType extends Model
             $rules[$language . '.name'] = 'required|string|max:191';
         }
 
-        $rules['icon'] = 'required|image|mimes:jpeg,jpg,png';
+        $rules['icon']      = 'required|image|mimes:jpeg,jpg,png';
+        $rules['web_icon']  = 'nullable|image|mimes:jpeg,jpg,png';
 
         return $rules;
     }
@@ -55,6 +57,8 @@ class DonationType extends Model
     protected $appends = [
         'icon_original_path',
         'icon_thumbnail_path',
+        'web_icon_original_path',
+        'web_icon_thumbnail_path',
     ];
 
     // icon
@@ -86,4 +90,34 @@ class DonationType extends Model
         return $this->icon ? asset('uploads/images/thumbnail/' . $this->icon) : null;
     }
     // icon
+
+    // Web icon
+    public function setWebIconAttribute($file)
+    {
+        try {
+            if ($file) {
+
+                $fileName = $this->createFileName($file);
+
+                $this->originalImage($file, $fileName);
+
+                $this->thumbImage($file, $fileName, 200, 200);
+
+                $this->attributes['web_icon'] = $fileName;
+            }
+        } catch (\Throwable $th) {
+            $this->attributes['web_icon'] = $file;
+        }
+    }
+
+    public function getWebIconOriginalPathAttribute()
+    {
+        return $this->web_icon ? asset('uploads/images/original/' . $this->web_icon) : null;
+    }
+
+    public function getWebIconThumbnailPathAttribute()
+    {
+        return $this->web_icon ? asset('uploads/images/thumbnail/' . $this->web_icon) : null;
+    }
+    // web icon
 }

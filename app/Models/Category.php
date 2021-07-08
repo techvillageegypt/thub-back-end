@@ -65,8 +65,19 @@ class Category extends Model
         return $query->where('status', 1);
     }
 
+
+
+    ########################### Scopes #############################
     public function parent()
     {
         return $this->belongsTo(Category::class, 'parent_id', 'id');
+    }
+
+
+    ########################### Relations #############################
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
     }
 }
