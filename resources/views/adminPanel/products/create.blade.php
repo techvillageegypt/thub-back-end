@@ -21,7 +21,7 @@
                         <h3 class="card-title">Create @lang('models/products.singular')</h3>
                     </div>
                     <div class="card-body">
-                        {!! Form::open(['route' => 'adminPanel.products.store','id' => 'product-form']) !!}
+                        {!! Form::open(['route' => ['adminPanel.products.store'],'id' => 'product-form', 'files' => true]) !!}
                         @include('adminPanel.products.fields')
                         {!! Form::close() !!}
                     </div>

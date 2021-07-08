@@ -74,7 +74,8 @@ class Product extends Model
         // $rules['sale_price'] = 'nullable|string|max:191';
         // $rules['price']      = 'required|numeric';
         // $rules['stock']      = 'required|numeric';
-        $rules['status']     = 'required|numeric|in:0,1';
+        $rules['category_id']     = 'required';
+        $rules['status']          = 'required|numeric|in:0,1';
 
         return $rules;
     }
@@ -91,5 +92,10 @@ class Product extends Model
     public function items()
     {
         return $this->hasMany(ProductItem::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }

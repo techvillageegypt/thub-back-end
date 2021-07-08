@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\ImageUploaderTrait;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -16,11 +17,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class ProductPhoto extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, ImageUploaderTrait;
 
 
     public $table = 'product_photos';
-    
+
 
     protected $dates = ['deleted_at'];
 
@@ -39,7 +40,7 @@ class ProductPhoto extends Model
     protected $casts = [
         'id' => 'integer',
         'product_id' => 'integer',
-        'photo' => 'integer'
+        'photo' => 'string'
     ];
 
     /**
@@ -47,9 +48,43 @@ class ProductPhoto extends Model
      *
      * @var array
      */
-    public static $rules = [
-        
+    public static $rules = [];
+
+
+    protected $appends = [
+        'photo_original_path',
+        'photo_thumbnail_path',
     ];
 
-    
+    // photo
+    public function setPhotoAttribute($file)
+    {
+        try {
+            if ($file) {
+
+                $fileName = $this->createFileName($file);
+
+                $this->originalImage($file, $fileName);
+
+                $this->thumbImage($file, $fileName, 100, 100);
+
+                $this->attributes['photo'] = $fileName;
+            }
+        } catch (\Throwable $th) {
+            $this->attributes['photo'] = $file;
+        }
+    }
+
+    public function getPhotoOriginalPathAttribute()
+    {
+        return $this->photo ? asset('uploads/images/original/' . $this->photo) : null;
+    }
+
+    public function getPhotoThumbnailPathAttribute()
+    {
+        return $this->photo ? asset('uploads/images/thumbnail/' . $this->photo) : null;
+    }
+    // photo
+
+
 }

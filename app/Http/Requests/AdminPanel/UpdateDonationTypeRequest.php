@@ -26,6 +26,7 @@ class UpdateDonationTypeRequest extends FormRequest
     public function rules()
     {
         $rules = DonationType::rules();
+        $rules['icon'] = 'nullable';
 
         return $rules;
     }

@@ -74,6 +74,8 @@
             <h3>Product Photos</h3>
             <br>
             <div id="product-photos">
+
+
                 <div id="wrapper">
                     <h2>Drop your Files</h2>
                     <span>or</span>
@@ -83,7 +85,12 @@
                     <br />
                     <div id="file-count"></div>
                     <div id="file-preview">
+                        @if (isset($product->photos))
+                        @foreach ($product->photos as $photo)
+                        <img src="{{$photo->photo_original_path}}" alt="" width="100">
 
+                        @endforeach
+                        @endif
                     </div>
                 </div>
             </div>

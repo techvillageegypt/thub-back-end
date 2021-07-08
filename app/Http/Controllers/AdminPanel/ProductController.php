@@ -8,6 +8,7 @@ use App\Repositories\AdminPanel\ProductRepository;
 use App\Http\Controllers\AppBaseController;
 use App\Models\Category;
 use App\Models\Color;
+use App\Models\Product;
 use App\Models\ProductItem;
 use App\Models\Size;
 use Illuminate\Http\Request;
@@ -62,19 +63,17 @@ class ProductController extends AppBaseController
      */
     public function store(Request $request)
     {
+        $request->validate(array_merge(Product::rules(), ProductItem::$rules));
+
         $input = $request->all();
         $product = $this->productRepository->create($input);
-
-        $request->validate([
-            'photo' => 'array',
-            'photo.*' => 'required|image|mimes:png,jpg,jpeg',
-        ]);
 
         foreach (request('photos') as $photo) {
             $product->photos()->create([
                 'photo' => $photo
             ]);
         }
+
 
         foreach ($request->item as $key => $item) {
             $product->items()->create($item);
@@ -138,14 +137,23 @@ class ProductController extends AppBaseController
      *
      * @return Response
      */
-    public function update($id, UpdateProductRequest $request)
+    public function update($id, Request $request)
     {
+        $request->validate(array_merge(Product::rules(), ProductItem::$rules));
         $product = $this->productRepository->find($id);
 
         if (empty($product)) {
             Flash::error(__('messages.not_found', ['model' => __('models/products.singular')]));
 
             return redirect(route('adminPanel.products.index'));
+        }
+
+        $product->photos()->delete();
+
+        foreach (request('photos') as $photo) {
+            $product->photos()->create([
+                'photo' => $photo
+            ]);
         }
 
         if (!empty($request->item)) {

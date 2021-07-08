@@ -30,7 +30,6 @@ class ProductItem extends Model
         'product_id',
         'color_id',
         'size_id',
-        'description',
         'sale_price',
         'price',
         'stock',
@@ -44,6 +43,17 @@ class ProductItem extends Model
         'status' => 'integer'
     ];
 
+    public static $rules = [
+        'photos'                => 'required|array',
+        'photos.*'              => 'required|image|mimes:png,jpg,jpeg',
+        'item'                  => 'required|array',
+        'item.*.size_id'        => 'required',
+        'item.*.color_id'       => 'required',
+        'item.*.sale_price'     => 'nullable',
+        'item.*.price'          => 'required',
+        'item.*.stock'          => 'required',
+    ];
+
 
     ###################### Relations #########################
 
@@ -51,5 +61,16 @@ class ProductItem extends Model
     public function mainProduct()
     {
         return $this->belongsTo(Product::class);
+    }
+
+
+    public function color()
+    {
+        return $this->belongsTo(Color::class);
+    }
+
+    public function size()
+    {
+        return $this->belongsTo(Size::class);
     }
 }
