@@ -7,6 +7,8 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Color;
+use App\Models\Size;
 
 class ShopController extends Controller
 {
@@ -31,11 +33,13 @@ class ShopController extends Controller
     public function product($id)
     {
         $data['product'] = Product::with('photos', 'items.color', 'items.size')->find($id);
+        if ($data['product']) {
+            $sizes = $data['product']->items()->pluck('size_id')->toArray();
+            $data['productSizes'] = Size::whereIn('id', $sizes)->get();
 
-        $data['productSizes'] = $data['product']->items()->pluck('size_id', 'id')->unique()->all();
-        $data['productColors'] = $data['product']->items()->pluck('color_id', 'id')->unique()->all();
-
-
+            $colors = $data['product']->items()->pluck('color_id')->toArray();
+            $data['productColors'] = Color::whereIn('id', $colors)->get();
+        }
 
         return response()->json($data);
     }

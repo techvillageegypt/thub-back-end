@@ -91,6 +91,9 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('customer-wallet', 'CustomerController@wallet');
     Route::get('customer-donations', 'CustomerController@donations');
 
+    // Rate
+    Route::post('add-or-update-rate', 'CustomerController@addOrUpdateRate');
+
     // Driver
     Route::post('driver-update-information', 'DriverController@update_information');
     Route::post('picked-up/{Donation}', 'DriverController@picked_up');

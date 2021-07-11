@@ -93,6 +93,18 @@ class Product extends Model
 
 
 
+    ################################## Appends ###################################
+
+    protected $appends = [
+        'rating_avg'
+    ];
+
+    public function getRatingAvgAttribute()
+    {
+        return $this->rates()->avg('rate');
+    }
+
+
     ###################### Relations ######################
 
     public function photos()
@@ -109,6 +121,12 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function rates()
+    {
+        return $this->hasMany(ProductRate::class);
+    }
+
 
 
     ###################### Scopes ######################
