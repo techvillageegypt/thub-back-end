@@ -14,4 +14,12 @@ class ProductRate extends Model
         'product_id',
         'rate',
     ];
+
+
+    ############################ Relation ############################
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

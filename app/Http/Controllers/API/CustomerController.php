@@ -225,7 +225,7 @@ class CustomerController extends Controller
                 'product_id'     => request('product_id')
             ], $validated);
         }
-        // $data['rate']->load('customer', 'driver');
+        $data['rate']->load('product');
         return response()->json($data);
     }
 
