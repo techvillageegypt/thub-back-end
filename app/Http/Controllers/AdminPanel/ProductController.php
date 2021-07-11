@@ -140,6 +140,7 @@ class ProductController extends AppBaseController
     public function update($id, Request $request)
     {
         $request->validate(array_merge(Product::rules(), ProductItem::$rules));
+
         $product = $this->productRepository->find($id);
 
         if (empty($product)) {
