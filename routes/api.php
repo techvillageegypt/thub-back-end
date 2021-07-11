@@ -49,6 +49,9 @@ Route::get('donation-types', 'MainController@donation_types');
 
 Route::get('app-home', 'ShopController@appHome');
 Route::get('category-products/{category}', 'ShopController@categoryProducts');
+
+Route::get('categories', 'ShopController@categories');
+Route::get('products', 'ShopController@products');
 Route::get('product/{id}', 'ShopController@product');
 
 //////////////////////////////////////////////////////////////////////////////

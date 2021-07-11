@@ -63,7 +63,7 @@ class ProductController extends AppBaseController
      */
     public function store(Request $request)
     {
-        $request->validate(array_merge(Product::rules(), ProductItem::$rules));
+        $request->validate(Product::rules());
 
         $input = $request->all();
         $product = $this->productRepository->create($input);
@@ -139,7 +139,7 @@ class ProductController extends AppBaseController
      */
     public function update($id, Request $request)
     {
-        $request->validate(array_merge(Product::rules(), ProductItem::$rules));
+        $request->validate(array_merge(Product::rules(), ['photos' => 'nullable']));
 
         $product = $this->productRepository->find($id);
 
@@ -149,12 +149,15 @@ class ProductController extends AppBaseController
             return redirect(route('adminPanel.products.index'));
         }
 
-        $product->photos()->delete();
+        if (request('photos')) {
 
-        foreach (request('photos') as $photo) {
-            $product->photos()->create([
-                'photo' => $photo
-            ]);
+            $product->photos()->delete();
+
+            foreach (request('photos') as $photo) {
+                $product->photos()->create([
+                    'photo' => $photo
+                ]);
+            }
         }
 
         if (!empty($request->item)) {

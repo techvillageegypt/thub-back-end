@@ -63,6 +63,8 @@ class Product extends Model
 
     public static function rules()
     {
+
+
         $languages = array_keys(config('langs'));
 
         foreach ($languages as $language) {
@@ -76,6 +78,15 @@ class Product extends Model
         // $rules['stock']      = 'required|numeric';
         $rules['category_id']     = 'required';
         $rules['status']          = 'required|numeric|in:0,1';
+
+        $rules['photos']                = 'required|array';
+        $rules['photos.*']             = 'required|image|mimes:png,jpg,jpeg';
+        $rules['item']                 = 'required|array';
+        $rules['item.*.size_id']       = 'required';
+        $rules['item.*.color_id']      = 'required';
+        $rules['item.*.sale_price']    = 'nullable';
+        $rules['item.*.price']          = 'required';
+        $rules['item.*.stock']          = 'required';
 
         return $rules;
     }
@@ -97,5 +108,13 @@ class Product extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+
+    ###################### Scopes ######################
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
     }
 }
