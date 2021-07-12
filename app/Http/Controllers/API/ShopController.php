@@ -16,9 +16,7 @@ class ShopController extends Controller
 
     public function appHome()
     {
-        $data['categories'] = Category::with(['products' => function ($query) {
-            $query->with('photos', 'items')->limit(10);
-        }])->get();
+        $data['categories'] = Category::with('products.photos', 'products.items.color', 'products.items.size')->get();
 
         return response()->json($data);
     }
