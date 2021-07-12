@@ -25,7 +25,6 @@ class CreateProductsTable extends Migration
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
 
-
         Schema::create('product_translations', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('product_id')->unsigned();
@@ -39,7 +38,6 @@ class CreateProductsTable extends Migration
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
-
 
         Schema::create('product_items', function (Blueprint $table) {
             $table->increments('id');
@@ -70,6 +68,25 @@ class CreateProductsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
+
+        Schema::create('user_cart', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedInteger('item_id');
+            $table->unsignedBigInteger('quantity');
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('item_id')->references('id')->on('product_items')->onDelete('cascade');
+        });
+
+        Schema::create('user_wishlist', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedInteger('product_id');
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+        });
     }
 
     /**
@@ -79,6 +96,9 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
+        Schema::drop('user_wishlist');
+        Schema::drop('user_cart');
+        Schema::drop('product_rates');
         Schema::drop('product_items');
         Schema::drop('product_translations');
         Schema::drop('products');

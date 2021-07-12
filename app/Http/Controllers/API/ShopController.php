@@ -7,12 +7,12 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\Color;
 use App\Models\Size;
 
 class ShopController extends Controller
 {
-
 
     public function appHome()
     {
@@ -41,8 +41,6 @@ class ShopController extends Controller
 
         return response()->json($data);
     }
-
-
 
     public function categories()
     {
@@ -110,5 +108,92 @@ class ShopController extends Controller
         $products = $productsQuery->paginate($perPage);
 
         return response()->json(compact('products'));
+    }
+
+    // Cart
+    public function toggleCart()
+    {
+        $data['user'] = auth('api')->user();
+        $item = $data['user']->cart()->where('item_id', request('item_id'))->first();
+        if ($item) {
+            $data['user']->cart()->where('item_id', request('item_id'))->delete();
+        } else {
+            $data['user']->cart()->create([
+                'item_id' => request('item_id'),
+                'quantity' => request('quantity'),
+            ]);
+        }
+
+        $data['user']->load('userable');
+        $data['cart'] = $data['user']->cart()->with('item.mainProduct', 'item.size', 'item.color')->get();
+
+        return response()->json($data);
+    }
+
+    public function updateCart()
+    {
+        $data['user'] = auth('api')->user();
+        $item = $data['user']->cart()->where('item_id', request('item_id'))->first();
+        if ($item) {
+            $data['user']->cart()->where('item_id', request('item_id'))->update([
+                'quantity' => request('quantity')
+            ]);
+        }
+
+        $data['user']->load('userable');
+        $data['cart'] = $data['user']->cart()->with('item.mainProduct', 'item.size', 'item.color')->get();
+
+        return response()->json($data);
+    }
+
+    public function myCart()
+    {
+        $data['user'] = auth('api')->user();
+
+        $data['user']->load('userable');
+        $data['cart'] = $data['user']->cart()->with('item.mainProduct', 'item.size', 'item.color')->get();
+        // $data['total'] = $data['user']->cart()->sum('product_items.price');
+        $prices = $data['user']->cart()->with('item')->get()->pluck("item.price", 'quantity');
+
+
+        return $prices;
+        // return $data['cart']->sum(function ($item) {
+        //     return count($item['item.price']);
+        // });
+
+
+
+        return response()->json($data);
+    }
+
+    // Wishlist
+    public function toggleWishlist()
+    {
+        $data['user'] = auth('api')->user();
+        $product = $data['user']->wishlist()->where('product_id', request('product_id'))->first();
+        if ($product) {
+            $data['user']->wishlist()->where('product_id', request('product_id'))->delete();
+        } else {
+            $data['user']->wishlist()->create([
+                'product_id' => request('product_id'),
+                'quantity' => request('quantity'),
+            ]);
+        }
+
+        $data['user']->load('userable');
+        $data['wishlist'] = $data['user']->wishlist()->with('product.items.mainProduct', 'product.items.size', 'product.items.color')->get();
+
+        return response()->json($data);
+    }
+
+    public function myWishlist()
+    {
+        $data['user'] = auth('api')->user();
+
+
+        $data['user']->load('userable');
+        $data['wishlist'] = $data['user']->wishlist()->with('product.items.mainProduct', 'product.items.size', 'product.items.color')->get();
+
+        return response()->json($data);
     }
 }

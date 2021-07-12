@@ -96,6 +96,15 @@ Route::group(['middleware' => ['auth:api']], function () {
     // Rate
     Route::post('add-or-update-rate', 'CustomerController@addOrUpdateRate');
 
+    // Cart
+    Route::post('toggle-cart', 'ShopController@toggleCart');
+    Route::post('update-cart', 'ShopController@updateCart');
+    Route::get('my-cart', 'ShopController@myCart');
+
+    // wishlist
+    Route::post('toggle-wishlist', 'ShopController@toggleWishlist');
+    Route::get('my-wishlist', 'ShopController@myWishlist');
+
     // Driver
     Route::post('driver-update-information', 'DriverController@update_information');
     Route::post('picked-up/{Donation}', 'DriverController@picked_up');

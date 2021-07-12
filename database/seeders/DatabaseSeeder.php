@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             InformationTableSeeder::class,
             SocialLinkTableSeeder::class,
             BrandTableSeeder::class,
-            ColorTableSeeder::class,
+            AttributeSeeder::class,
             UserTableSeeder::class,
             StateTableSeeder::class,
             DonationTypeTableSeeder::class,
