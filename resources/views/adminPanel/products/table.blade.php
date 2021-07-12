@@ -5,7 +5,7 @@
             <th>@lang('models/products.fields.id')</th>
             <th>@lang('models/products.fields.title')</th>
             <th>@lang('models/products.fields.brief')</th>
-            <th>@lang('models/products.fields.description')</th>
+            <th>@lang('models/products.fields.created_at')</th>
             <th>@lang('models/products.fields.status')</th>
             <th>@lang('crud.action')</th>
         </tr>
@@ -15,15 +15,15 @@
         <tr>
             <td>{{ $product->id }}</td>
             <td>{{ $product->title }}</td>
-            <td>{{ $product->brief }}</td>
-            <td>{{ $product->description }}</td>
+            <td>{{ Str::limit($product->brief, 50, '...') }}</td>
+            <td>{{ $product->created_at->diffForHumans() }}</td>
             <td>{{ $product->status ? 'Active' : 'Inactive' }}</td>
             <td nowrap>
                 {!! Form::open(['route' => ['adminPanel.products.destroy', $product->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
-                    @can('products view')
+                    {{-- @can('products view')
                     <a href="{{ route('adminPanel.products.show', [$product->id]) }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-success'><i class="fa fa-eye"></i></a>
-                    @endcan
+                    @endcan --}}
                     @can('products edit')
                     <a href="{{ route('adminPanel.products.edit', [$product->id]) . '?languages=' . \App::getLocale() }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-primary'><i class="fa fa-edit"></i></a>
                     @endcan

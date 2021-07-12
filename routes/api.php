@@ -51,6 +51,8 @@ Route::get('app-home', 'ShopController@appHome');
 Route::get('category-products/{category}', 'ShopController@categoryProducts');
 
 Route::get('categories', 'ShopController@categories');
+Route::get('sizes', 'ShopController@sizes');
+Route::get('colors', 'ShopController@colors');
 Route::get('products', 'ShopController@products');
 Route::get('product/{id}', 'ShopController@product');
 

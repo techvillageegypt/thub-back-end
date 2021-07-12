@@ -53,6 +53,20 @@ class ShopController extends Controller
         return response()->json(compact('categories'));
     }
 
+    public function sizes()
+    {
+        $sizes = Size::get();
+
+        return response()->json(compact('sizes'));
+    }
+
+    public function colors()
+    {
+        $colors = Color::get();
+
+        return response()->json(compact('colors'));
+    }
+
     public function products(Request $request)
     {
 
@@ -82,9 +96,16 @@ class ShopController extends Controller
                 $query->where('size_id', request('size_id'));
             });
         }
+
         if ($request->filled('color_id')) {
             $productsQuery->whereHas('items', function ($query) {
                 $query->where('color_id', request('color_id'));
+            });
+        }
+
+        if ($request->filled('price_from') && $request->filled('price_to')) {
+            $productsQuery->whereHas('items', function ($query) {
+                $query->whereBetween('price', [request('price_from'), request('price_to')]);
             });
         }
 
