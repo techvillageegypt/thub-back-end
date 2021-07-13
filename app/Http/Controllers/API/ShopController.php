@@ -152,16 +152,6 @@ class ShopController extends Controller
 
         $data['user']->load('userable');
         $data['cart'] = $data['user']->cart()->with('item.mainProduct', 'item.size', 'item.color')->get();
-        // $data['total'] = $data['user']->cart()->sum('product_items.price');
-        $prices = $data['user']->cart()->with('item')->get()->pluck("item.price", 'quantity');
-
-
-        return $prices;
-        // return $data['cart']->sum(function ($item) {
-        //     return count($item['item.price']);
-        // });
-
-
 
         return response()->json($data);
     }

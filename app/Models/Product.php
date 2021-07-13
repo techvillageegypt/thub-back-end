@@ -96,12 +96,21 @@ class Product extends Model
     ################################## Appends ###################################
 
     protected $appends = [
-        'rating_avg'
+        'rating_avg',
+        'min_price'
     ];
 
     public function getRatingAvgAttribute()
     {
         return $this->rates()->avg('rate');
+    }
+
+    public function getMinPriceAttribute()
+    {
+        $minPrice = $this->items()->min('price');
+        $minSalePrice = $this->items()->min('sale_price');
+        $price = collect([$minPrice, $minSalePrice]);
+        return $price->min();
     }
 
 
