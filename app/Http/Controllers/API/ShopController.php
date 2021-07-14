@@ -169,6 +169,20 @@ class ShopController extends Controller
         $data['user']->load('userable');
         $data['cart'] = $data['user']->cart()->with('item.mainProduct.photos', 'item.size', 'item.color')->get();
 
+
+        $data['total'] = 0;
+        $data['totalQuantity'] = 0;
+        // return $data['cart'][0]->item->sale_price ?? $data['cart'][0]->item->price;
+        // return $data['cart'][0]->quantity;
+        foreach ($data['cart'] as $cart) {
+
+            $itemPrice = $cart->item->sale_price ?? $cart->item->price;
+            $itemQuantity = $cart->quantity;
+            $totalPrice = $itemPrice * $itemQuantity;
+            $data['total'] += $totalPrice;
+            $data['totalQuantity'] += $itemQuantity;
+        }
+
         return response()->json($data);
     }
 
@@ -176,8 +190,8 @@ class ShopController extends Controller
     public function toggleWishlist()
     {
         $data['user'] = auth('api')->user();
-        $product = $data['user']->wishlist()->where('product_id', request('product_id'))->first();
-        if ($product) {
+        $wishlistProduct = $data['user']->wishlist()->where('product_id', request('product_id'))->first();
+        if ($wishlistProduct) {
             $data['user']->wishlist()->where('product_id', request('product_id'))->delete();
         } else {
             $data['user']->wishlist()->create([
@@ -185,7 +199,7 @@ class ShopController extends Controller
                 'quantity' => request('quantity'),
             ]);
         }
-
+        $data['product'] = Product::findOrFail(request('product_id'));
         $data['user']->load('userable');
         $data['wishlist'] = $data['user']->wishlist()->with('product.photos', 'product.items.size', 'product.items.color')->get();
 

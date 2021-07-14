@@ -55,6 +55,29 @@ class ProductItem extends Model
     ];
 
 
+
+    ################################## Appends ###################################
+
+    protected $appends = [
+        'is_in_cart',
+    ];
+
+    public function getIsInCartAttribute()
+    {
+        $user = auth('api')->user();
+        if ($user) {
+            $cartItems = $user->cart->pluck('item_id')->toArray();
+            if (in_array($this->id, $cartItems)) {
+                $cartStatus = 1;
+            } else {
+                $cartStatus = 0;
+            }
+        } else {
+            $cartStatus = 0;
+        }
+        return $cartStatus;
+    }
+
     ###################### Relations #########################
 
 
