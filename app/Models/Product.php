@@ -97,12 +97,44 @@ class Product extends Model
 
     protected $appends = [
         'rating_avg',
-        'min_price'
+        'min_price',
+        'is_in_cart',
+        'is_in_wishlist',
     ];
 
     public function getRatingAvgAttribute()
     {
         return $this->rates()->avg('rate');
+    }
+
+    public function getIsInCartAttribute()
+    {
+        $user = auth('api')->user();
+        if ($user) {
+            $cartItems = $user->cart->pluck('item_id')->toArray();
+            $productItems = $this->items()->pluck('id')->toArray();
+            foreach ($cartItems as $cartItem) {
+                if (in_array($cartItem, $productItems)) {
+                    $cartStatus = 1;
+                } else {
+                    $cartStatus = 0;
+                }
+            }
+        }
+        return $cartStatus;
+    }
+    public function getIsInWishlistAttribute()
+    {
+        $user = auth('api')->user();
+        if ($user) {
+            $wishlistProducts = $user->wishlist->pluck('product_id')->toArray();
+            if (in_array($this->id, $wishlistProducts)) {
+                $wishlistStatus = 1;
+            } else {
+                $wishlistStatus = 0;
+            }
+        }
+        return $wishlistStatus;
     }
 
     public function getMinPriceAttribute()

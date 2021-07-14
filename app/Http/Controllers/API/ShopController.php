@@ -71,7 +71,7 @@ class ShopController extends Controller
         $productsQuery = Product::active()->with('photos', 'items.color', 'items.size');
 
         if ($request->filled('sort') == 'date') {
-            $productsQuery->orderByTranslation('created_at', 'desc');
+            $productsQuery->orderBy('created_at', 'desc');
         } elseif ($request->filled('sort') == 'title') {
             $productsQuery->orderByTranslation('title');
         } else {
@@ -110,6 +110,22 @@ class ShopController extends Controller
         return response()->json(compact('products'));
     }
 
+    // All Products max Price For max Price Filtering
+    public function maxPrice()
+    {
+        $products = Product::active()->get();
+
+        $prices = collect();
+        foreach ($products as $product) {
+            $prices->push($product->items()->max('price'));
+        }
+        $prices->all();
+
+        $maxPrice = $prices->max();
+
+        return response()->json(compact('maxPrice'));
+    }
+
     // Cart
     public function toggleCart()
     {
@@ -125,7 +141,7 @@ class ShopController extends Controller
         }
 
         $data['user']->load('userable');
-        $data['cart'] = $data['user']->cart()->with('item.mainProduct', 'item.size', 'item.color')->get();
+        $data['cart'] = $data['user']->cart()->with('item.mainProduct.photos', 'item.size', 'item.color')->get();
 
         return response()->json($data);
     }
@@ -141,7 +157,7 @@ class ShopController extends Controller
         }
 
         $data['user']->load('userable');
-        $data['cart'] = $data['user']->cart()->with('item.mainProduct', 'item.size', 'item.color')->get();
+        $data['cart'] = $data['user']->cart()->with('item.mainProduct.photos', 'item.size', 'item.color')->get();
 
         return response()->json($data);
     }
@@ -151,7 +167,7 @@ class ShopController extends Controller
         $data['user'] = auth('api')->user();
 
         $data['user']->load('userable');
-        $data['cart'] = $data['user']->cart()->with('item.mainProduct', 'item.size', 'item.color')->get();
+        $data['cart'] = $data['user']->cart()->with('item.mainProduct.photos', 'item.size', 'item.color')->get();
 
         return response()->json($data);
     }
@@ -171,7 +187,7 @@ class ShopController extends Controller
         }
 
         $data['user']->load('userable');
-        $data['wishlist'] = $data['user']->wishlist()->with('product.items.mainProduct', 'product.items.size', 'product.items.color')->get();
+        $data['wishlist'] = $data['user']->wishlist()->with('product.photos', 'product.items.size', 'product.items.color')->get();
 
         return response()->json($data);
     }
@@ -182,7 +198,7 @@ class ShopController extends Controller
 
 
         $data['user']->load('userable');
-        $data['wishlist'] = $data['user']->wishlist()->with('product.items.mainProduct', 'product.items.size', 'product.items.color')->get();
+        $data['wishlist'] = $data['user']->wishlist()->with('product.photos', 'product.items.size', 'product.items.color')->get();
 
         return response()->json($data);
     }

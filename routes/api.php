@@ -55,6 +55,7 @@ Route::get('sizes', 'ShopController@sizes');
 Route::get('colors', 'ShopController@colors');
 Route::get('products', 'ShopController@products');
 Route::get('product/{id}', 'ShopController@product');
+Route::get('max-price', 'ShopController@maxPrice');
 
 //////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////// End Shop ///////////////////////////////////
@@ -72,10 +73,6 @@ Route::post('user/verify-code', 'AuthController@verify_code_user');
 // Route::post('driver/login', 'AuthController@login_or_register_driver');
 // Route::post('driver/verify-code', 'AuthController@verify_code_driver');
 
-Route::get('driver-rates/{driverId}', 'DriverController@rates');
-Route::get('driver-rate/{driverRate}', 'DriverController@rate');
-Route::get('customer-rates/{customerId}', 'CustomerController@rates');
-Route::get('customer-rate/{customerRate}', 'CustomerController@rate');
 
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////////////// Start Customer ///////////////////////////////
