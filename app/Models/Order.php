@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Illuminate\Support\Facades\Lang;
 
 /**
  * Class Order
@@ -31,7 +31,7 @@ class Order extends Model
 
 
     public $table = 'orders';
-    
+
 
     protected $dates = ['deleted_at'];
 
@@ -80,9 +80,39 @@ class Order extends Model
      *
      * @var array
      */
-    public static $rules = [
-        
-    ];
+    public static $rules = [];
 
-    
+    ############################## Filters ###############################
+
+    public function getPaymentMethodAttribute()
+    {
+        return $this->attributes['payment_method'] == 1 ? 'Cash On Delevery' : 'Online';
+    }
+
+    public function getStatusAttribute()
+    {
+        switch ($this->attributes['status']) {
+            case 1:
+                return 'New Order';
+                break;
+            case 2:
+                return 'Delevered';
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    ############################## Relations ###############################
+
+    public function items()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
 }

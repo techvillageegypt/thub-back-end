@@ -6,6 +6,7 @@ use App\Http\Requests\AdminPanel\CreateOrderRequest;
 use App\Http\Requests\AdminPanel\UpdateOrderRequest;
 use App\Repositories\AdminPanel\OrderRepository;
 use App\Http\Controllers\AppBaseController;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
@@ -152,5 +153,13 @@ class OrderController extends AppBaseController
         Flash::success(__('messages.deleted', ['model' => __('models/orders.singular')]));
 
         return redirect(route('adminPanel.orders.index'));
+    }
+
+
+    public function delevered(Order $order)
+    {
+        $order->update(['status' => 2]);
+        Flash::success('Order Status Changed Successfuly');
+        return back();
     }
 }

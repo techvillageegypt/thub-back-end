@@ -15,7 +15,7 @@ class CreateOrdersTable extends Migration
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->from(10000);
             $table->unsignedBigInteger('user_id');
             $table->unsignedInteger('state_id')->nullable();
             $table->string('name')->nullable();
@@ -39,10 +39,10 @@ class CreateOrdersTable extends Migration
 
         Schema::create('order_items', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('order_id');
+            $table->unsignedInteger('order_id');
             $table->string('title');
-            $table->string('color')->unsigned();
-            $table->string('size')->unsigned();
+            $table->string('color');
+            $table->string('size');
             $table->decimal('price');
             $table->integer('quantity');
 
@@ -50,8 +50,7 @@ class CreateOrdersTable extends Migration
             $table->softDeletes();
 
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
         });
     }
 

@@ -60,7 +60,9 @@ class ProductItem extends Model
 
     protected $appends = [
         'is_in_cart',
+        'final_price',
     ];
+
 
     public function getIsInCartAttribute()
     {
@@ -76,6 +78,11 @@ class ProductItem extends Model
             $cartStatus = 0;
         }
         return $cartStatus;
+    }
+
+    public function getFinalPriceAttribute()
+    {
+        return $this->sale_price ?? $this->price;
     }
 
     ###################### Relations #########################

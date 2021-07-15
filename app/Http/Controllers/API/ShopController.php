@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Color;
+use App\Models\Order;
 use App\Models\Size;
 
 class ShopController extends Controller
@@ -129,6 +130,7 @@ class ShopController extends Controller
     // Cart
     public function toggleCart()
     {
+        request()->validate(['item_id' => 'exists:product_items,id']);
         $data['user'] = auth('api')->user();
         $item = $data['user']->cart()->where('item_id', request('item_id'))->first();
         if ($item) {
@@ -169,19 +171,7 @@ class ShopController extends Controller
         $data['user']->load('userable');
         $data['cart'] = $data['user']->cart()->with('item.mainProduct.photos', 'item.size', 'item.color')->get();
 
-
-        $data['total'] = 0;
-        $data['totalQuantity'] = 0;
-        // return $data['cart'][0]->item->sale_price ?? $data['cart'][0]->item->price;
-        // return $data['cart'][0]->quantity;
-        foreach ($data['cart'] as $cart) {
-
-            $itemPrice = $cart->item->sale_price ?? $cart->item->price;
-            $itemQuantity = $cart->quantity;
-            $totalPrice = $itemPrice * $itemQuantity;
-            $data['total'] += $totalPrice;
-            $data['totalQuantity'] += $itemQuantity;
-        }
+        $data += $this->calcTotal($data['cart']);
 
         return response()->json($data);
     }
@@ -189,6 +179,7 @@ class ShopController extends Controller
     // Wishlist
     public function toggleWishlist()
     {
+        request()->validate(['product_id' => 'exists:products,id']);
         $data['user'] = auth('api')->user();
         $wishlistProduct = $data['user']->wishlist()->where('product_id', request('product_id'))->first();
         if ($wishlistProduct) {
@@ -215,5 +206,90 @@ class ShopController extends Controller
         $data['wishlist'] = $data['user']->wishlist()->with('product.photos', 'product.items.size', 'product.items.color')->get();
 
         return response()->json($data);
+    }
+
+    public function checkout()
+    {
+        $validated = request()->validate([
+            'name'              => 'required|string|max:191',
+            'address'           => 'required|string|max:191',
+            'state_id'          => 'required|exists:states,id',
+            'housing_type'      => 'required|in:1,2',
+            'house_number'      => 'required_if:housing_type,1|numeric',
+            'building_number'   => 'required_if:housing_type,2|numeric',
+            'floor_number'      => 'required_if:housing_type,2|numeric',
+            'apartment_number'  => 'required_if:housing_type,2|numeric',
+            'payment_method'    => 'required|numeric',
+        ]);
+
+        $user = auth('api')->user();
+
+        $validated['user_id'] = $user->id;
+
+        $data['order'] = Order::create($validated);
+
+        $userCart = $user->cart;
+
+        foreach ($userCart as $cart) {
+            $data['order']->items()->create([
+                'title' => $cart->item->mainProduct->title,
+                'color' => $cart->item->color->hex,
+                'size' => $cart->item->size->name,
+                'price' => $cart->item->final_price,
+                'quantity' => $cart->quantity,
+            ]);
+        }
+
+        $data += $this->calcTotal($userCart);
+
+        $data['order']->update(['total' => $data['total']]);
+        foreach ($userCart as $item) {
+            $item->delete();
+        }
+
+        $data['order']->load('items');
+
+        return response()->json($data);
+    }
+
+
+    public function myOrders()
+    {
+        $user = auth('api')->user();
+
+        $data['orders'] = $user->orders()->with('items')->get();
+
+        return response()->json($data);
+    }
+
+
+
+
+
+
+
+
+
+
+
+    ############################################################################
+    ################################### Helpers ################################
+    ############################################################################
+
+
+    protected function calcTotal($cartData)
+    {
+        $data['total'] = 0;
+        $data['totalQuantity'] = 0;
+        foreach ($cartData as $cart) {
+
+            $itemPrice = $cart->item->final_price;
+            $itemQuantity = $cart->quantity;
+            $totalPrice = $itemPrice * $itemQuantity;
+            $data['total'] += $totalPrice;
+            $data['totalQuantity'] += $itemQuantity;
+        }
+
+        return $data;
     }
 }

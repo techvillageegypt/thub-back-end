@@ -57,7 +57,7 @@
 <!-- State Id Field -->
 <div class="form-group">
     {!! Form::label('state_id', __('models/orders.fields.state_id').':') !!}
-    <b>{{ $order->state_id }}</b>
+    <b>{{ $order->state->name ?? '' }}</b>
 </div>
 
 
@@ -75,25 +75,25 @@
 </div>
 
 
-<!-- Subtotal Field -->
+{{-- <!-- Subtotal Field -->
 <div class="form-group">
     {!! Form::label('subtotal', __('models/orders.fields.subtotal').':') !!}
     <b>{{ $order->subtotal }}</b>
 </div>
-
+--}}
 
 <!-- Total Field -->
 <div class="form-group">
     {!! Form::label('total', __('models/orders.fields.total').':') !!}
-    <b>{{ $order->total }}</b>
+    <b>{{ $order->total }} @lang('lang.currency')</b>
 </div>
 
-
+{{--
 <!-- User Id Field -->
 <div class="form-group">
     {!! Form::label('user_id', __('models/orders.fields.user_id').':') !!}
     <b>{{ $order->user_id }}</b>
-</div>
+</div> --}}
 
 
 <!-- Created At Field -->
@@ -109,4 +109,38 @@
     <b>{{ $order->updated_at }}</b>
 </div>
 
+<br>
+<hr><br>
 
+<h3> Order Items </h3>
+<div class="order_items">
+    <table class="table table-separate table-head-custom table-checkable">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Color</th>
+                <th>Size</th>
+                <th>Price</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($order->items as $item)
+            <tr>
+                <td>{{$item->title}}</td>
+                <td>
+                    <div style="background-color:{{$item->color}};
+                        width: 25px;
+                        height: 25px;
+                        border: 2px solid #ddd;
+                        border-radius: 50%;">
+                    </div>
+                </td>
+                <td>{{$item->size}}</td>
+                <td>{{$item->price}} @lang('lang.currency')</td>
+                <td>{{$item->quantity}}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>

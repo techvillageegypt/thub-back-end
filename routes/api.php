@@ -101,6 +101,14 @@ Route::group(['middleware' => ['auth:api']], function () {
     // wishlist
     Route::post('toggle-wishlist', 'ShopController@toggleWishlist');
     Route::get('my-wishlist', 'ShopController@myWishlist');
+    Route::get('my-orders', 'ShopController@myOrders');
+
+    // Checkout
+    Route::post('checkout', 'ShopController@checkout');
+
+
+
+
 
     // Driver
     Route::post('driver-update-information', 'DriverController@update_information');
