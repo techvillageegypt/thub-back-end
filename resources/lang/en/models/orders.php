@@ -12,6 +12,7 @@ return array(
         'housing_type'          => 'Housing Type',
         'house_number'          => 'House Number',
         'state'                 => 'State',
+        'phone'                 => 'Phone',
         'building_number'       => 'Building Number',
         'floor_number'          => 'Floor Number',
         'apartment_number'      => 'Apartment Number',

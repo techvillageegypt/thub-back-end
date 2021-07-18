@@ -65,7 +65,7 @@ class DriverController extends AppBaseController
             'verify_code'   => $this->randomCode(4),
             'phone'         => $request->phone,
             'userable_id'   => $driver->id,
-            'userable_type' => "\App\Models\Driver",
+            'userable_type' => "App\Models\Driver",
             'type'          => "driver",
         ]);
 
