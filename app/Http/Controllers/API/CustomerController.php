@@ -13,6 +13,8 @@ use App\Models\DonationPhoto;
 use App\Models\TypeOfDonation;
 use App\Helpers\HelperFunctionTrait;
 use App\Http\Controllers\Controller;
+use App\Models\Product;
+use App\Models\ProductRate;
 
 class CustomerController extends Controller
 {
@@ -208,34 +210,22 @@ class CustomerController extends Controller
     # Rates
     ##################################################################
 
-    public function rates($customerId)
-    {
-        $data['rates'] = CustomerRate::where('customer_id', $customerId)->get();
-        $data['rates']->load('customer', 'driver');
-        return response()->json($data);
-    }
-
-    public function rate(CustomerRate $customerRate)
-    {
-        $customerRate->load('customer', 'driver');
-        return response()->json($customerRate);
-    }
-
     public function addOrUpdateRate()
     {
         $validated = request()->validate([
-            'driver_id'         => 'required',
+            'product_id'        => 'required',
             'rate'              => 'required',
-            'report'            => 'required',
         ]);
+        $validated['user_id'] =  auth('api')->id();
 
-        $validated['customer_id'] =  auth('api.customer')->id();
-
-        $data['rate'] = DriverRate::updateOrCreate([
-            'customer_id'   => auth('api.customer')->id(),
-            'driver_id'     => request('driver_id')
-        ], $validated);
-        $data['rate']->load('customer', 'driver');
+        $product = Product::findOrFail(request('product_id'));
+        if ($product) {
+            $data['rate'] = ProductRate::updateOrCreate([
+                'user_id'       => auth('api')->id(),
+                'product_id'     => request('product_id')
+            ], $validated);
+        }
+        $data['rate']->load('product');
         return response()->json($data);
     }
 

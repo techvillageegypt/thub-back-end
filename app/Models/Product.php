@@ -63,6 +63,8 @@ class Product extends Model
 
     public static function rules()
     {
+
+
         $languages = array_keys(config('langs'));
 
         foreach ($languages as $language) {
@@ -77,9 +79,56 @@ class Product extends Model
         $rules['category_id']     = 'required';
         $rules['status']          = 'required|numeric|in:0,1';
 
+        $rules['photos']                = 'required|array';
+        $rules['photos.*']             = 'required|image|mimes:png,jpg,jpeg';
+        $rules['item']                 = 'required|array';
+        $rules['item.*.size_id']       = 'required';
+        $rules['item.*.color_id']      = 'required';
+        $rules['item.*.sale_price']    = 'nullable';
+        $rules['item.*.price']          = 'required';
+        $rules['item.*.stock']          = 'required';
+
         return $rules;
     }
 
+
+
+    ################################## Appends ###################################
+
+    protected $appends = [
+        'rating_avg',
+        'min_price',
+        'is_in_wishlist',
+    ];
+
+    public function getRatingAvgAttribute()
+    {
+        return $this->rates()->avg('rate');
+    }
+
+    public function getIsInWishlistAttribute()
+    {
+        $user = auth('api')->user();
+        if ($user) {
+            $wishlistProducts = $user->wishlist->pluck('product_id')->toArray();
+            if (in_array($this->id, $wishlistProducts)) {
+                $wishlistStatus = 1;
+            } else {
+                $wishlistStatus = 0;
+            }
+        } else {
+            $wishlistStatus = 0;
+        }
+        return $wishlistStatus;
+    }
+
+    public function getMinPriceAttribute()
+    {
+        $minPrice = $this->items()->min('price');
+        $minSalePrice = $this->items()->min('sale_price');
+        $price = collect([$minPrice, $minSalePrice]);
+        return $price->min();
+    }
 
 
     ###################### Relations ######################
@@ -97,5 +146,19 @@ class Product extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function rates()
+    {
+        return $this->hasMany(ProductRate::class);
+    }
+
+
+
+    ###################### Scopes ######################
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
     }
 }

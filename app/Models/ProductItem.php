@@ -55,12 +55,42 @@ class ProductItem extends Model
     ];
 
 
+
+    ################################## Appends ###################################
+
+    protected $appends = [
+        'is_in_cart',
+        'final_price',
+    ];
+
+
+    public function getIsInCartAttribute()
+    {
+        $user = auth('api')->user();
+        if ($user) {
+            $cartItems = $user->cart->pluck('item_id')->toArray();
+            if (in_array($this->id, $cartItems)) {
+                $cartStatus = 1;
+            } else {
+                $cartStatus = 0;
+            }
+        } else {
+            $cartStatus = 0;
+        }
+        return $cartStatus;
+    }
+
+    public function getFinalPriceAttribute()
+    {
+        return $this->sale_price ?? $this->price;
+    }
+
     ###################### Relations #########################
 
 
     public function mainProduct()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class, 'product_id', 'id');
     }
 
 

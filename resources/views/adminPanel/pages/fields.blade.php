@@ -34,7 +34,7 @@
                     CKEDITOR.replace("{{ $locale . '[content]' }}", {
                 filebrowserUploadUrl: "{{route('adminPanel.ckeditor.upload', ['_token' => csrf_token() ])}}",
                 filebrowserUploadMethod: 'form'
-            });
+                });
                 </script>
             </div>
 

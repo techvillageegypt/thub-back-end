@@ -119,6 +119,9 @@ Route::group(
             Route::resource('productPhotos', ProductPhotoController::class);
 
             Route::delete('products/delete-item/{id}', 'ProductController@destroyItem')->name('products.destroy.item');
+
+            Route::resource('orders', OrderController::class);
+            Route::patch('orders/delevered/{order}', 'OrderController@delevered')->name('orders.delevered');
         });
     }
 );

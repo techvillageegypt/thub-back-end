@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Size;
 use App\Models\Color;
 use Illuminate\Database\Seeder;
 
-class ColorTableSeeder extends Seeder
+class AttributeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -46,10 +47,39 @@ class ColorTableSeeder extends Seeder
                 'hex' => '#FFFF00'
             ],
         ];
+        $sizes = [
+            [
+                'en'  => ['name' => 'XS'],
+                'ar'  => ['name' => 'XS'],
+            ],
+            [
+                'en'  => ['name' => 'S'],
+                'ar'  => ['name' => 'S'],
+            ],
+            [
+                'en'  => ['name' => 'M'],
+                'ar'  => ['name' => 'M'],
+            ],
+            [
+                'en'  => ['name' => 'L'],
+                'ar'  => ['name' => 'L'],
+            ],
+            [
+                'en'  => ['name' => 'XL'],
+                'ar'  => ['name' => 'XL'],
+            ],
+            [
+                'en'  => ['name' => 'XXL'],
+                'ar'  => ['name' => 'XXL'],
+            ],
+        ];
 
 
         foreach ($colors as $color) {
             Color::create($color);
+        }
+        foreach ($sizes as $size) {
+            Size::create($size);
         }
     }
 }
