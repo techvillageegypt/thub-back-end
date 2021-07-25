@@ -60,6 +60,7 @@ class ProductItem extends Model
 
     protected $appends = [
         'is_in_cart',
+        'is_checked_out',
         'final_price',
     ];
 
@@ -78,6 +79,26 @@ class ProductItem extends Model
             $cartStatus = 0;
         }
         return $cartStatus;
+    }
+
+    public function getIsCheckedOutAttribute()
+    {
+        $user = auth('api')->user();
+        if ($user) {
+            $Orders = $user->orders;
+            foreach ($Orders as $Order) {
+
+                $OrderItems = $Order->items->pluck('item_id')->toArray();
+            }
+            if (in_array($this->id, $OrderItems)) {
+                $checkoutStatus = 1;
+            } else {
+                $checkoutStatus = 0;
+            }
+        } else {
+            $checkoutStatus = 0;
+        }
+        return $checkoutStatus;
     }
 
     public function getFinalPriceAttribute()

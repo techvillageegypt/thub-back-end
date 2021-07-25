@@ -234,6 +234,7 @@ class ShopController extends Controller
 
         foreach ($userCart as $cart) {
             $data['order']->items()->create([
+                'item_id' => $cart->item_id,
                 'title' => $cart->item->mainProduct->title,
                 'color' => $cart->item->color->hex,
                 'size' => $cart->item->size->name,

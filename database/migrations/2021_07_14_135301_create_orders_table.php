@@ -39,6 +39,7 @@ class CreateOrdersTable extends Migration
 
         Schema::create('order_items', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('item_id');
             $table->unsignedInteger('order_id');
             $table->string('title');
             $table->string('color');
@@ -51,6 +52,7 @@ class CreateOrdersTable extends Migration
 
 
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+            $table->foreign('item_id')->references('id')->on('product_items')->onDelete('cascade');
         });
     }
 

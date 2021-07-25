@@ -20,6 +20,7 @@ class OrderItem extends Model
 
     public $fillable = [
         'order_id',
+        'item_id',
         'title',
         'color',
         'size',
