@@ -34,7 +34,7 @@ class AuthController extends Controller
                 return User::create([
                     'phone'             => request('phone'),
                     'userable_id'       => $customer->id,
-                    'userable_type'     => "\App\Models\Customer",
+                    'userable_type'     => "App\Models\Customer",
                     'type'              => "customer",
                 ]);
             });

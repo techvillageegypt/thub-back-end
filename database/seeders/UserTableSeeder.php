@@ -27,13 +27,13 @@ class UserTableSeeder extends Seeder
             [
                 'phone'                     => '01077777777',
                 'userable_id'               => 1,
-                'userable_type'             => '\App\Models\Customer',
+                'userable_type'             => 'App\Models\Customer',
                 'type'                      => 'customer',
             ],
             [
                 'phone'             => '01055555555',
                 'userable_id'               => 2,
-                'userable_type'             => '\App\Models\Customer',
+                'userable_type'             => 'App\Models\Customer',
                 'type'                      => 'customer',
             ],
         ]);
