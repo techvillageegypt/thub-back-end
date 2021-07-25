@@ -173,6 +173,8 @@ class ShopController extends Controller
 
         $data += $this->calcTotal($data['cart']);
 
+        $data['cart']->push(['total' => $data['total'], 'totalQuantity' => $data['totalQuantity']]);
+
         return response()->json($data);
     }
 

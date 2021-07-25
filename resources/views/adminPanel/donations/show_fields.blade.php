@@ -10,11 +10,11 @@
     <b>{{ $donation->customer->name ?? '' }}</b>
 </div>
 
-{{-- <!-- driver Field -->
+<!-- driver Field -->
 <div class="form-group">
     {!! Form::label('driver', __('models/donations.fields.driver').':') !!}
-    <b>{{ $donation->driver->name ?? '' }}</b>
-</div> --}}
+    <b>{{ $donation->driver->name ?? 'Not Assigned' }}</b>
+</div>
 
 <!-- pickup_date Field -->
 <div class="form-group">
@@ -69,7 +69,21 @@
 
 
 
-{{-- <hr>
+<hr>
+
+<h3>Donation Photos</h3>
+<br>
+<div class="donation-photos">
+    @if (isset($donation->photos))
+    @foreach ($donation->photos as $photo)
+    <img src="{{$photo->photo}}" alt="" width="150" class="image-thumbnail">
+
+    @endforeach
+    @endif
+</div>
+
+
+<hr>
 
 <h3>Assign Driver</h3>
 <br>
@@ -81,4 +95,4 @@
 
 {!! Form::submit('Assign', ['class' => 'form-control btn btn-primary mt-4']) !!}
 
-{!! Form::close() !!} --}}
+{!! Form::close() !!}
