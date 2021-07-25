@@ -3,7 +3,7 @@
 @section('breadcrumb')
 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
     <li class="breadcrumb-item">
-        <a href="{{ route('adminPanel.donationTypes.index') }}">@lang('models/donationTypes.singular')</a>
+        <a href="{{ route('adminPanel.donations.index') }}">@lang('models/donations.singular')</a>
     </li>
     <li class="breadcrumb-item active">@lang('crud.detail')</li>
 </ul>
@@ -21,7 +21,7 @@
                         <h3 class="card-title">@lang('crud.detail')</h3>
                         <div class="card-toolbar">
                             <!--begin::Button-->
-                            <a href="{{ route('adminPanel.donationTypes.index') }}" class="btn btn-secondary font-weight-bolder">
+                            <a href="{{ route('adminPanel.donations.index') }}" class="btn btn-secondary font-weight-bolder">
                                 <span class="svg-icon svg-icon-primary svg-icon-2x">
                                     <!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-03-11-144509/theme/html/demo1/dist/../src/media/svg/icons/Media/Backward.svg-->
                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">

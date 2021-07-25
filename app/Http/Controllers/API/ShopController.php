@@ -11,6 +11,7 @@ use App\Models\Cart;
 use App\Models\Color;
 use App\Models\Order;
 use App\Models\Size;
+use App\Models\State;
 
 class ShopController extends Controller
 {
@@ -145,6 +146,8 @@ class ShopController extends Controller
         $data['user']->load('userable');
         $data['cart'] = $data['user']->cart()->with('item.mainProduct.photos', 'item.size', 'item.color')->get();
 
+        $data += $this->calcTotal($data['cart']);
+
         return response()->json($data);
     }
 
@@ -161,6 +164,8 @@ class ShopController extends Controller
         $data['user']->load('userable');
         $data['cart'] = $data['user']->cart()->with('item.mainProduct.photos', 'item.size', 'item.color')->get();
 
+        $data += $this->calcTotal($data['cart']);
+
         return response()->json($data);
     }
 
@@ -172,8 +177,6 @@ class ShopController extends Controller
         $data['cart'] = $data['user']->cart()->with('item.mainProduct.photos', 'item.size', 'item.color')->get();
 
         $data += $this->calcTotal($data['cart']);
-
-        $data['cart']->push(['total' => $data['total'], 'totalQuantity' => $data['totalQuantity']]);
 
         return response()->json($data);
     }
@@ -227,6 +230,8 @@ class ShopController extends Controller
         $user = auth('api')->user();
 
         $validated['user_id'] = $user->id;
+        $validated['state'] = State::find(request('state_id'))->name;
+        $validated['phone'] = $user->phone;
 
         $data['order'] = Order::create($validated);
 

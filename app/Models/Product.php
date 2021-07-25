@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Product extends Model
 {
-    use SoftDeletes, Translatable;
+    use  Translatable;
 
 
     public $table = 'products';
@@ -99,6 +99,7 @@ class Product extends Model
         'rating_avg',
         'min_price',
         'is_in_wishlist',
+        // 'is_checked_out',
     ];
 
     public function getRatingAvgAttribute()
@@ -130,6 +131,26 @@ class Product extends Model
         return $price->min();
     }
 
+    // public function getIsCheckedOutAttribute()
+    // {
+    //     $user = auth('api')->user();
+    //     if ($user) {
+    //         $Orders = $user->orders;
+    //         $OrderItems = array();
+    //         foreach ($Orders as $Order) {
+    //             array_push($OrderItems, $Order->items->pluck('item_id')->toArray());
+    //         }
+    //         $productItems = $this->items->pluck('id')->toArray();
+    //         foreach ($OrderItems as  $itemId) {
+    //             if (in_array($itemId, $productItems)) {
+    //                 $checkoutStatus = 1;
+    //             }
+    //         }
+    //     } else {
+    //         $checkoutStatus = 0;
+    //     }
+    //     return $checkoutStatus;
+    // }
 
     ###################### Relations ######################
 

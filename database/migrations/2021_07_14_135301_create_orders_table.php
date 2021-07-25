@@ -17,8 +17,9 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id')->from(10000);
             $table->unsignedBigInteger('user_id');
-            $table->unsignedInteger('state_id')->nullable();
+            $table->string('state')->nullable();
             $table->string('name')->nullable();
+            $table->string('phone')->nullable();
             $table->string('address')->nullable();
             $table->unsignedTinyInteger('housing_type')->nullable()->comment(' 1 => House, 2 => Apartment');
             $table->string('house_number')->nullable();
@@ -34,7 +35,6 @@ class CreateOrdersTable extends Migration
 
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
         });
 
         Schema::create('order_items', function (Blueprint $table) {
