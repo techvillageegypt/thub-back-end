@@ -23,7 +23,7 @@ return [
 
     // C c
 
-    'currency' => 'UAE',
+    'currency' => 'AED',
     '' => '',
     '' => '',
 
