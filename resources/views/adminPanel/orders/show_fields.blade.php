@@ -57,7 +57,7 @@
 <!-- State Id Field -->
 <div class="form-group">
     {!! Form::label('state_id', __('models/orders.fields.state_id').':') !!}
-    <b>{{ $order->state->name ?? '' }}</b>
+    <b>{{ $order->state }}</b>
 </div>
 
 

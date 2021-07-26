@@ -66,7 +66,7 @@ class ProductPhoto extends Model
 
                 $this->originalImage($file, $fileName);
 
-                $this->thumbImage($file, $fileName, 100, 100);
+                $this->thumbImage($file, $fileName, 200, 200);
 
                 $this->attributes['photo'] = $fileName;
             }

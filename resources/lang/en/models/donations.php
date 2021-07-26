@@ -9,6 +9,8 @@ return array(
         'customer'              => 'Customer',
         'driver'                => 'Driver',
         'name'                  => 'Name',
+        'status'                => 'Status',
+        'phone'                 => 'Phone',
         'address'               => 'Address',
         'housing_type'          => 'Housing Type',
         'house_number'          => 'House Number',

@@ -73,7 +73,7 @@ class MainController extends Controller
     public function landing_page()
     {
         // $slider = Slider::active()->orderBy('in_order_to')->get();
-        $data['latest_products'] = Product::with('category', 'photos', 'items.color', 'items.size')->latest()->get();
+        $data['latest_products'] = Product::with('category', 'photos', 'items.color', 'items.size')->latest()->limit(12)->get();
         // $blogs = Blog::latest()->limit(3)->get();
         // $appFeatures = AppFeature::get();
 

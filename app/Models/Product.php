@@ -135,6 +135,7 @@ class Product extends Model
     {
         $user = auth('api')->user();
         if ($user) {
+            $checkoutStatus = 0;
             $Orders = $user->orders;
             $OrderItems = collect();
             foreach ($Orders as $Order) {
