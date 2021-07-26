@@ -103,73 +103,91 @@ class CustomerController extends Controller
             return response()->json(['msg' => 'You Are Not Customer']);
         }
 
+        // $data = request()->validate([
+        //     'name'              => 'required|string|max:191',
+        //     'address'           => 'required|string|max:191',
+        //     'state_id'          => 'required|exists:states,id',
+        //     'housing_type'      => 'required|in:1,2',
+        //     'house_number'      => 'required_if:housing_type,1|numeric',
+        //     'building_number'   => 'required_if:housing_type,2|numeric',
+        //     'floor_number'      => 'required_if:housing_type,2|numeric',
+        //     'apartment_number'  => 'required_if:housing_type,2|numeric',
+        //     'pickup_date'       => 'required|date',
+        //     'photos'            => 'nullable|array',
+        //     'photos.*'          => 'nullable|image|mimes:png,jpg,jpeg',
+        //     'donation_types'    => 'nullable|array',
+        //     'donation_types.*'  => 'nullable|exists:donation_types,id',
+        // ]);
         $data = request()->validate([
-            'name'              => 'required|string|max:191',
-            'address'           => 'required|string|max:191',
-            'state_id'          => 'required|exists:states,id',
-            'housing_type'      => 'required|in:1,2',
-            'house_number'      => 'required_if:housing_type,1|numeric',
-            'building_number'   => 'required_if:housing_type,2|numeric',
-            'floor_number'      => 'required_if:housing_type,2|numeric',
-            'apartment_number'  => 'required_if:housing_type,2|numeric',
-            'pickup_date'       => 'required|date',
+            'name'              => 'nullable|string|max:191',
+            'address'           => 'nullable|string|max:191',
+            'state_id'          => 'nullable|exists:states,id',
+            'housing_type'      => 'nullable|in:1,2',
+            'house_number'      => 'nullable|numeric',
+            'building_number'   => 'nullable|numeric',
+            'floor_number'      => 'nullable|numeric',
+            'apartment_number'  => 'nullable|numeric',
+            'pickup_date'       => 'nullable|date',
             'photos'            => 'nullable|array',
             'photos.*'          => 'nullable|image|mimes:png,jpg,jpeg',
-            'donation_types'    => 'nullable|array',
-            'donation_types.*'  => 'nullable|exists:donation_types,id',
+            'donation_types'    => 'required|array',
+            'donation_types.*'  => 'required|exists:donation_types,id',
         ]);
 
         $data['customer_id'] = $customer->id;
 
         if ($customer->userable->donations->count() > 0) {
             $donation = Donation::create([
-                'name'              => $data['name'],
-                'state_id'          => $data['state_id'],
-                'housing_type'      => $data['housing_type'],
+                'name'              => $data['name'] ?? null,
+                'state_id'          => $data['state_id'] ?? null,
+                'housing_type'      => $data['housing_type'] ?? null,
                 'house_number'      => $data['house_number'] ?? null,
                 'building_number'   => $data['building_number'] ?? null,
                 'floor_number'      => $data['floor_number'] ?? null,
                 'apartment_number'  => $data['apartment_number'] ?? null,
-                'customer_id'       => $data['customer_id'],
-                'address'           => $data['address'],
-                'pickup_date'       => $data['pickup_date'],
+                'customer_id'       => $data['customer_id'] ?? null,
+                'address'           => $data['address'] ?? null,
+                'pickup_date'       => $data['pickup_date'] ?? null,
             ]);
         } else {
             $customer->userable->update([
-                'name'              => $data['name'],
-                'state_id'          => $data['state_id'],
-                'address'           => $data['address'],
-                'housing_type'      => $data['housing_type'],
+                'name'              => $data['name'] ?? null,
+                'state_id'          => $data['state_id'] ?? null,
+                'address'           => $data['address'] ?? null,
+                'housing_type'      => $data['housing_type'] ?? null,
                 'house_number'      => $data['house_number'] ?? null,
                 'building_number'   => $data['building_number'] ?? null,
                 'floor_number'      => $data['floor_number'] ?? null,
                 'apartment_number'  => $data['apartment_number'] ?? null,
             ]);
             $donation = Donation::create([
-                'name'              => $data['name'],
-                'state_id'          => $data['state_id'],
-                'address'           => $data['address'],
-                'housing_type'      => $data['housing_type'],
+                'name'              => $data['name'] ?? null,
+                'state_id'          => $data['state_id'] ?? null,
+                'address'           => $data['address'] ?? null,
+                'housing_type'      => $data['housing_type'] ?? null,
                 'house_number'      => $data['house_number'] ?? null,
                 'building_number'   => $data['building_number'] ?? null,
                 'floor_number'      => $data['floor_number'] ?? null,
                 'apartment_number'  => $data['apartment_number'] ?? null,
-                'customer_id'       => $data['customer_id'],
-                'pickup_date'       => $data['pickup_date'],
+                'customer_id'       => $data['customer_id'] ?? null,
+                'pickup_date'       => $data['pickup_date'] ?? null,
             ]);
         }
-
-        foreach ($data['photos'] as $photo) {
-            DonationPhoto::create([
-                'donation_id'   => $donation->id,
-                'photo'         => $photo,
-            ]);
+        if (request('photos')) {
+            foreach ($data['photos'] as $photo) {
+                DonationPhoto::create([
+                    'donation_id'   => $donation->id,
+                    'photo'         => $photo,
+                ]);
+            }
         }
-        foreach ($data['donation_types'] as $donation_type) {
-            TypeOfDonation::create([
-                'donation_id'           => $donation->id,
-                'donation_type_id'      => $donation_type,
-            ]);
+        if (request('donation_types')) {
+            foreach ($data['donation_types'] as $donation_type) {
+                TypeOfDonation::create([
+                    'donation_id'           => $donation->id,
+                    'donation_type_id'      => $donation_type,
+                ]);
+            }
         }
 
         $customer->load('userable.donations.photos', 'userable.donations.types.donationType');
