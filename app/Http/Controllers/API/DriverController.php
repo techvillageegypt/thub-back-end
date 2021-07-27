@@ -52,7 +52,7 @@ class DriverController extends Controller
 
     public function my_orders()
     {
-        $data['orders'] = Donation::where('driver_id', auth('api')->user()->userable_id)->with('photos')->get();
+        $data['orders'] = Donation::where('driver_id', auth('api')->user()->userable_id)->with('photos', 'types.donationType', 'customer.user', 'state')->get();
         return response()->json($data);
     }
 
@@ -61,6 +61,7 @@ class DriverController extends Controller
         $donation_data = Donation::find($donation);
 
         $donation_data->update(['status' => 1]);
+        $donation_data->load('photos', 'types.donationType', 'customer.user', 'state');
 
         return response()->json(['msg' => 'status updated successfuly', $donation_data]);
     }
@@ -70,6 +71,7 @@ class DriverController extends Controller
         $donation_data = Donation::find($donation);
 
         $donation_data->update(['status' => 2]);
+        $donation_data->load('photos', 'types.donationType', 'customer.user', 'state');
 
         return response()->json(['msg' => 'status updated successfuly', $donation_data]);
     }

@@ -19,7 +19,7 @@
     <p>{!! $page->translate($locale)->content !!}</p>
 </div>
 @endforeach
-
+{{--
 <!-- Active Field -->
 <div class="form-group">
     <b>{!! Form::label('active', __('models/pages.fields.active').':') !!}</b>
@@ -36,7 +36,7 @@
 <div class="form-group">
     <b>{!! Form::label('in_footer', __('models/pages.fields.in_footer').':') !!}</b>
     <p>{{ $page->in_footer }}</p>
-</div>
+</div> --}}
 
 <!-- Created At Field -->
 <div class="form-group">
@@ -49,4 +49,3 @@
     <b>{!! Form::label('updated_at', __('models/pages.fields.updated_at').':') !!}</b>
     <p>{{ $page->updated_at }}</p>
 </div>
-

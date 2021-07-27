@@ -46,11 +46,11 @@
             <td nowrap>
                 {!! Form::open(['route' => ['adminPanel.pages.destroy', $page->id], 'method' => 'delete']) !!}
                 <div class='btn btn-sm-group'>
-                    @can('pages view')
+                    {{-- @can('pages view')
                     <a href="{{ route('adminPanel.pages.show', [$page->id]) }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-success'>
-                        <i class="fa fa-eye"></i>
+                    <i class="fa fa-eye"></i>
                     </a>
-                    @endcan
+                    @endcan --}}
                     @can('pages edit')
                     <a href="{{ route('adminPanel.pages.edit', [$page->id]) . "?languages=$locale" }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-primary'>
                         <i class="fa fa-edit"></i>
