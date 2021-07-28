@@ -17,6 +17,8 @@ class Donation extends Model
         'code',
         'name',
         'address',
+        'lat',
+        'long',
         'housing_type',
         'house_number',
         'state_id',

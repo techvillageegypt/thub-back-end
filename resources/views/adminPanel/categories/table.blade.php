@@ -3,6 +3,7 @@
     <thead>
         <tr>
             <th>@lang('models/categories.fields.parent_id')</th>
+            <th>@lang('models/categories.fields.icon')</th>
             <th>@lang('models/categories.fields.name')</th>
             <th>@lang('models/categories.fields.brief')</th>
             <th>@lang('models/categories.fields.status')</th>
@@ -13,6 +14,9 @@
         @foreach($categories as $category)
         <tr>
             <td>{{ $category->parent->name ?? '' }}</td>
+            <td>
+                <img onError="this.onerror=null;this.src='{{asset('uploads/images/original/default.png')}}';" src="{{$category->icon_thumbnail_path}}" alt="{{$category->name}}" style="width:80px">
+            </td>
             <td>{{ $category->name }}</td>
             <td>{{ $category->brief }}</td>
             <td>{{ $category->status? __('lang.active'): __('lang.inactive') }}</td>

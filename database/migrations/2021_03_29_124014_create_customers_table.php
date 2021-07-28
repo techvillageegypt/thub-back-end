@@ -40,6 +40,8 @@ class CreateCustomersTable extends Migration
             $table->dateTime('pickup_date')->nullable();
             $table->string('name')->nullable();
             $table->string('address')->nullable();
+            $table->string('lat')->nullable();
+            $table->string('long')->nullable();
             $table->unsignedTinyInteger('housing_type')->nullable()->comment(' 1 => House, 2 => Apartment');
             $table->unsignedInteger('state_id')->nullable();
             $table->string('house_number')->nullable();

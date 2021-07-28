@@ -18,6 +18,7 @@ class CreateCategoriesTable extends Migration
 
             $table->increments('id');
             $table->unsignedTinyInteger('status')->default(1)->comment('0 => Inactive, 1 => Active');
+            $table->string('icon')->nullable();
             $table->unsignedInteger('parent_id')->nullable();
 
             $table->timestamps();

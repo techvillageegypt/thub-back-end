@@ -32,7 +32,7 @@ class CategoryController extends AppBaseController
     public function index(Request $request)
     {
         $categories = $this->categoryRepository->paginate(10);
-
+        // dd($categories);
         return view('adminPanel.categories.index')
             ->with('categories', $categories);
     }
@@ -102,7 +102,7 @@ class CategoryController extends AppBaseController
 
             return redirect(route('adminPanel.categories.index'));
         }
-
+        // dd($category);
         $parents = Category::whereNull('parent_id')->get()->pluck('name', 'id');
 
         return view('adminPanel.categories.edit', compact('category', 'parents'));
@@ -127,7 +127,7 @@ class CategoryController extends AppBaseController
         }
 
         $category = $this->categoryRepository->update($request->all(), $id);
-
+        // dd($category);
         Flash::success(__('messages.updated', ['model' => __('models/categories.singular')]));
 
         return redirect(route('adminPanel.categories.index'));

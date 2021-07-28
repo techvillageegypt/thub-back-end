@@ -59,10 +59,8 @@
     @php $i = 0; @endphp
     @endforeach
 
+    <!-- Photo -->
     <div class="form-group col-sm-6">
-        {{-- @if (isset($slider))
-        <img onError="this.onerror=null;this.src='{{asset('uploads/images/original/default.png')}}';" src="{{asset('uploads/images/thumbnail/'. $slider->photo)}}" class="" style="width: 200px" alt="">
-        @endif --}}
         {!! Form::label('photo', __('models/sliders.fields.photo').':') !!}
         <br>
         <div class="image-input image-input-outline" id="kt_image_4" style="background-image: url({{asset('uploads/images/original/default.png')}})">
@@ -82,7 +80,6 @@
                 <i class="ki ki-bold-close icon-xs text-muted"></i>
             </span>
         </div>
-
     </div>
 
     <!-- Link Field -->

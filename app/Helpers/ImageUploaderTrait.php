@@ -16,21 +16,18 @@ trait ImageUploaderTrait
             $fileName = time() . '_' . $originalName;
 
             return $fileName;
-
         } catch (Throwable $e) {
 
             return $file;
         }
-
     }
 
     public function saveFile($file, $fileName)
     {
         try {
             $file->move('uploads/files/', $fileName);
-
-        } catch (Throwable $e) {}
-
+        } catch (Throwable $e) {
+        }
     }
 
     /**
@@ -44,9 +41,8 @@ trait ImageUploaderTrait
 
             Image::make($file)
                 ->save($accountOriginalDestination . $current_name);
-
-        } catch (Throwable $e) {}
-
+        } catch (Throwable $e) {
+        }
     }
 
     public function mediumImage($file, $current_name, $width = 600, $height = 300)
@@ -59,8 +55,8 @@ trait ImageUploaderTrait
                 ->resize($width, $height, function ($constraint) {
                     $constraint->aspectRatio();
                 })->save($accountMediumDestination . $current_name);
-
-        } catch (Throwable $e) {}
+        } catch (Throwable $e) {
+        }
     }
 
     public function thumbImage($file, $current_name, $width = 100, $height = 100)
@@ -72,9 +68,8 @@ trait ImageUploaderTrait
             Image::make($file)
                 ->resize($width, $height)
                 ->save($accountThumbnailDestination . $current_name);
-
-        } catch (Throwable $e) {}
-
+        } catch (Throwable $e) {
+        }
     }
 
     public function base64Image($file, $fileName)
@@ -85,7 +80,7 @@ trait ImageUploaderTrait
 
             Image::make(file_get_contents($file))
                 ->save($accountOriginalDestination . $fileName);
-
-        } catch (Throwable $e) {}
+        } catch (Throwable $e) {
+        }
     }
 }

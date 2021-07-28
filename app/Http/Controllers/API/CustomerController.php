@@ -121,6 +121,8 @@ class CustomerController extends Controller
         $data = request()->validate([
             'name'              => 'nullable|string|max:191',
             'address'           => 'nullable|string|max:191',
+            'lat'               => 'nullable|string|max:191',
+            'long'              => 'nullable|string|max:191',
             'state_id'          => 'nullable|exists:states,id',
             'housing_type'      => 'nullable|in:1,2',
             'house_number'      => 'nullable|numeric',
@@ -147,6 +149,8 @@ class CustomerController extends Controller
                 'apartment_number'  => $data['apartment_number'] ?? null,
                 'customer_id'       => $data['customer_id'] ?? null,
                 'address'           => $data['address'] ?? null,
+                'lat'               => $data['lat'] ?? null,
+                'long'              => $data['long'] ?? null,
                 'pickup_date'       => $data['pickup_date'] ?? null,
             ]);
         } else {
@@ -164,6 +168,8 @@ class CustomerController extends Controller
                 'name'              => $data['name'] ?? null,
                 'state_id'          => $data['state_id'] ?? null,
                 'address'           => $data['address'] ?? null,
+                'lat'               => $data['lat'] ?? null,
+                'long'              => $data['long'] ?? null,
                 'housing_type'      => $data['housing_type'] ?? null,
                 'house_number'      => $data['house_number'] ?? null,
                 'building_number'   => $data['building_number'] ?? null,
