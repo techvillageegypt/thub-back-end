@@ -122,3 +122,15 @@
     </div>
 
 </div>
+
+
+
+
+@section('styles')
+<style>
+    .image-input-wrapper {
+        width: 500px !important;
+        height: 200px !important;
+    }
+</style>
+@endsection

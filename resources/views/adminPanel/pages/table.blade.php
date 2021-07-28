@@ -18,7 +18,6 @@
 <table class="datatable datatable-bordered datatable-head-custom table-hover" id="kt_datatable">
     <thead>
         <th>@lang('models/pages.fields.id')</th>
-        <th>@lang('models/pages.fields.language')</th>
         <th>@lang('models/pages.fields.name')</th>
         <th>@lang('models/paragraphs.plural')</th>
         <th>@lang('models/images.plural')</th>
@@ -26,12 +25,9 @@
     </thead>
     <tbody>
         @foreach($pages as $page)
-        @php $i = 1; @endphp
-        @foreach ( config('langs') as $locale => $name)
         <tr>
             <td>{{ $page->id }}</td>
-            <td>{{ $name }}</td>
-            <td>{{ $page->translate($locale)->name ?? '' }}</td>
+            <td>{{ $page->name }}</td>
 
             <td>
                 <a href="{{ route('adminPanel.pages.paragraphs.index', $page->id) }}">
@@ -52,7 +48,7 @@
                     </a>
                     @endcan --}}
                     @can('pages edit')
-                    <a href="{{ route('adminPanel.pages.edit', [$page->id]) . "?languages=$locale" }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-primary'>
+                    <a href="{{ route('adminPanel.pages.edit', [$page->id]) . "?languages=" . \App::getLocale() }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-primary'>
                         <i class="fa fa-edit"></i>
                     </a>
                     @endcan
@@ -63,8 +59,6 @@
                 {!! Form::close() !!}
             </td>
         </tr>
-        @php $i = 0; @endphp
-        @endforeach
         @endforeach
     </tbody>
 </table>

@@ -74,6 +74,8 @@ class MainController extends Controller
     {
         // $slider = Slider::active()->orderBy('in_order_to')->get();
         $data['latest_products'] = Product::with('category', 'photos', 'items.color', 'items.size')->latest()->limit(12)->get();
+        $data['donation_types'] = DonationType::get();
+
         // $blogs = Blog::latest()->limit(3)->get();
         // $appFeatures = AppFeature::get();
 
@@ -94,7 +96,7 @@ class MainController extends Controller
         $data['phone']          = $informations->where('id', 1)->first()->value;
         $data['email']          = $informations->where('id', 2)->first()->value;
         $data['address']        = $informations->where('id', 3)->first()->value;
-        $data['description']    = $informations->where('id', 4)->first()->value;
+        // $data['description']    = $informations->where('id', 4)->first()->value;
 
         $social = SocialLink::get();
 
@@ -151,10 +153,10 @@ class MainController extends Controller
         return response()->json(compact('blog'));
     }
 
-    public function faqs()
-    {
-        $data['faqCategories'] = FaqCategory::orderByTranslation('name')->with('faqs')->get();
+    // public function faqs()
+    // {
+    //     $data['faqCategories'] = FaqCategory::orderByTranslation('name')->with('faqs')->get();
 
-        return response()->json($data);
-    }
+    //     return response()->json($data);
+    // }
 }
