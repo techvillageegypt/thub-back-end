@@ -43,7 +43,7 @@
                     <a href="{{ route('adminPanel.paragraphs.show', [$paragraph->id]) }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-success'><i class="fa fa-eye"></i></a>
                     @endcan
                     @can('paragraphs edit')
-                    <a href="{{ route('adminPanel.paragraphs.edit', [$paragraph->id]) }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-primary'><i class="fa fa-edit"></i></a>
+                    <a href="{{ route('adminPanel.paragraphs.edit', [$paragraph->id]) .'?languages=' . \App::getLocale()  }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-primary'><i class="fa fa-edit"></i></a>
                     @endcan
                     @can('paragraphs destroy')
                     {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-shadow mx-1 btn-transparent-danger', 'onclick' => 'return confirm("'.__('crud.are_you_sure').'")']) !!}

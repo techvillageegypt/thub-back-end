@@ -6,9 +6,8 @@
             @foreach ( config('langs') as $locale => $name)
 
             <li class="nav-item">
-                <a class="nav-link {{request()->filled('lang')? request('lang') == $name ?'show active':'' : $i?'active':''}}" id="{{$name}}-tab" data-toggle="pill" href="#{{$name}}" role="tab" aria-controls="{{$name}}" aria-selected="{{request()->filled('lang')? request('lang') == $name ?'show active':'' : $i ? 'true' : 'false'}}">{{$name}}</a>
+                <a class="nav-link {{request('languages') == $locale ?'active':''}}" id="{{$name}}-tab" data-toggle="pill" href="#{{$name}}" role="tab" aria-controls="{{$name}}" aria-selected="{{ request('languages') == $locale  ? 'true' : 'false'}}">{{$name}}</a>
             </li>
-
             @php $i = 0; @endphp
             @endforeach
         </ul>
@@ -18,7 +17,8 @@
             @php $i = 1; @endphp
             @foreach ( config('langs') as $locale => $name)
 
-            <div class="tab-pane fade {{request()->filled('lang')? request('lang') == $name ?'show active':'' : $i?'show active':''}}" id="{{$name}}" role="tabpanel" aria-labelledby="{{$name}}-tab">
+            <div class="tab-pane fade {{request('languages') == $locale ?'show active':''}}" id="{{$name}}" role="tabpanel" aria-labelledby="{{$name}}-tab">
+
                 <!-- Text Field -->
                 <div class="form-group col-sm-12">
                     {!! Form::label('text', __('models/paragraphs.fields.text').':') !!}
