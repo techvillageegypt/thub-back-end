@@ -27,6 +27,7 @@ class Donation extends Model
         'apartment_number',
         'pickup_date',
         'status',  // 0 => New, 1 => Picked up, 2 => Delevered
+        'driver_notes',
     ];
 
 

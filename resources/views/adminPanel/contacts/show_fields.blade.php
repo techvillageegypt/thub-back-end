@@ -1,35 +1,35 @@
 <!-- Name Field -->
 <div class="form-group show">
     {!! Form::label('name', __('models/contacts.fields.name').':') !!}
-    <p>{{ $contact->name }}</p>
+    <b>{{ $contact->name }}</b>
 </div>
 
 <!-- Email Field -->
 <div class="form-group show">
     {!! Form::label('email', __('models/contacts.fields.email').':') !!}
-    <p>{{ $contact->email }}</p>
+    <b>{{ $contact->email }}</b>
 </div>
 
 <!-- phone Field -->
 <div class="form-group show">
     {!! Form::label('phone', __('models/contacts.fields.phone').':') !!}
-    <p>{{ $contact->phone }}</p>
+    <b>{{ $contact->phone }}</b>
 </div>
 
 <!-- Subject Field -->
 <div class="form-group show">
     {!! Form::label('subject', __('models/contacts.fields.subject').':') !!}
-    <p>{{ $contact->subject }}</p>
+    <b>{{ $contact->subject }}</b>
 </div>
 
 <!-- Message Field -->
 <div class="form-group show">
     {!! Form::label('message', __('models/contacts.fields.message').':') !!}
-    <p>{{ $contact->message }}</p>
+    <b>{{ $contact->message }}</b>
 </div>
 
 <!-- Created At Field -->
 <div class="form-group show">
     {!! Form::label('created_at', __('models/contacts.fields.created_at').':') !!}
-    <p>{{ $contact->created_at }}</p>
+    <b>{{ $contact->created_at }}</b>
 </div>

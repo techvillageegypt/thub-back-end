@@ -90,20 +90,20 @@ class Order extends Model
         return $this->attributes['payment_method'] == 1 ? 'Cash On Delevery' : 'Online';
     }
 
-    public function getStatusAttribute()
-    {
-        switch ($this->attributes['status']) {
-            case 1:
-                return 'New Order';
-                break;
-            case 2:
-                return 'Delevered';
-                break;
+    // public function getStatusAttribute()
+    // {
+    //     switch ($this->attributes['status']) {
+    //         case 1:
+    //             return 'New Order';
+    //             break;
+    //         case 2:
+    //             return 'Delevered';
+    //             break;
 
-            default:
-                break;
-        }
-    }
+    //         default:
+    //             break;
+    //     }
+    // }
 
     ############################## Relations ###############################
 

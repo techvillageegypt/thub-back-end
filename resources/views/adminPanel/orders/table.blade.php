@@ -20,7 +20,22 @@
             <td>{{ $order->name }}</td>
             <td>{{ Str::limit($order->address, 40, '...') }}</td>
             <td>{{ $order->phone }}</td>
-            <td>{{ $order->status }}</td>
+            <td>
+                {{ $order->status }}
+                @switch($order->status)
+                @case(0)
+                New
+                @break
+                @case(1)
+                Picked Up
+                @break
+                @case(2)
+                Delevered
+                @break
+                @default
+
+                @endswitch
+            </td>
             <td>{{ $order->payment_method }}</td>
             <td>{{ $order->total }} @lang('lang.currency')</td>
             <td>{{ $order->created_at->diffForHumans() }}</td>

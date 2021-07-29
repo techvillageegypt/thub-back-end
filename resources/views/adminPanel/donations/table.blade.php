@@ -2,6 +2,7 @@
 <table class="table table-separate table-head-custom table-checkable" id="kt_datatable1">
     <thead>
         <tr>
+            <th>@lang('models/donations.fields.id')</th>
             <th>@lang('models/donations.fields.customer')</th>
             <th>@lang('models/donations.fields.phone')</th>
             {{-- <th>@lang('models/donations.fields.driver')</th> --}}
@@ -14,6 +15,7 @@
     <tbody>
         @foreach ($donations as $donation)
         <tr>
+            <td>{{ $donation->id }}</td>
             <td>{{ $donation->customer->name ?? '' }}</td>
             <td>{{ $donation->customer->user->phone ?? '' }}</td>
             {{-- <td>{{ $donation->driver->name ?? '' }}</td> --}}

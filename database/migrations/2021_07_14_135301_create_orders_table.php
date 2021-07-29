@@ -26,7 +26,7 @@ class CreateOrdersTable extends Migration
             $table->string('building_number')->nullable();
             $table->string('floor_number')->nullable();
             $table->string('apartment_number')->nullable();
-            $table->unsignedTinyInteger('status')->default(1);
+            $table->unsignedTinyInteger('status')->default(0);
             $table->integer('payment_method')->nullable();
             $table->integer('subtotal')->nullable();
             $table->integer('total')->nullable();

@@ -60,7 +60,7 @@ class DriverController extends Controller
     {
         $donation_data = Donation::find($donation);
 
-        $donation_data->update(['status' => 1]);
+        $donation_data->update(['status' => 1, 'driver_notes' => request('driver_notes')]);
         $donation_data->load('photos', 'types.donationType', 'customer.user', 'state');
 
         return response()->json(['msg' => 'status updated successfuly', $donation_data]);
@@ -70,7 +70,7 @@ class DriverController extends Controller
     {
         $donation_data = Donation::find($donation);
 
-        $donation_data->update(['status' => 2]);
+        $donation_data->update(['status' => 2, 'driver_notes' => request('driver_notes')]);
         $donation_data->load('photos', 'types.donationType', 'customer.user', 'state');
 
         return response()->json(['msg' => 'status updated successfuly', $donation_data]);
