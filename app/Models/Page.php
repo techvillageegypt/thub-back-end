@@ -45,6 +45,7 @@ class Page extends Model
     public $translatedAttributes =  [
         'name',
         'content',
+        'app_content',
         'slug'
     ];
 

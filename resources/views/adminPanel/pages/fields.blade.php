@@ -36,6 +36,18 @@
                 filebrowserUploadMethod: 'form'
                 });
                 </script>
+
+                <!-- app_content Field -->
+                <div class="form-group col-sm-12">
+                    {!! Form::label('app_content', __('models/pages.fields.app_content').':') !!}
+                    {!! Form::textarea($locale . '[app_content]', isset($page)? $page->translate($locale)->app_content : '' , ['class' => 'form-control', 'placeholder' => $name . ' app_content']) !!}
+                </div>
+                <script type="text/javascript">
+                    CKEDITOR.replace("{{ $locale . '[app_content]' }}", {
+                filebrowserUploadUrl: "{{route('adminPanel.ckeditor.upload', ['_token' => csrf_token() ])}}",
+                filebrowserUploadMethod: 'form'
+                });
+                </script>
             </div>
 
             @endforeach

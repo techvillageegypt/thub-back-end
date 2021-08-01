@@ -10,6 +10,7 @@ return array(
         'driver'                => 'Driver',
         'name'                  => 'Name',
         'status'                => 'Status',
+        'driver_notes'          => 'Driver Notes',
         'phone'                 => 'Phone',
         'address'               => 'Address',
         'housing_type'          => 'Housing Type',

@@ -20,27 +20,11 @@
             <td>{{ $order->name }}</td>
             <td>{{ Str::limit($order->address, 40, '...') }}</td>
             <td>{{ $order->phone }}</td>
-            <td>
-                {{ $order->status }}
-                @switch($order->status)
-                @case(0)
-                New
-                @break
-                @case(1)
-                Picked Up
-                @break
-                @case(2)
-                Delevered
-                @break
-                @default
-
-                @endswitch
-            </td>
+            <td>{{ $order->status_text }}</td>
             <td>{{ $order->payment_method }}</td>
             <td>{{ $order->total }} @lang('lang.currency')</td>
             <td>{{ $order->created_at->diffForHumans() }}</td>
             <td nowrap>
-                {!! Form::open(['route' => ['adminPanel.orders.destroy', $order->id], 'method' => 'delete', 'class' => 'd-inline']) !!}
                 <div class='btn-group'>
                     @can('orders view')
                     <a href="{{ route('adminPanel.orders.show', [$order->id]) }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-success'><i class="fa fa-eye"></i></a>
@@ -52,6 +36,7 @@
                     {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-shadow mx-1 btn-transparent-danger', 'onclick' => 'return confirm("'.__('crud.are_you_sure').'")']) !!}
                     @endcan --}}
                 </div>
+                {{-- {!! Form::open(['route' => ['adminPanel.orders.destroy', $order->id], 'method' => 'delete', 'class' => 'd-inline']) !!}
                 {!! Form::close() !!}
 
                 @if ($order->status != 'Delevered')
@@ -60,7 +45,7 @@
                 {!! Form::button('Delevered', ['type' => 'submit', 'class' => 'btn btn-sm btn-shadow mx-1 btn-primary']) !!}
                 @endcan
                 {!! Form::close() !!}
-                @endif
+                @endif --}}
             </td>
         </tr>
         @endforeach

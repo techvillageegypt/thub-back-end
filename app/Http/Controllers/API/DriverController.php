@@ -18,6 +18,7 @@ use App\Http\Controllers\Controller;
 use Grimzy\LaravelMysqlSpatial\Types\Point;
 use App\Models\CustomerRate;
 use App\Models\Donation;
+use App\Models\Order;
 
 class DriverController extends Controller
 {
@@ -50,17 +51,23 @@ class DriverController extends Controller
         return response()->json(compact('user'));
     }
 
-    public function my_orders()
-    {
-        $data['orders'] = Donation::where('driver_id', auth('api')->user()->userable_id)->with('photos', 'types.donationType', 'customer.user', 'state')->get();
-        return response()->json($data);
-    }
 
+    //////////////// Donations //////////////////
     public function picked_up($donation)
     {
         $donation_data = Donation::find($donation);
 
         $donation_data->update(['status' => 1, 'driver_notes' => request('driver_notes')]);
+        $donation_data->load('photos', 'types.donationType', 'customer.user', 'state');
+
+        return response()->json(['msg' => 'status updated successfuly', $donation_data]);
+    }
+
+    public function not_picked_up($donation)
+    {
+        $donation_data = Donation::find($donation);
+
+        $donation_data->update(['status' => 3, 'driver_notes' => request('driver_notes')]);
         $donation_data->load('photos', 'types.donationType', 'customer.user', 'state');
 
         return response()->json(['msg' => 'status updated successfuly', $donation_data]);
@@ -75,6 +82,50 @@ class DriverController extends Controller
 
         return response()->json(['msg' => 'status updated successfuly', $donation_data]);
     }
+
+    public function my_orders()
+    {
+        if (auth('api')->user()->type !== 'driver') {
+            return response()->json(['msg' => 'You are Not Driver'], 403);
+        }
+
+        $data['orders'] = Donation::where('driver_id', auth('api')->user()->userable_id)->with('photos', 'types.donationType', 'customer.user', 'state')->get();
+        return response()->json($data);
+    }
+    //////////////// End Donations //////////////////
+
+
+    //////////////// Ecommerce //////////////////
+    public function ecommerce_delevered($order)
+    {
+        $order_data = Order::find($order);
+
+        $order_data->update(['status' => 1, 'driver_notes' => request('driver_notes')]);
+        $order_data->load('items');
+
+        return response()->json(['msg' => 'status updated successfuly', $order_data]);
+    }
+
+    public function ecommerce_not_delevered($order)
+    {
+        $order_data = Order::find($order);
+
+        $order_data->update(['status' => 2, 'driver_notes' => request('driver_notes')]);
+        $order_data->load('items');
+
+        return response()->json(['msg' => 'status updated successfuly', $order_data]);
+    }
+
+    public function my_ecommerce_orders()
+    {
+        if (auth('api')->user()->type !== 'driver') {
+            return response()->json(['msg' => 'You are Not Driver'], 403);
+        }
+
+        $data['orders'] = Order::where('driver_id', auth('api')->user()->userable_id)->with('items')->get();
+        return response()->json($data);
+    }
+    //////////////// End Ecommerce //////////////////
 
     //------------------------- End Main ---------------------------//
 

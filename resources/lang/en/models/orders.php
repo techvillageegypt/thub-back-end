@@ -20,6 +20,7 @@ return array(
         'state_id'      => 'State',
         'user_id'      => 'User',
         'status'      => 'Status',
+        'driver_notes'      => 'Driver Notes',
 
         'subtotal' => 'Subtotal',
         'total' => 'Total',

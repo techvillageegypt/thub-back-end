@@ -121,6 +121,8 @@ Route::group(
             Route::delete('products/delete-item/{id}', 'ProductController@destroyItem')->name('products.destroy.item');
 
             Route::resource('orders', OrderController::class);
+            Route::patch('/assign-driver/{order}', 'OrderController@assign_driver')->name('orders.assign_driver');
+
             Route::patch('orders/delevered/{order}', 'OrderController@delevered')->name('orders.delevered');
         });
     }

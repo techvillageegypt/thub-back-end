@@ -5,6 +5,12 @@
 </div>
 
 
+<!-- driver Field -->
+<div class="form-group">
+    {!! Form::label('driver', __('models/donations.fields.driver').':') !!}
+    <b>{{ $order->driver->name ?? 'Not Assigned' }}</b>
+</div>
+
 <!-- Name Field -->
 <div class="form-group">
     {!! Form::label('name', __('models/orders.fields.name').':') !!}
@@ -64,7 +70,13 @@
 <!-- Status Field -->
 <div class="form-group">
     {!! Form::label('status', __('models/orders.fields.status').':') !!}
-    <b>{{ $order->status }}</b>
+    <b>{{ $order->status_text }}</b>
+</div>
+
+<!-- driver_notes Field -->
+<div class="form-group">
+    {!! Form::label('driver_notes', __('models/orders.fields.driver_notes').':') !!}
+    <b>{{ $order->driver_notes }}</b>
 </div>
 
 
@@ -144,3 +156,19 @@
         </tbody>
     </table>
 </div>
+
+
+
+<hr>
+
+<h3>Assign Driver</h3>
+<br>
+
+
+{!! Form::model($order, ['route' => ['adminPanel.orders.assign_driver', $order->id], 'method' => 'patch']) !!}
+
+{!! Form::select('driver_id', $drivers, null, ['class' => 'form-control','placeholder' => 'Select Driver']) !!}
+
+{!! Form::submit('Assign', ['class' => 'form-control btn btn-primary mt-4']) !!}
+
+{!! Form::close() !!}

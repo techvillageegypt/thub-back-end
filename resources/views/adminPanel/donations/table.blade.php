@@ -21,21 +21,8 @@
             {{-- <td>{{ $donation->driver->name ?? '' }}</td> --}}
             <td>{{ $donation->pickup_date }}</td>
             <td>{{ $donation->state->name ?? '' }}</td>
-            <td>
-                @switch($donation->status)
-                @case(0)
-                New
-                @break
-                @case(1)
-                Picked Up
-                @break
-                @case(2)
-                Delevered
-                @break
-                @default
+            <td>{{ $donation->status_text }}</td>
 
-                @endswitch
-            </td>
             <td nowrap>
                 @can('donations view')
                 <a href="{{ route('adminPanel.donations.show', [$donation->id]) }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-success'><i class="fa fa-eye"></i></a>

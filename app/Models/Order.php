@@ -51,7 +51,10 @@ class Order extends Model
         'payment_method',
         'subtotal',
         'total',
-        'user_id'
+        'user_id',
+        'driver_id',
+        'driver_notes',
+        'state_id',
     ];
 
     /**
@@ -83,6 +86,29 @@ class Order extends Model
      */
     public static $rules = [];
 
+
+    ############################## Appends ###############################
+
+    protected $appends = ['status_text'];
+
+    public function getStatusTextAttribute()
+    {
+        switch ($this->attributes['status']) {
+            case 0:
+                return 'New';
+                break;
+            case 1:
+                return 'Delivered';
+                break;
+            case 2:
+                return 'Not Delivered';
+                break;
+
+            default:
+                break;
+        }
+    }
+
     ############################## Filters ###############################
 
     public function getPaymentMethodAttribute()
@@ -90,20 +116,7 @@ class Order extends Model
         return $this->attributes['payment_method'] == 1 ? 'Cash On Delevery' : 'Online';
     }
 
-    // public function getStatusAttribute()
-    // {
-    //     switch ($this->attributes['status']) {
-    //         case 1:
-    //             return 'New Order';
-    //             break;
-    //         case 2:
-    //             return 'Delevered';
-    //             break;
 
-    //         default:
-    //             break;
-    //     }
-    // }
 
     ############################## Relations ###############################
 
@@ -120,5 +133,10 @@ class Order extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function driver()
+    {
+        return $this->belongsTo(Driver::class);
     }
 }

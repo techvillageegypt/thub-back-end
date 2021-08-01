@@ -129,6 +129,9 @@ class DriverController extends AppBaseController
         }
 
         $driver->update($request->all());
+        if (request('phone')) {
+            $driver->user->update(['phone' => request('phone')]);
+        }
 
         Flash::success('driver updated successfully.');
 

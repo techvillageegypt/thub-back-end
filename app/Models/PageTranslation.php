@@ -28,7 +28,7 @@ class PageTranslation extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'content', 'slug'];
+    protected $fillable = ['name', 'content', 'slug', 'app_content'];
 
     /**
      * Timestamps.

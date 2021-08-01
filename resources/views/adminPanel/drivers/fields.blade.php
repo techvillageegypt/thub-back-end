@@ -8,17 +8,22 @@
     {!! Form::text('name', null, ['class' => 'form-control']) !!}
 </div>
 
-@if (Request::is('*edit'))
-<div class="form-group col-sm-6 d-none">
+<div class="form-group col-sm-6">
     {!! Form::label('phone', __('models/drivers.fields.phone') . ':') !!}
-    {!! Form::text('phone', null, ['class' => 'form-control']) !!}
+    {!! Form::text('phone', isset($driver) ? $driver->user->phone : null, ['class' => 'form-control']) !!}
+</div>
+
+{{-- @if (Request::is('*edit'))
+<div class="form-group col-sm-6">
+    {!! Form::label('phone', __('models/drivers.fields.phone') . ':') !!}
+    {!! Form::text('phone', $driver->user->phone, ['class' => 'form-control']) !!}
 </div>
 @else
 <div class="form-group col-sm-6">
     {!! Form::label('phone', __('models/drivers.fields.phone') . ':') !!}
     {!! Form::text('phone', null, ['class' => 'form-control']) !!}
 </div>
-@endif
+@endif --}}
 
 <div class="form-group col-sm-6">
     {!! Form::label('address', __('models/drivers.fields.address') . ':') !!}

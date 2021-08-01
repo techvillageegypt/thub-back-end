@@ -26,8 +26,6 @@ class DonationController extends Controller
 
     public function assign_driver(Donation $donation)
     {
-        // dd(request('driver_id'));
-        // dd($donation);
         $donation->update(['driver_id' => request('driver_id')]);
 
         Flash::success('The Donation Order Assigned Successfuly');

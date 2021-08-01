@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\AdminPanel;
 
-use App\Http\Requests\AdminPanel\CreateOrderRequest;
-use App\Http\Requests\AdminPanel\UpdateOrderRequest;
-use App\Repositories\AdminPanel\OrderRepository;
-use App\Http\Controllers\AppBaseController;
-use App\Models\Order;
-use Illuminate\Http\Request;
 use Flash;
 use Response;
+use App\Models\Order;
+use App\Models\Driver;
+use Illuminate\Http\Request;
+use App\Http\Controllers\AppBaseController;
+use App\Repositories\AdminPanel\OrderRepository;
+use App\Http\Requests\AdminPanel\CreateOrderRequest;
+use App\Http\Requests\AdminPanel\UpdateOrderRequest;
 
 class OrderController extends AppBaseController
 {
@@ -81,7 +82,9 @@ class OrderController extends AppBaseController
             return redirect(route('adminPanel.orders.index'));
         }
 
-        return view('adminPanel.orders.show')->with('order', $order);
+        $drivers = Driver::where('state_id', $order->state_id)->get()->pluck('name', 'id');
+
+        return view('adminPanel.orders.show', compact('order', 'drivers'));
     }
 
     /**
@@ -160,6 +163,17 @@ class OrderController extends AppBaseController
     {
         $order->update(['status' => 2]);
         Flash::success('Order Status Changed Successfuly');
+        return back();
+    }
+
+
+
+    public function assign_driver(Order $order)
+    {
+        $order->update(['driver_id' => request('driver_id')]);
+
+        Flash::success('The Shop Order Assigned Successfuly');
+
         return back();
     }
 }

@@ -54,6 +54,18 @@
 </div>
 
 
+<!-- status Field -->
+<div class="form-group">
+    {!! Form::label('status', __('models/donations.fields.status') . ':') !!}
+    <b>{{ $donation->status_text}}</b>
+</div>
+<!-- driver_notes Field -->
+<div class="form-group">
+    {!! Form::label('driver_notes', __('models/donations.fields.driver_notes') . ':') !!}
+    <b>{{ $donation->driver_notes}}</b>
+</div>
+
+
 <!-- Created At Field -->
 <div class="form-group">
     {!! Form::label('created_at', __('models/donations.fields.created_at') . ':') !!}

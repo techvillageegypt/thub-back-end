@@ -17,7 +17,10 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id')->from(10000);
             $table->unsignedBigInteger('user_id');
+            $table->unsignedInteger('driver_id')->nullable();
+            $table->text('driver_notes')->nullable();
             $table->string('state')->nullable();
+            $table->unsignedInteger('state_id')->nullable();
             $table->string('name')->nullable();
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
@@ -35,6 +38,8 @@ class CreateOrdersTable extends Migration
 
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('driver_id')->references('id')->on('drivers')->onDelete('cascade');
+            $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
         });
 
         Schema::create('order_items', function (Blueprint $table) {
@@ -63,6 +68,7 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
+        Schema::drop('order_items');
         Schema::drop('orders');
     }
 }

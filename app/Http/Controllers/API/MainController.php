@@ -141,7 +141,7 @@ class MainController extends Controller
 
     public function blogs()
     {
-        $blogs = Blog::latest()->get();
+        $blogs = Blog::latest()->paginate(8);
 
         return response()->json(compact('blogs'));
     }

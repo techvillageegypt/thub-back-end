@@ -230,6 +230,7 @@ class ShopController extends Controller
         $user = auth('api')->user();
 
         $validated['user_id'] = $user->id;
+        $validated['state_id'] = request('state_id');
         $validated['state'] = State::find(request('state_id'))->name;
         $validated['phone'] = $user->phone;
 
