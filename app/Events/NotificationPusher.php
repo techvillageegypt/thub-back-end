@@ -17,6 +17,7 @@ class NotificationPusher implements ShouldBroadcast
     public $data;
     public $sendTo;
     public $type;
+    public $text;
 
     /**
      * Create a new event instance.
@@ -28,6 +29,7 @@ class NotificationPusher implements ShouldBroadcast
         $this->data = $data['data'];
         $this->sendTo = $data['send_to'];
         $this->type = $data['type'];
+        $this->text = $data['text'];
     }
 
     /**
@@ -37,12 +39,11 @@ class NotificationPusher implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel($this->type);
+        return new Channel('user-' . $this->sendTo);
     }
 
     public function broadcastAs()
     {
-        return $this->sendTo;
-        // return 'user-' . config('customestatus.type_notification.'. $this->sendTo);
+        return 'user-notification';
     }
 }

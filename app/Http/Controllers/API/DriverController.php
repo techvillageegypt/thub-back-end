@@ -5,20 +5,21 @@ namespace App\Http\Controllers\API;
 
 use App\Models\Seek;
 use App\Models\Trip;
+use App\Models\Order;
 use App\Models\Reward;
 use App\Models\Vehicle;
+use App\Models\Donation;
 use App\Models\DriverRate;
+use App\Models\CustomerRate;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Models\VehiclePhotos;
 use App\Helpers\CapServiceTrait;
 use App\Helpers\TowingTruckTrait;
 use App\Models\DriverBankAccount;
+use App\Events\NotificationPusher;
 use App\Http\Controllers\Controller;
 use Grimzy\LaravelMysqlSpatial\Types\Point;
-use App\Models\CustomerRate;
-use App\Models\Donation;
-use App\Models\Order;
 
 class DriverController extends Controller
 {
@@ -79,6 +80,26 @@ class DriverController extends Controller
 
         $donation_data->update(['status' => 2, 'driver_notes' => request('driver_notes')]);
         $donation_data->load('photos', 'types.donationType', 'customer.user', 'state');
+
+        // Fire & save Notification
+        Notification::create([
+            'user_id' => $donation_data->customer->user->id,
+            'type' => 'donation_delivered',
+            'en' => [
+                'text' => 'Thanks, Your Donation Delivered To Thub Successfuly',
+            ],
+            'ar' => [
+                'text' => 'شكراً لك , لقد تم تسليم تبرعك لثوب بنجاح',
+            ]
+
+        ]);
+
+        event(new NotificationPusher([
+            'type'      => 'donation_delivered',
+            'send_to'   => $donation_data->customer->user->id,
+            'data'      => $donation_data,
+            'text'      => __('lang.donation_delivered'),
+        ]));
 
         return response()->json(['msg' => 'status updated successfuly', $donation_data]);
     }

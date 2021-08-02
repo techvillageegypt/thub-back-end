@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\API;
 
-
-use App\Models\Product;
-use App\Models\Category;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Size;
 use App\Models\Color;
 use App\Models\Order;
-use App\Models\Size;
 use App\Models\State;
+use App\Models\Product;
+use App\Models\Category;
+use App\Models\Notification;
+use Illuminate\Http\Request;
+use App\Events\NotificationPusher;
+use App\Http\Controllers\Controller;
 
 class ShopController extends Controller
 {
@@ -257,6 +258,26 @@ class ShopController extends Controller
         }
 
         $data['order']->load('items');
+
+        // Fire & save Notification
+        Notification::create([
+            'user_id' => $user->id,
+            'type' => 'checkout',
+            'en' => [
+                'text' => 'Your order created successfuly with order id : ' . $data['order']->id,
+            ],
+            'ar' => [
+                'text' => 'تم تنفيذ الطلب بنجاح برقم : ' . $data['order']->id,
+            ]
+
+        ]);
+
+        event(new NotificationPusher([
+            'type'      => 'checkout',
+            'send_to'   => $user->id,
+            'data'      => $data,
+            'text'      => __('lang.checkout_notification') . $data['order']->id,
+        ]));
 
         return response()->json($data);
     }

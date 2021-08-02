@@ -72,7 +72,7 @@ class Order extends Model
         'floor_number' => 'integer',
         'apartment_number' => 'integer',
         'state' => 'string',
-        'status' => 'integer',
+        // 'status' => 'integer',
         'payment_method' => 'integer',
         'subtotal' => 'integer',
         'total' => 'integer',
@@ -93,7 +93,7 @@ class Order extends Model
 
     public function getStatusTextAttribute()
     {
-        switch ($this->attributes['status']) {
+        switch ($this->status) {
             case 0:
                 return 'New';
                 break;

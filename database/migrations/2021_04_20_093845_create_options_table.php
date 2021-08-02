@@ -18,11 +18,22 @@ class CreateOptionsTable extends Migration
             $table->increments('id');
             $table->string('logo')->default('logo.png');
             $table->string('fav_icon')->default('fav_icon.png');
-            $table->string('welcome_message')->default('Welcome to Thub');
             $table->string('welcome_photo')->default('welcome.jpg');
 
             $table->timestamps();
             $table->softDeletes();
+        });
+
+        Schema::create('option_translations', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('option_id')->unsigned();
+            $table->string('locale', 2)->index();
+
+            $table->string('welcome_message')->default('Welcome to Thub');
+
+            $table->unique(['option_id', 'locale']);
+
+            $table->foreign('option_id')->references('id')->on('options')->onDelete('cascade');
         });
     }
 
@@ -33,6 +44,7 @@ class CreateOptionsTable extends Migration
      */
     public function down()
     {
+        Schema::drop('option_translations');
         Schema::drop('options');
     }
 }

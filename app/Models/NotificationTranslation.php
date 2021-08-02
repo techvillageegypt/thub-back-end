@@ -26,7 +26,7 @@ class NotificationTranslation extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'brief', 'description'];
+    protected $fillable = ['text'];
 
     /**
      * Timestamps.

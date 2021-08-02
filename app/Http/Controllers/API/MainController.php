@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\NotificationPusher;
 use App\Models\Faq;
 use App\Models\Blog;
 use App\Models\Meta;
@@ -27,6 +28,7 @@ use App\Models\VehicleType;
 use App\Models\DonationType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Notification;
 use App\Models\Product;
 use Illuminate\Support\Facades\Hash;
 
@@ -34,7 +36,36 @@ class MainController extends Controller
 {
     public function test()
     {
-        return ('test home');
+        $orderID = 1000;
+        // switch (\App::getLocale()) {
+        //     case 'en':
+        //         $text = 'Your order created successfuly with order id : ' . $orderID;
+        //         break;
+        //     case 'ar':
+        //         $text = 'تم تنفيذ الطلب بنجاح برقم : ' . $orderID;
+        //         break;
+        //     default:
+        //         break;
+        // }
+        Notification::create([
+            'user_id' => 1,
+            'type' => 'checkout',
+            'en' => [
+                'text' => 'Your order created successfuly with order id : ' . $orderID,
+            ],
+            'ar' => [
+                'text' => 'تم تنفيذ الطلب بنجاح برقم : ' . $orderID,
+            ]
+
+        ]);
+
+        event(new NotificationPusher([
+            'type'      => 'checkout',
+            'send_to'   => 1,
+            'data'      => 'data',
+            'text'      => __('lang.checkout_notification') . $orderID,
+        ]));
+        return ('Done');
     }
 
     ##########################################################################

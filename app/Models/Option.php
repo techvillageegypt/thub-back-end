@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Helpers\ImageUploaderTrait;
+use Astrotomic\Translatable\Translatable;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -16,7 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Option extends Model
 {
-    use SoftDeletes, ImageUploaderTrait;
+    use SoftDeletes, ImageUploaderTrait, Translatable;
 
 
     public $table = 'options';
@@ -36,6 +37,8 @@ class Option extends Model
         'welcome_message'   => 'required',
         'welcome_photo'     => 'required',
     ];
+
+    public $translatedAttributes = ['welcome_message'];
 
 
     ################################### Appends #####################################

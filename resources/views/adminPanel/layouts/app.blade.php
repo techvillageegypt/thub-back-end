@@ -247,7 +247,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                         @can('options edit')
                                         <!--begin::Item-->
                                         <li class="navi-item">
-                                            <a href="{{route('adminPanel.options.edit', 1)}}" class="navi-link">
+                                            <a href="{{route('adminPanel.options.edit', 1).'?language='. \App::getlocale()}}" class="navi-link">
                                                 <span class="symbol symbol-20 mr-3">
                                                     <span class="svg-icon svg-icon-primary svg-icon-2x">
                                                         <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo1\dist/../src/media/svg/icons\Code\Settings4.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">

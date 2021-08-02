@@ -70,7 +70,7 @@ class Product extends Model
         foreach ($languages as $language) {
             $rules[$language . '.title']        = 'required|string|max:191';
             $rules[$language . '.brief']        = 'required|string|max:191';
-            $rules[$language . '.description']  = 'required|string|max:191';
+            $rules[$language . '.description']  = 'required|string';
         }
 
         // $rules['sale_price'] = 'nullable|string|max:191';
