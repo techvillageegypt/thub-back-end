@@ -13,6 +13,7 @@ use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Events\NotificationPusher;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\Builder;
 
 class ShopController extends Controller
 {
@@ -73,13 +74,46 @@ class ShopController extends Controller
 
         $productsQuery = Product::active()->with('photos', 'items.color', 'items.size');
 
-        if ($request->filled('sort') == 'date') {
-            $productsQuery->orderBy('created_at', 'desc');
-        } elseif ($request->filled('sort') == 'title') {
-            $productsQuery->orderByTranslation('title');
+        // if ($request->filled('sort') == 'date') {
+        //     $productsQuery->orderBy('created_at', 'desc');
+        // } elseif ($request->filled('sort') === 'title') {
+        //     dd('ok');
+        //     $productsQuery->orderByTranslation('title');
+        // } elseif ($request->filled('sort') == 'lower_price') {
+        //     $productsQuery->with(['items' => function ($query) {
+        //         $query->select(DB::raw('min(price)'));
+        //     }])->orderByDesc('price');
+        // } else {
+        //     $productsQuery->orderByTranslation('title');
+        // }
+
+
+
+        if ($request->filled('sort')) {
+            switch ($request->sort) {
+
+                case 'title':
+                    $productsQuery->orderByTranslation('title');
+                    break;
+
+                case 'date':
+                    $productsQuery->orderBy('created_at', 'desc');
+                    break;
+
+                    // case 'lower_price':
+                    //     $productsQuery->orderBy(
+                    //         $productsQuery->items()->first()->price
+                    //     );
+                    //     break;
+
+                default:
+                    break;
+            }
         } else {
             $productsQuery->orderByTranslation('title');
         }
+
+
 
 
         if ($request->filled('title')) {

@@ -121,6 +121,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::post('ecommerce-delevered/{order}', 'DriverController@ecommerce_delevered');
     Route::post('ecommerce-not-delevered/{order}', 'DriverController@ecommerce_not_delevered');
     Route::get('driver-ecommerce-orders', 'DriverController@my_ecommerce_orders');
+    Route::get('user-notifications', 'CustomerController@notifications');
 });
 
 //////////////////////////////////////////////////////////////////////////////
@@ -139,6 +140,7 @@ Route::group(['middleware' => ['auth:api.driver']], function () {
 
         Route::get('driver-wallet', 'DriverController@wallet');
 
+        Route::get('driver-notifications', 'DriverController@notifications');
         Route::get('driver-notifications', 'DriverController@notifications');
         Route::get('driver-notifications/{notification}', 'DriverController@notification');
         Route::post('driver-update-location', 'DriverController@update_my_location');

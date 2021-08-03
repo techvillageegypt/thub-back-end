@@ -136,7 +136,7 @@ class CustomerController extends Controller
             'donation_types.*'  => 'required|exists:donation_types,id',
         ]);
 
-        $data['customer_id'] = $customer->id;
+        $data['customer_id'] = $customer->userable->id;
 
         if ($customer->userable->donations->count() > 0) {
             $donation = Donation::create([
@@ -217,9 +217,9 @@ class CustomerController extends Controller
 
     public function notifications()
     {
-        $notifications = Notification::customer()->get();
+        $notifications = Notification::where('user_id', auth('api')->id())->get();
 
-        return response()->json($notifications, 200);
+        return response()->json($notifications);
     }
 
     public function notification(Notification $notification)
