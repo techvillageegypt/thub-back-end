@@ -196,7 +196,7 @@ class CustomerController extends Controller
             }
         }
 
-        $customer->load('userable.donations.photos', 'userable.donations.types.donationType');
+        $customer->load('userable.donations.photos', 'userable.state', 'userable.donations.types.donationType');
 
         return response()->json($customer);
     }
@@ -217,7 +217,7 @@ class CustomerController extends Controller
 
     public function notifications()
     {
-        $notifications = Notification::where('user_id', auth('api')->id())->get();
+        $notifications = Notification::where('user_id', auth('api')->id())->latest()->paginate(12);
 
         return response()->json($notifications);
     }

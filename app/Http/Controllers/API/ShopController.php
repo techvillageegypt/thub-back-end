@@ -43,6 +43,18 @@ class ShopController extends Controller
             $data['productColors'] = Color::whereIn('id', $colors)->get();
         }
 
+        $data['related_products'] = Product::where('category_id', $data['product']->category_id)
+            ->where('id', '!=', $data['product']->id)
+            ->get();
+
+        $productsLimit = 20;
+
+        if ($data['related_products']->count() <= $productsLimit) {
+            $data['related_products']->random($data['related_products']->count());
+        } else {
+            $data['related_products']->random($productsLimit);
+        }
+
         return response()->json($data);
     }
 
@@ -74,21 +86,6 @@ class ShopController extends Controller
 
         $productsQuery = Product::active()->with('photos', 'items.color', 'items.size');
 
-        // if ($request->filled('sort') == 'date') {
-        //     $productsQuery->orderBy('created_at', 'desc');
-        // } elseif ($request->filled('sort') === 'title') {
-        //     dd('ok');
-        //     $productsQuery->orderByTranslation('title');
-        // } elseif ($request->filled('sort') == 'lower_price') {
-        //     $productsQuery->with(['items' => function ($query) {
-        //         $query->select(DB::raw('min(price)'));
-        //     }])->orderByDesc('price');
-        // } else {
-        //     $productsQuery->orderByTranslation('title');
-        // }
-
-
-
         if ($request->filled('sort')) {
             switch ($request->sort) {
 
@@ -100,11 +97,13 @@ class ShopController extends Controller
                     $productsQuery->orderBy('created_at', 'desc');
                     break;
 
-                    // case 'lower_price':
-                    //     $productsQuery->orderBy(
-                    //         $productsQuery->items()->first()->price
-                    //     );
-                    //     break;
+                case 'lower_price':
+                    $productsQuery->orderBy('min_price');
+                    break;
+
+                case 'higher_price':
+                    $productsQuery->orderBy('min_price', 'desc');
+                    break;
 
                 default:
                     break;
@@ -112,8 +111,6 @@ class ShopController extends Controller
         } else {
             $productsQuery->orderByTranslation('title');
         }
-
-
 
 
         if ($request->filled('title')) {
@@ -142,6 +139,13 @@ class ShopController extends Controller
             });
         }
 
+        // if ($request->filled('sort') && $request->sort == 'lower_price') {
+        //     $products = $productsQuery->paginate($perPage)->sortBy('min_price');
+        //     $products->paginate($perPage);
+        // } elseif ($request->filled('sort') && $request->sort == 'higher_price') {
+        //     $products = $productsQuery->sortByDesc('min_price')->paginate($perPage);
+        // } else {
+        // }
         $products = $productsQuery->paginate($perPage);
 
         return response()->json(compact('products'));

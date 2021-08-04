@@ -17,6 +17,7 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id')->from(1000);
             $table->unsignedInteger('category_id');
+            $table->unsignedInteger('min_price')->nullable();
             $table->unsignedTinyInteger('status')->default(1)->comment('0 => Inactive, 1 => Active');
 
             $table->timestamps();

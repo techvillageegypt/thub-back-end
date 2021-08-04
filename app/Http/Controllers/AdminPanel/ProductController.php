@@ -79,6 +79,10 @@ class ProductController extends AppBaseController
             $product->items()->create($item);
         }
 
+        $minPrice = $product->items()->min('price');
+        $minSalePrice = $product->items()->min('sale_price');
+        $price = collect([$minPrice, $minSalePrice]);
+        $product->update(['min_price' => $price->min()]);
 
         Flash::success(__('messages.saved', ['model' => __('models/products.singular')]));
 

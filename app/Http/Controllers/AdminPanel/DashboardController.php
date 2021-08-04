@@ -10,6 +10,7 @@ use App\Models\Distributor;
 use App\Models\Donation;
 use App\Models\Driver;
 use App\Models\Order;
+use App\Models\Product;
 
 class DashboardController extends Controller
 {
@@ -33,6 +34,7 @@ class DashboardController extends Controller
         $data['drivers_count'] = Driver::count();
         $data['orders_count'] = Order::count();
         $data['donations_count'] = Donation::count();
+        $data['products_count'] = Product::count();
 
         return view('adminPanel.home', compact('data'));
     }

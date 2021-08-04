@@ -34,6 +34,7 @@ class Product extends Model
 
     public $fillable = [
         'category_id',
+        'min_price',
         'title',
         'brief',
         'description',
@@ -97,7 +98,7 @@ class Product extends Model
 
     protected $appends = [
         'rating_avg',
-        'min_price',
+        // 'min_price',
         'is_in_wishlist',
         'is_checked_out',
     ];
@@ -123,13 +124,13 @@ class Product extends Model
         return $wishlistStatus;
     }
 
-    public function getMinPriceAttribute()
-    {
-        $minPrice = $this->items()->min('price');
-        $minSalePrice = $this->items()->min('sale_price');
-        $price = collect([$minPrice, $minSalePrice]);
-        return $price->min();
-    }
+    // public function getMinPriceAttribute()
+    // {
+    //     $minPrice = $this->items()->min('price');
+    //     $minSalePrice = $this->items()->min('sale_price');
+    //     $price = collect([$minPrice, $minSalePrice]);
+    //     return $price->min();
+    // }
 
     public function getIsCheckedOutAttribute()
     {
