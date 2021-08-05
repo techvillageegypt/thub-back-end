@@ -27,7 +27,7 @@ class CreateOrdersTable extends Migration
             $table->unsignedTinyInteger('housing_type')->nullable()->comment(' 1 => House, 2 => Apartment');
             $table->string('house_number')->nullable();
             $table->string('building_number')->nullable();
-            $table->string('floor_number')->nullable();
+
             $table->string('apartment_number')->nullable();
             $table->unsignedTinyInteger('status')->default(0);
             $table->integer('payment_method')->nullable();

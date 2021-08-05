@@ -22,7 +22,7 @@ class CreateDriversTable extends Migration
             $table->unsignedInteger('state_id')->nullable();
             $table->string('house_number')->nullable();
             $table->string('building_number')->nullable();
-            $table->string('floor_number')->nullable();
+
             $table->string('apartment_number')->nullable();
 
             $table->timestamps();

@@ -17,7 +17,6 @@ return array(
         'house_number'          => 'House Number',
         'state'                 => 'State',
         'building_number'       => 'Building Number',
-        'floor_number'          => 'Floor Number',
         'apartment_number'      => 'Apartment Number',
         'pickup_date'           => 'Pickup Date',
         'created_at'            => 'Created At',

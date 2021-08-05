@@ -9,7 +9,7 @@ use App\Repositories\BaseRepository;
  * Class OrderRepository
  * @package App\Repositories\AdminPanel
  * @version July 14, 2021, 1:53 pm UTC
-*/
+ */
 
 class OrderRepository extends BaseRepository
 {
@@ -22,7 +22,6 @@ class OrderRepository extends BaseRepository
         'housing_type',
         'house_number',
         'building_number',
-        'floor_number',
         'apartment_number',
         'state_id',
         'status',

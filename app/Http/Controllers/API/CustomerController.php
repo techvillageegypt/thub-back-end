@@ -39,7 +39,6 @@ class CustomerController extends Controller
             'housing_type'      => 'required|in:1,2',
             'house_number'      => 'required_if:housing_type,1|numeric',
             'building_number'   => 'required_if:housing_type,2|numeric',
-            'floor_number'      => 'required_if:housing_type,2|numeric',
             'apartment_number'  => 'required_if:housing_type,2|numeric',
         ]);
 
@@ -110,7 +109,6 @@ class CustomerController extends Controller
         //     'housing_type'      => 'required|in:1,2',
         //     'house_number'      => 'required_if:housing_type,1|numeric',
         //     'building_number'   => 'required_if:housing_type,2|numeric',
-        //     'floor_number'      => 'required_if:housing_type,2|numeric',
         //     'apartment_number'  => 'required_if:housing_type,2|numeric',
         //     'pickup_date'       => 'required|date',
         //     'photos'            => 'nullable|array',
@@ -127,7 +125,6 @@ class CustomerController extends Controller
             'housing_type'      => 'nullable|in:1,2',
             'house_number'      => 'nullable|numeric',
             'building_number'   => 'nullable|numeric',
-            'floor_number'      => 'nullable|numeric',
             'apartment_number'  => 'nullable|numeric',
             'pickup_date'       => 'nullable|date',
             'photos'            => 'nullable|array',
@@ -145,7 +142,6 @@ class CustomerController extends Controller
                 'housing_type'      => $data['housing_type'] ?? null,
                 'house_number'      => $data['house_number'] ?? null,
                 'building_number'   => $data['building_number'] ?? null,
-                'floor_number'      => $data['floor_number'] ?? null,
                 'apartment_number'  => $data['apartment_number'] ?? null,
                 'customer_id'       => $data['customer_id'] ?? null,
                 'address'           => $data['address'] ?? null,
@@ -161,7 +157,6 @@ class CustomerController extends Controller
                 'housing_type'      => $data['housing_type'] ?? null,
                 'house_number'      => $data['house_number'] ?? null,
                 'building_number'   => $data['building_number'] ?? null,
-                'floor_number'      => $data['floor_number'] ?? null,
                 'apartment_number'  => $data['apartment_number'] ?? null,
             ]);
             $donation = Donation::create([
@@ -173,7 +168,6 @@ class CustomerController extends Controller
                 'housing_type'      => $data['housing_type'] ?? null,
                 'house_number'      => $data['house_number'] ?? null,
                 'building_number'   => $data['building_number'] ?? null,
-                'floor_number'      => $data['floor_number'] ?? null,
                 'apartment_number'  => $data['apartment_number'] ?? null,
                 'customer_id'       => $data['customer_id'] ?? null,
                 'pickup_date'       => $data['pickup_date'] ?? null,

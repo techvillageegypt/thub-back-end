@@ -24,7 +24,6 @@ class Driver extends Model
         'house_number',
         'state_id',
         'building_number',
-        'floor_number',
         'apartment_number',
     ];
 
@@ -34,7 +33,6 @@ class Driver extends Model
         'housing_type'      => 'nullable|in:1,2',
         'state_id'          => 'required|exists:states,id',
         'building_number'   => 'nullable|numeric',
-        'floor_number'      => 'nullable|numeric',
         'apartment_number'  => 'nullable|numeric',
 
     ];

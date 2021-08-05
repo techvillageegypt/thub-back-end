@@ -22,7 +22,7 @@ class CreateCustomersTable extends Migration
             $table->unsignedInteger('state_id')->nullable();
             $table->string('house_number')->nullable();
             $table->string('building_number')->nullable();
-            $table->string('floor_number')->nullable();
+
             $table->string('apartment_number')->nullable();
 
             // $table->rememberToken();
@@ -46,7 +46,7 @@ class CreateCustomersTable extends Migration
             $table->unsignedInteger('state_id')->nullable();
             $table->string('house_number')->nullable();
             $table->string('building_number')->nullable();
-            $table->string('floor_number')->nullable();
+
             $table->string('apartment_number')->nullable();
             $table->unsignedTinyInteger('status')->default(0)->comment('0 => New, 1 => Picked up, 2 => Delevered');
             $table->text('driver_notes')->nullable();

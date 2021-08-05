@@ -13,10 +13,26 @@ use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Events\NotificationPusher;
 use App\Http\Controllers\Controller;
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Builder;
 
 class ShopController extends Controller
 {
+
+
+    public function sizes()
+    {
+        $sizes = Size::get();
+
+        return response()->json(compact('sizes'));
+    }
+
+    public function colors()
+    {
+        $colors = Color::get();
+
+        return response()->json(compact('colors'));
+    }
 
     public function appHome()
     {
@@ -32,51 +48,11 @@ class ShopController extends Controller
         return response()->json($data);
     }
 
-    public function product($id)
-    {
-        $data['product'] = Product::with('photos', 'items.color', 'items.size')->find($id);
-        if ($data['product']) {
-            $sizes = $data['product']->items()->pluck('size_id')->toArray();
-            $data['productSizes'] = Size::whereIn('id', $sizes)->get();
-
-            $colors = $data['product']->items()->pluck('color_id')->toArray();
-            $data['productColors'] = Color::whereIn('id', $colors)->get();
-        }
-
-        $data['related_products'] = Product::where('category_id', $data['product']->category_id)
-            ->where('id', '!=', $data['product']->id)
-            ->get();
-
-        $productsLimit = 20;
-
-        if ($data['related_products']->count() <= $productsLimit) {
-            $data['related_products']->random($data['related_products']->count());
-        } else {
-            $data['related_products']->random($productsLimit);
-        }
-
-        return response()->json($data);
-    }
-
     public function categories()
     {
         $categories = Category::get();
 
         return response()->json(compact('categories'));
-    }
-
-    public function sizes()
-    {
-        $sizes = Size::get();
-
-        return response()->json(compact('sizes'));
-    }
-
-    public function colors()
-    {
-        $colors = Color::get();
-
-        return response()->json(compact('colors'));
     }
 
     public function products(Request $request)
@@ -139,16 +115,39 @@ class ShopController extends Controller
             });
         }
 
-        // if ($request->filled('sort') && $request->sort == 'lower_price') {
-        //     $products = $productsQuery->paginate($perPage)->sortBy('min_price');
-        //     $products->paginate($perPage);
-        // } elseif ($request->filled('sort') && $request->sort == 'higher_price') {
-        //     $products = $productsQuery->sortByDesc('min_price')->paginate($perPage);
-        // } else {
-        // }
-        $products = $productsQuery->paginate($perPage);
+        $data['products'] = $productsQuery->paginate($perPage);
 
-        return response()->json(compact('products'));
+        return response()->json($data);
+    }
+
+    public function product($id)
+    {
+        $data['product'] = Product::with('photos', 'items.color', 'items.size')->find($id);
+        if ($data['product']) {
+            $sizes = $data['product']->items()->pluck('size_id')->toArray();
+            $data['productSizes'] = Size::whereIn('id', $sizes)->get();
+
+            $colors = $data['product']->items()->pluck('color_id')->toArray();
+            $data['productColors'] = Color::whereIn('id', $colors)->get();
+        }
+
+
+        $products = Product::with('photos')->where('category_id', $data['product']->category_id)
+            ->where('id', '!=', $data['product']->id)
+            ->get();
+
+        $data['related_products'] = $products->random($products->count() - 1);
+        $data['related_products']->all();
+
+        return response()->json($data);
+    }
+
+    public function randomProducts()
+    {
+        $allProducts = Product::with('photos')->get();
+        $data['random_products'] = $allProducts->random($allProducts->count() - 1);
+
+        return response()->json($data);
     }
 
     // All Products max Price For max Price Filtering
@@ -261,7 +260,6 @@ class ShopController extends Controller
             'housing_type'      => 'required|in:1,2',
             'house_number'      => 'required_if:housing_type,1|numeric',
             'building_number'   => 'required_if:housing_type,2|numeric',
-            'floor_number'      => 'required_if:housing_type,2|numeric',
             'apartment_number'  => 'required_if:housing_type,2|numeric',
             'payment_method'    => 'required|numeric',
         ]);

@@ -23,7 +23,6 @@ class Donation extends Model
         'house_number',
         'state_id',
         'building_number',
-        'floor_number',
         'apartment_number',
         'pickup_date',
         'status',  // 0 => New, 1 => Picked up, 2 => Delivered, 3 => Not Picked up

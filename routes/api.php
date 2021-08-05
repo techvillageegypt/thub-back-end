@@ -55,6 +55,7 @@ Route::get('sizes', 'ShopController@sizes');
 Route::get('colors', 'ShopController@colors');
 Route::get('products', 'ShopController@products');
 Route::get('product/{id}', 'ShopController@product');
+Route::get('random-products', 'ShopController@randomProducts');
 Route::get('max-price', 'ShopController@maxPrice');
 
 //////////////////////////////////////////////////////////////////////////////

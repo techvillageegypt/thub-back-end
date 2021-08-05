@@ -74,6 +74,5 @@
         'house_number',
         'state_id',
         'building_number',
-        'floor_number',
         'apartment_number',
     --}}

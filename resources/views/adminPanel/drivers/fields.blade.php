@@ -45,10 +45,6 @@
     {!! Form::number('building_number', null, ['class' => 'form-control']) !!}
 </div>
 
-<div class="form-group col-sm-6">
-    {!! Form::label('floor_number', __('models/drivers.fields.floor_number') . ':') !!}
-    {!! Form::number('floor_number', null, ['class' => 'form-control']) !!}
-</div>
 
 <div class="form-group col-sm-6">
     {!! Form::label('apartment_number', __('models/drivers.fields.apartment_number') . ':') !!}

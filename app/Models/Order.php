@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Lang;
  * @property integer $housing_type
  * @property integer $house_number
  * @property integer $building_number
- * @property integer $floor_number
  * @property integer $apartment_number
  * @property integer $state_id
  * @property integer $status
@@ -44,7 +43,6 @@ class Order extends Model
         'housing_type',
         'house_number',
         'building_number',
-        'floor_number',
         'apartment_number',
         'state',
         'status',
@@ -69,7 +67,6 @@ class Order extends Model
         'housing_type' => 'integer',
         'house_number' => 'integer',
         'building_number' => 'integer',
-        'floor_number' => 'integer',
         'apartment_number' => 'integer',
         'state' => 'string',
         // 'status' => 'integer',

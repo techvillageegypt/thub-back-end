@@ -46,13 +46,6 @@
 </div>
 
 
-<!-- Floor Number Field -->
-<div class="form-group">
-    {!! Form::label('floor_number', __('models/orders.fields.floor_number').':') !!}
-    <b>{{ $order->floor_number }}</b>
-</div>
-
-
 <!-- Apartment Number Field -->
 <div class="form-group">
     {!! Form::label('apartment_number', __('models/orders.fields.apartment_number').':') !!}

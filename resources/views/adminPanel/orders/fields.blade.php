@@ -28,12 +28,6 @@
     {!! Form::text('building_number', null, ['class' => 'form-control']) !!}
 </div>
 
-<!-- Floor Number Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('floor_number', __('models/orders.fields.floor_number').':') !!}
-    {!! Form::text('floor_number', null, ['class' => 'form-control']) !!}
-</div>
-
 <!-- Apartment Number Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('apartment_number', __('models/orders.fields.apartment_number').':') !!}

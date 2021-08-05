@@ -58,7 +58,6 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         'housing_type'      => 'nullable|in:1,2',
         'state_id'          => 'nullable',
         'building_number'   => 'nullable',
-        'floor_number'      => 'nullable',
         'apartment_number'  => 'nullable',
         'status'            => 'nullable',
         'verify_code'       => 'nullable',

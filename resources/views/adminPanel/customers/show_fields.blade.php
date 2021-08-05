@@ -34,12 +34,6 @@
     <b>{{ $customer->building_number }}</b>
 </div>
 
-<!-- floor_number Field -->
-<div class="form-group">
-    {!! Form::label('floor_number', __('models/customers.fields.floor_number') . ':') !!}
-    <b>{{ $customer->floor_number }}</b>
-</div>
-
 <!-- apartment_number Field -->
 <div class="form-group">
     {!! Form::label('apartment_number', __('models/customers.fields.apartment_number') . ':') !!}

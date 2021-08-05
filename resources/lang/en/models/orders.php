@@ -14,7 +14,6 @@ return array(
         'state'                 => 'State',
         'phone'                 => 'Phone',
         'building_number'       => 'Building Number',
-        'floor_number'          => 'Floor Number',
         'apartment_number'      => 'Apartment Number',
         'payment_method'      => 'Payment Method',
         'state_id'      => 'State',
