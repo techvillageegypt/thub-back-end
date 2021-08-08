@@ -9,16 +9,6 @@
                         <span><i class="flaticon2-search-1 text-muted"></i></span>
                     </div>
                 </div>
-                <div class="col-md-4 my-2 my-md-0">
-                    <div class="d-flex align-items-center">
-                        <label class="mr-3 mb-0 d-none d-md-block">@lang('lang.status'):</label>
-                        <select class="form-control" id="kt_datatable_search_status">
-                            <option value="">@lang('lang.all')</option>
-                            <option value="1">@lang('lang.active')</option>
-                            <option value="0">@lang('lang.inactive')</option>
-                        </select>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

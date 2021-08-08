@@ -134,9 +134,10 @@ class ShopController extends Controller
 
         $products = Product::with('photos')->where('category_id', $data['product']->category_id)
             ->where('id', '!=', $data['product']->id)
+            ->limit(25)
             ->get();
 
-        $data['related_products'] = $products->random($products->count() - 1);
+        $data['related_products'] = $products->random($products->count() - 5);
         $data['related_products']->all();
 
         return response()->json($data);
@@ -144,8 +145,8 @@ class ShopController extends Controller
 
     public function randomProducts()
     {
-        $allProducts = Product::with('photos')->get();
-        $data['random_products'] = $allProducts->random($allProducts->count() - 1);
+        $allProducts = Product::with('photos')->limit(25)->get();
+        $data['random_products'] = $allProducts->random($allProducts->count() - 5);
 
         return response()->json($data);
     }
