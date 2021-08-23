@@ -54,9 +54,18 @@ class AuthController extends Controller
         if (empty($data['user'])) {
             return response()->json(['msg' => 'Verify code is not correct'], 403);
         }
-        $data['user']->update(['device_id' => $request->device_id]);
+
         $data['user']->load('userable.state');
         $data['token'] = auth('api')->tokenById($data['user']->id);
+
+        return response()->json($data);
+    }
+
+
+    public function updateDeviceId()
+    {
+        $data['user'] = auth('api')->user();
+        $data['user']->update(['device_id' => request('device_id')]);
 
         return response()->json($data);
     }
@@ -65,31 +74,31 @@ class AuthController extends Controller
 
     // Start Driver
 
-    public function login_or_register_driver(Request $request)
-    {
-        $phone = $request->validate(['phone' => 'required|numeric']);
+    // public function login_or_register_driver(Request $request)
+    // {
+    //     $phone = $request->validate(['phone' => 'required|numeric']);
 
-        $driver = User::where($phone)->firstOr(function () {
-            response()->json(['msg' => 'Wrong Phone Please Check Your Data']);
-        });
+    //     $driver = User::where($phone)->firstOr(function () {
+    //         response()->json(['msg' => 'Wrong Phone Please Check Your Data']);
+    //     });
 
-        return response()->json(['msg' => 'Use Your verification To Complete Login Process']);
-    }
+    //     return response()->json(['msg' => 'Use Your verification To Complete Login Process']);
+    // }
 
-    public function verify_code_driver(Request $request)
-    {
-        $inputs = $request->validate(['phone' => 'required|numeric', 'verify_code' => 'required|min:4|max:5']);
+    // public function verify_code_driver(Request $request)
+    // {
+    //     $inputs = $request->validate(['phone' => 'required|numeric', 'verify_code' => 'required|min:4|max:5']);
 
-        $driver = User::firstWhere($inputs);
+    //     $driver = User::firstWhere($inputs);
 
-        if (empty($driver)) {
-            return response()->json(['msg' => 'Verify code is not correct'], 403);
-        }
+    //     if (empty($driver)) {
+    //         return response()->json(['msg' => 'Verify code is not correct'], 403);
+    //     }
 
-        $token = auth('api')->tokenById($driver->id);
+    //     $token = auth('api')->tokenById($driver->id);
 
-        return response()->json(compact('driver', 'token'));
-    }
+    //     return response()->json(compact('driver', 'token'));
+    // }
 
     // End Driver
 

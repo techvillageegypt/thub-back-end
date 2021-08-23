@@ -70,6 +70,7 @@ Route::get('max-price', 'ShopController@maxPrice');
 // Auth
 Route::post('user/login', 'AuthController@login_or_register_user');
 Route::post('user/verify-code', 'AuthController@verify_code_user');
+Route::post('user/update-device-id', 'AuthController@updateDeviceId');
 
 // Route::post('driver/login', 'AuthController@login_or_register_driver');
 // Route::post('driver/verify-code', 'AuthController@verify_code_driver');
