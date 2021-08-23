@@ -34,7 +34,7 @@ class DonationController extends Controller
             "You have  a new order",
             $driver->user->device_id,
             $url = null,
-            $data = $donation,
+            $data = null,
             $buttons = null,
             $schedule = null
         );
