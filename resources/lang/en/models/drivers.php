@@ -15,6 +15,7 @@ return array(
         'house_number' => 'House Number',
         'building_number' => 'Building Number',
         'apartment_number' => 'Apartment Number',
+        'total_weight' => 'Total Weight',
 
 
         'status' => 'Status',

@@ -32,48 +32,22 @@ use App\Models\Notification;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use OneSignal;
 
 class MainController extends Controller
 {
     public function test()
     {
-        $orderID = 1000;
-        // switch (\App::getLocale()) {
-        //     case 'en':
-        //         $text = 'Your order created successfuly with order id : ' . $orderID;
-        //         break;
-        //     case 'ar':
-        //         $text = 'تم تنفيذ الطلب بنجاح برقم : ' . $orderID;
-        //         break;
-        //     default:
-        //         break;
-        // }
-        // Notification::create([
-        //     'user_id' => 1,
-        //     'type' => 'checkout',
-        //     'en' => [
-        //         'text' => 'Your order created successfuly with order id : ' . $orderID,
-        //     ],
-        //     'ar' => [
-        //         'text' => 'تم تنفيذ الطلب بنجاح برقم : ' . $orderID,
-        //     ]
-
-        // ]);
-
-        // event(new NotificationPusher([
-        //     'type'      => 'checkout',
-        //     'send_to'   => 1,
-        //     'data'      => 'data',
-        //     'text'      => __('lang.checkout_notification') . $orderID,
-        // ]));
 
 
-
-
-
-        // $products = Product::get();
-        // $sorted = $products->sortBy('rating_avg');
-        // return $sorted->values()->all();
+        OneSignal::sendNotificationToAll(
+            "Some Message",
+            $url = null,
+            $data = null,
+            $buttons = null,
+            $schedule = null,
+            'ionsgsdngsdoinfweonfweonfserofnesefoiei'
+        );
 
         return ('Done');
     }

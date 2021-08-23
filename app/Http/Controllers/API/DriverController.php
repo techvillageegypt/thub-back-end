@@ -55,9 +55,10 @@ class DriverController extends Controller
     //////////////// Donations //////////////////
     public function picked_up($donation)
     {
+        request()->validate(['weight' => 'required|numeric']);
         $donation_data = Donation::find($donation);
 
-        $donation_data->update(['status' => 1, 'driver_notes' => request('driver_notes')]);
+        $donation_data->update(['status' => 1, 'driver_notes' => request('driver_notes'), 'weight' => request('weight')]);
         $donation_data->load('photos', 'types.donationType', 'customer.user', 'state');
 
         return response()->json(['msg' => 'status updated successfuly', $donation_data]);

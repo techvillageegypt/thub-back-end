@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Driver extends Model
 {
@@ -38,6 +40,14 @@ class Driver extends Model
     ];
 
 
+    ########################### Appends #########################
+    public $appends = ['total_weight'];
+
+    public function getTotalWeightAttribute()
+    {
+        return $this->donations()->whereMonth('created_at', Carbon::now()->month)->sum('weight');
+    }
+
     ########################### Relations #########################
 
     public function user()
@@ -48,5 +58,10 @@ class Driver extends Model
     public function state()
     {
         return $this->belongsTo(State::class, 'state_id', 'id');
+    }
+
+    public function donations()
+    {
+        return $this->hasMany(Donation::class);
     }
 }

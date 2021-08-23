@@ -71,9 +71,9 @@ class CustomerController extends Controller
         }
 
         $user->update(['phone' => $request->phone]);
-        // $user->load('userable');
+        $user->load('userable.state');
 
-        return response()->json(['msg' => 'Your Phone Updated Successfuly']);
+        return response()->json(compact('user'));
     }
 
     public function wallet()
@@ -116,6 +116,7 @@ class CustomerController extends Controller
         //     'donation_types'    => 'nullable|array',
         //     'donation_types.*'  => 'nullable|exists:donation_types,id',
         // ]);
+
         $data = request()->validate([
             'name'              => 'nullable|string|max:191',
             'address'           => 'nullable|string|max:191',

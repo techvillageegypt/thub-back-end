@@ -36,21 +36,44 @@ class ShopController extends Controller
 
     public function appHome()
     {
-        $data['categories'] = Category::with('products.photos', 'products.items.color', 'products.items.size')->get();
+
+        // $category = Category::find(request('category_id'));
+
+        // $categoryIDs = $category->children->pluck('id');
+
+        // $data['products'] = Product::active()->with('photos', 'items.color', 'items.size')->whereIn('category_id', $categoryIDs)->get();
+
+
+        // $data['products'] = Product::active()->with('photos', 'items.color', 'items.size')->where('category_id', request('category_id'))->get();
+
+
+
+
+        $data['categories'] = Category::parent()->with('children.products.photos', 'children.products.items.color', 'children.products.items.size')->get();
 
         return response()->json($data);
     }
 
+
     public function categoryProducts($category)
     {
-        $data['category_products'] = Category::with('products.photos', 'products.items.color', 'products.items.size')->find($category);
+
+        $categoryData = Category::find($category);
+
+        if ($categoryData->parent_id == null && $categoryData->has('children')) {
+            $categoryIDs = $categoryData->children->pluck('id');
+            $data['category_products'] = Product::active()->with('photos', 'items.color', 'items.size')->whereIn('category_id', $categoryIDs)->get();
+        } else {
+            $data['category_products'] = Product::active()->with('photos', 'items.color', 'items.size')->where('category_id', $category)->get();
+        }
+
 
         return response()->json($data);
     }
 
     public function categories()
     {
-        $categories = Category::get();
+        $categories = Category::parent()->with('children')->get();
 
         return response()->json(compact('categories'));
     }
@@ -94,7 +117,15 @@ class ShopController extends Controller
         }
 
         if ($request->filled('category_id')) {
-            $productsQuery->where('category_id', request('category_id'));
+
+            $category = Category::find(request('category_id'));
+            if ($category->parent_id == null && $category->has('children')) {
+                $categoryIDs = $category->children->pluck('id');
+
+                $productsQuery->whereIn('category_id', $categoryIDs);
+            } else {
+                $productsQuery->where('category_id', request('category_id'));
+            }
         }
 
         if ($request->filled('size_id')) {

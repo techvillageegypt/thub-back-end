@@ -59,10 +59,17 @@
     {!! Form::label('status', __('models/donations.fields.status') . ':') !!}
     <b>{{ $donation->status_text}}</b>
 </div>
+
 <!-- driver_notes Field -->
 <div class="form-group">
     {!! Form::label('driver_notes', __('models/donations.fields.driver_notes') . ':') !!}
     <b>{{ $donation->driver_notes}}</b>
+</div>
+
+<!-- weight Field -->
+<div class="form-group">
+    {!! Form::label('weight', __('models/donations.fields.weight') . ':') !!}
+    <b>{{ $donation->weight}}</b>
 </div>
 
 

@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('type')->nullable();
             $table->string('phone')->nullable();
             $table->string('verify_code')->nullable();
+            $table->string('device_id')->nullable();
             $table->string('balance')->default(0);
             $table->unsignedTinyInteger('status')->default(1)->comment('0 => Inactive, 1 => Active');
 

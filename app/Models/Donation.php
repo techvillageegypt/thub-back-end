@@ -27,6 +27,7 @@ class Donation extends Model
         'pickup_date',
         'status',  // 0 => New, 1 => Picked up, 2 => Delivered, 3 => Not Picked up
         'driver_notes',
+        'weight',
     ];
 
     ############################## Appends ###############################

@@ -11,6 +11,7 @@ return array(
         'name'                  => 'Name',
         'status'                => 'Status',
         'driver_notes'          => 'Driver Notes',
+        'weight'          => 'Weight',
         'phone'                 => 'Phone',
         'address'               => 'Address',
         'housing_type'          => 'Housing Type',

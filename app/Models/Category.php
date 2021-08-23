@@ -107,10 +107,6 @@ class Category extends Model
 
     ########################### Scopes #############################
 
-    public function parent()
-    {
-        return $this->belongsTo(Category::class, 'parent_id', 'id');
-    }
 
     public function scopeActive($query)
     {
@@ -118,10 +114,31 @@ class Category extends Model
     }
 
 
+    public function scopeParent($query)
+    {
+        return $query->where('parent_id', null);
+    }
+
+    public function scopeChild($query)
+    {
+        return $query->where('parent_id', '!=', null);
+    }
+
     ########################### Relations #############################
 
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+
+
+    public function main()
+    {
+        return $this->belongsTo(Category::class, 'parent_id', 'id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Category::class, 'parent_id', 'id');
     }
 }

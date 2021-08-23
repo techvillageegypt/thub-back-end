@@ -34,6 +34,7 @@
             <th>@lang('models/donations.fields.customer')</th>
             <th>@lang('models/donations.fields.phone')</th>
             <th>@lang('models/donations.fields.pickup_date')</th>
+            <th>@lang('models/donations.fields.weight')</th>
             <th>@lang('models/donations.fields.state')</th>
             <th>@lang('models/donations.fields.status')</th>
             <th>@lang('crud.action')</th>
@@ -46,6 +47,7 @@
             <td>{{ $donation->customer->name ?? '' }}</td>
             <td>{{ $donation->customer->user->phone ?? '' }}</td>
             <td>{{ $donation->pickup_date }}</td>
+            <td>{{ $donation->weight }}</td>
             <td>{{ $donation->state->name ?? '' }}</td>
             <td>{{ $donation->status }}</td>
 

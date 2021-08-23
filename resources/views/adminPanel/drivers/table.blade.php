@@ -35,6 +35,7 @@
             <th>@lang('models/drivers.fields.phone')</th>
             <th>@lang('models/drivers.fields.verify_code')</th>
             <th>@lang('models/drivers.fields.state')</th>
+            <th>@lang('models/drivers.fields.total_weight')</th>
             <th>@lang('models/drivers.fields.status')</th>
             <th>@lang('crud.action')</th>
         </tr>
@@ -46,6 +47,7 @@
             <td>{{ $driver->user->phone ?? '' }}</td>
             <td>{{ $driver->user->verify_code ?? '' }}</td>
             <td>{{ $driver->state->name ?? '' }}</td>
+            <td>{{ $driver->total_weight }}</td>
 
             <td>{{ $driver->user->status }}</td>
             <td nowrap>
