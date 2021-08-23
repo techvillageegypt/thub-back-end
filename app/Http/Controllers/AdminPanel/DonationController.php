@@ -29,6 +29,7 @@ class DonationController extends Controller
     {
         $donation->update(['driver_id' => request('driver_id')]);
         $driver = Driver::find(request('driver_id'));
+
         OneSignal::sendNotificationToUser(
             "You have  a new order",
             $driver->user->device_id,
