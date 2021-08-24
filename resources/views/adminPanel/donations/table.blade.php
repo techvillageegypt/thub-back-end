@@ -111,6 +111,10 @@
                                 'title': 'Not Delivered',
                                 'class': ' label-light-danger'
                             }
+                            4: {
+                                'title': 'Rescheduled',
+                                'class': ' label-light-primary'
+                            }
                         };
                         return '<span class="label font-weight-bold label-lg' + status[row.Status].class + ' label-inline">' + status[row.Status].title + '</span>';
                     },

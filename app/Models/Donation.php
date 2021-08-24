@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Donation extends Model
 {
@@ -54,6 +55,15 @@ class Donation extends Model
                 break;
         }
     }
+
+
+
+    public function setPickupDateAttribute($value)
+    {
+        $this->attributes['pickup_date'] = (new Carbon($value))->format('y-m-d G:i:s');
+    }
+
+
 
     ############################### Relations ##################################
 

@@ -118,6 +118,8 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::post('picked-up/{Donation}', 'DriverController@picked_up');
     Route::post('not-picked-up/{Donation}', 'DriverController@not_picked_up');
     Route::post('delevered/{Donation}', 'DriverController@delevered');
+    Route::post('reschedule/{Donation}', 'DriverController@reschedule');
+    Route::post('daily-weight', 'DriverController@dailyWeight');
     Route::get('driver-orders', 'DriverController@my_orders');
 
     Route::post('ecommerce-delevered/{order}', 'DriverController@ecommerce_delevered');

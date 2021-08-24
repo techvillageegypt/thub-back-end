@@ -86,6 +86,7 @@ Route::group(
                 Route::get('/', 'DonationController@index')->name('index');
                 Route::get('/{donation}', 'DonationController@show')->name('show');
                 Route::patch('/assign-driver/{donation}', 'DonationController@assign_driver')->name('assign_driver');
+                Route::patch('/update-pickup-date/{donation}', 'DonationController@updatePickupDate')->name('updatePickupDate');
             });
 
             Route::resource('socialLinks', SocialLinkController::class);

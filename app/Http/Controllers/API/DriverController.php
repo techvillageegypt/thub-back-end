@@ -19,7 +19,9 @@ use App\Helpers\TowingTruckTrait;
 use App\Models\DriverBankAccount;
 use App\Events\NotificationPusher;
 use App\Http\Controllers\Controller;
+use App\Models\DriverWeight;
 use Grimzy\LaravelMysqlSpatial\Types\Point;
+use Illuminate\Support\Facades\DB;
 
 class DriverController extends Controller
 {
@@ -104,6 +106,16 @@ class DriverController extends Controller
         return response()->json(['msg' => 'status updated successfuly', $donation_data]);
     }
 
+    public function reschedule($donation)
+    {
+        $donation_data = Donation::find($donation);
+
+        $donation_data->update(['status' => 4, 'driver_notes' => request('driver_notes')]);
+        $donation_data->load('photos', 'types.donationType', 'customer.user', 'state');
+
+        return response()->json(['msg' => 'status updated successfuly', $donation_data]);
+    }
+
     public function my_orders()
     {
         if (auth('api')->user()->type !== 'driver') {
@@ -113,6 +125,18 @@ class DriverController extends Controller
         $data['orders'] = Donation::where('driver_id', auth('api')->user()->userable_id)->with('photos', 'types.donationType', 'customer.user', 'state')->get();
         return response()->json($data);
     }
+
+    public function dailyWeight()
+    {
+        $validated = request()->validate(['weight' => 'required|numeric']);
+        $validated['driver_id'] = auth('api')->user()->userable->id;
+        $validated['date'] = now();
+
+        DriverWeight::create($validated);
+
+        return response()->json($validated);
+    }
+
     //////////////// End Donations //////////////////
 
 

@@ -104,14 +104,44 @@
 
 <hr>
 
-<h3>Assign Driver</h3>
-<br>
+<div class="row">
+    <div class="col-6">
+        <h3>Assign Driver</h3>
+        <br>
 
 
-{!! Form::model($donation, ['route' => ['adminPanel.donations.assign_driver', $donation->id], 'method' => 'patch']) !!}
+        {!! Form::model($donation, ['route' => ['adminPanel.donations.assign_driver', $donation->id], 'method' => 'patch']) !!}
 
-{!! Form::select('driver_id', $drivers, null, ['class' => 'form-control','placeholder' => 'Select Driver']) !!}
+        {!! Form::select('driver_id', $drivers, null, ['class' => 'form-control','placeholder' => 'Select Driver']) !!}
 
-{!! Form::submit('Assign', ['class' => 'form-control btn btn-primary mt-4']) !!}
+        {!! Form::submit('Assign', ['class' => 'form-control btn btn-primary mt-4']) !!}
 
-{!! Form::close() !!}
+        {!! Form::close() !!}
+
+        <br>
+    </div>
+    <div class="col-6">
+
+        <h3>Update Pickup Date</h3>
+        <br>
+
+
+        {!! Form::model($donation, ['route' => ['adminPanel.donations.updatePickupDate', $donation->id], 'method' => 'patch']) !!}
+
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <div class="input-group date" id="kt_datetimepicker_1" data-target-input="nearest">
+                    <input type="text" class="form-control datetimepicker-input" placeholder="Select date & time" data-target="#kt_datetimepicker_1" name="pickup_date" />
+                    <div class="input-group-append" data-target="#kt_datetimepicker_1" data-toggle="datetimepicker">
+                        <span class="input-group-text">
+                            <i class="ki ki-calendar"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {!! Form::submit('Update', ['class' => 'form-control btn btn-primary mt-4']) !!}
+
+        {!! Form::close() !!}
+    </div>
+</div>

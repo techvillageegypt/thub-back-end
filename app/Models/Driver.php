@@ -41,6 +41,7 @@ class Driver extends Model
 
 
     ########################### Appends #########################
+
     public $appends = ['total_weight'];
 
     public function getTotalWeightAttribute()

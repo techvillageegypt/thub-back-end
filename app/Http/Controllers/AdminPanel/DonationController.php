@@ -43,4 +43,13 @@ class DonationController extends Controller
 
         return back();
     }
+
+    public function updatePickupDate(Donation $donation)
+    {
+        $donation->update(['pickup_date' => request('pickup_date'), 'status' => 0]);
+
+        Flash::success('The Donation Order Rescheduled Successfuly');
+
+        return back();
+    }
 }
