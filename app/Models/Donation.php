@@ -51,6 +51,12 @@ class Donation extends Model
             case 3:
                 return 'Not Picked up';
                 break;
+            case 4:
+                return 'Reschedule';
+                break;
+            case 5:
+                return 'InProgress';
+                break;
 
             default:
                 break;

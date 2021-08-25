@@ -5,8 +5,7 @@
             <div class="row align-items-center">
                 <div class="col-md-4 my-2 my-md-0">
                     <div class="input-icon">
-                        <input type="text" class="form-control" placeholder="Search..."
-                            id="kt_datatable_search_query" />
+                        <input type="text" class="form-control" placeholder="Search..." id="kt_datatable_search_query" />
                         <span><i class="flaticon2-search-1 text-muted"></i></span>
                     </div>
                 </div>
@@ -30,6 +29,7 @@
 <table class="datatable datatable-bordered datatable-head-custom table-hover" id="kt_datatable">
     <thead>
         <tr>
+            <th>@lang('models/customers.fields.id')</th>
             <th>@lang('models/customers.fields.name')</th>
             <th>@lang('models/customers.fields.phone')</th>
             <th>@lang('models/customers.fields.address')</th>
@@ -39,19 +39,18 @@
     </thead>
     <tbody>
         @foreach ($customers as $customer)
-            <tr>
-                {{-- {{ dd($customer->user) }} --}}
-                <td>{{ $customer->name }}</td>
-                <td>{{ $customer->user->phone ?? '' }}</td>
-                <td>{{ $customer->address }}</td>
-                {{-- <td>{{ $customer->user->status ?? '' }}</td> --}}
-                <td nowrap>
-                    <div class='btn btn-sm-group'>
-                        <a href="{{ route('adminPanel.customers.show', [$customer->id]) }}"
-                            class='btn btn-sm btn-shadow mx-1 btn-transparent-success'><i class="fa fa-eye"></i></a>
-                    </div>
-                </td>
-            </tr>
+        <tr>
+            <td>{{ $customer->id }}</td>
+            <td>{{ $customer->name }}</td>
+            <td>{{ $customer->user->phone ?? '' }}</td>
+            <td>{{ $customer->address }}</td>
+            {{-- <td>{{ $customer->user->status ?? '' }}</td> --}}
+            <td nowrap>
+                <div class='btn btn-sm-group'>
+                    <a href="{{ route('adminPanel.customers.show', [$customer->id]) }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-success'><i class="fa fa-eye"></i></a>
+                </div>
+            </td>
+        </tr>
         @endforeach
     </tbody>
 </table>

@@ -46,7 +46,7 @@ class Driver extends Model
 
     public function getTotalWeightAttribute()
     {
-        return $this->donations()->whereMonth('created_at', Carbon::now()->month)->sum('weight');
+        return $this->weights()->whereDay('date', Carbon::now()->day)->sum('weight');
     }
 
     ########################### Relations #########################
@@ -64,5 +64,12 @@ class Driver extends Model
     public function donations()
     {
         return $this->hasMany(Donation::class);
+    }
+
+
+
+    public function weights()
+    {
+        return $this->hasMany(DriverWeight::class);
     }
 }

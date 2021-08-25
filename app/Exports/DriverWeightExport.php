@@ -11,8 +11,9 @@ class DriverWeightExport implements FromView
 
     public function view(): View
     {
+
         return view('adminPanel.driver_weights.table', [
-            'driver_weights' => DriverWeight::all()
+            'driver_weights' => DriverWeight::get()
         ]);
     }
 }

@@ -1,5 +1,39 @@
+{!! Form::open(['route' => 'adminPanel.driver_weights.dateFilter']) !!}
+
+<div class="form-group row">
+    <div class="col-sm-4">
+        <div class="input-group date" id="kt_datetimepicker_1" data-target-input="nearest">
+            <input type="text" class="form-control datetimepicker-input" placeholder="From" data-target="#kt_datetimepicker_1" name="weight_from" />
+            <div class="input-group-append" data-target="#kt_datetimepicker_1" data-toggle="datetimepicker">
+                <span class="input-group-text">
+                    <i class="ki ki-calendar"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="input-group date" id="kt_datetimepicker_2" data-target-input="nearest">
+            <input type="text" class="form-control datetimepicker-input" placeholder="To" data-target="#kt_datetimepicker_1" name="weight_to" />
+            <div class="input-group-append" data-target="#kt_datetimepicker_2" data-toggle="datetimepicker">
+                <span class="input-group-text">
+                    <i class="ki ki-calendar"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-4">
+        {!! Form::submit('Filter', ['class' => 'form-control btn btn-primary']) !!}
+    </div>
+</div>
+
+{!! Form::close() !!}
+
+
 <!--begin: Datatable-->
 <table class="datatable datatable-bordered datatable-head-custom table-hover" id="kt_datatable">
+
     <thead>
         <tr>
             <th>@lang('models/driverWeights.fields.id')</th>

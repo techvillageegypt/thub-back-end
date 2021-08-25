@@ -77,13 +77,17 @@ Route::group(
             Route::patch('/deactivate/{driver}', 'DriverController@deactivate')->name('drivers.deactivate');
 
             Route::get('driver-weight', 'DriverWeightController@index')->name('driver_weights.index');
+            Route::post('driver-weight-date-filter', 'DriverWeightController@dateFilter')->name('driver_weights.dateFilter');
             Route::patch('driver-update-weight/{id}', 'DriverWeightController@updateDriverWeight')->name('driver_weights.updateDriverWeight');
             Route::get('driver-weight-export', 'DriverWeightController@export')->name('driver_weights.export');
+            Route::get('drivers-export', 'DriverController@export')->name('drivers.export');
+
 
             Route::prefix('customers')->as('customers.')->group(function () {
                 Route::get('/', 'CustomerController@index')->name('index');
                 Route::get('/{customer}', 'CustomerController@show')->name('show');
             });
+            Route::get('customers-export', 'CustomerController@export')->name('customers.export');
 
             Route::prefix('donations')->as('donations.')->group(function () {
                 Route::get('/', 'DonationController@index')->name('index');

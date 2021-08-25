@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\AdminPanel;
 
-use App\Http\Requests\AdminPanel\CreateCustomerRequest;
-use App\Http\Requests\AdminPanel\UpdateCustomerRequest;
-use App\Repositories\AdminPanel\CustomerRepository;
-use App\Http\Controllers\AppBaseController;
-use App\Models\Customer;
-use Illuminate\Http\Request;
+use App\Exports\CustomersExport;
 use Flash;
 use Response;
+use App\Models\Customer;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Controllers\AppBaseController;
+use App\Repositories\AdminPanel\CustomerRepository;
+use App\Http\Requests\AdminPanel\CreateCustomerRequest;
+use App\Http\Requests\AdminPanel\UpdateCustomerRequest;
 
 class CustomerController extends AppBaseController
 {
@@ -54,5 +56,14 @@ class CustomerController extends AppBaseController
         }
 
         return view('adminPanel.customers.show')->with('customer', $customer);
+    }
+
+
+
+
+
+    public function export()
+    {
+        return Excel::download(new CustomersExport, 'customers.xlsx');
     }
 }
