@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\AdminPanel;
 
-use App\Http\Controllers\Controller;
-use App\Models\Donation;
+use App\Exports\DriverWeightExport;
+use OneSignal;
 use App\Models\Driver;
+use App\Models\Donation;
+use Laracasts\Flash\Flash;
 use App\Models\DriverWeight;
 use Illuminate\Http\Request;
-use Laracasts\Flash\Flash;
-use OneSignal;
+use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DriverWeightController extends Controller
 {
@@ -27,5 +29,11 @@ class DriverWeightController extends Controller
         Flash::success('The Driver Weight Updated Successfuly');
 
         return back();
+    }
+
+
+    public function export()
+    {
+        return Excel::download(new DriverWeightExport, 'driver-weights.xlsx');
     }
 }

@@ -78,6 +78,7 @@ Route::group(
 
             Route::get('driver-weight', 'DriverWeightController@index')->name('driver_weights.index');
             Route::patch('driver-update-weight/{id}', 'DriverWeightController@updateDriverWeight')->name('driver_weights.updateDriverWeight');
+            Route::get('driver-weight-export', 'DriverWeightController@export')->name('driver_weights.export');
 
             Route::prefix('customers')->as('customers.')->group(function () {
                 Route::get('/', 'CustomerController@index')->name('index');
