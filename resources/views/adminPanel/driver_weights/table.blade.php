@@ -1,62 +1,30 @@
-<!--begin::Search Form-->
-<div class="mb-7">
-    <div class="row align-items-center">
-        <div class="col-lg-9 col-xl-8">
-            <div class="row align-items-center">
-                <div class="col-md-4 my-2 my-md-0">
-                    <div class="input-icon">
-                        <input type="text" class="form-control" placeholder="Search..." id="kt_datatable_search_query" />
-                        <span><i class="flaticon2-search-1 text-muted"></i></span>
-                    </div>
-                </div>
-                <div class="col-md-4 my-2 my-md-0">
-                    <div class="d-flex align-items-center">
-                        <label class="mr-3 mb-0 d-none d-md-block">@lang('lang.status'):</label>
-                        <select class="form-control" id="kt_datatable_search_status">
-                            <option value="">@lang('lang.all')</option>
-                            <option value="0">New</option>
-                            <option value="1">Picked Up</option>
-                            <option value="2">Delivered</option>
-                            <option value="3">Not Picked Up</option>
-                            <option value="4">Rescheduled</option>
-                            <option value="5">InProgress</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!--end::Search Form-->
 <!--begin: Datatable-->
 <table class="datatable datatable-bordered datatable-head-custom table-hover" id="kt_datatable">
     <thead>
         <tr>
-            <th>@lang('models/donations.fields.id')</th>
-            <th>@lang('models/donations.fields.customer')</th>
-            <th>@lang('models/donations.fields.phone')</th>
-            <th>@lang('models/donations.fields.pickup_date')</th>
-            <th>@lang('models/donations.fields.weight')</th>
-            <th>@lang('models/donations.fields.state')</th>
-            <th>@lang('models/donations.fields.status')</th>
+            <th>@lang('models/driverWeights.fields.id')</th>
+            <th>@lang('models/driverWeights.fields.driver_id')</th>
+            <th>@lang('models/driverWeights.fields.date')</th>
+            <th>@lang('models/driverWeights.fields.weight')</th>
             <th>@lang('crud.action')</th>
         </tr>
     </thead>
     <tbody>
-        @foreach ($donations as $donation)
+        @foreach ($driver_weights as $weight)
         <tr>
-            <td>{{ $donation->id }}</td>
-            <td>{{ $donation->customer->name ?? '' }}</td>
-            <td>{{ $donation->customer->user->phone ?? '' }}</td>
-            <td>{{ $donation->pickup_date }}</td>
-            <td>{{ $donation->weight }}</td>
-            <td>{{ $donation->state->name ?? '' }}</td>
-            <td>{{ $donation->status }}</td>
+            <td>{{ $weight->id }}</td>
+            <td>{{ $weight->driver->name ?? '' }}</td>
+            <td>{{ $weight->date }}</td>
+            <td>{{ $weight->weight }}</td>
 
             <td nowrap>
-                @can('donations view')
-                <a href="{{ route('adminPanel.donations.show', [$donation->id]) }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-success'><i class="fa fa-eye"></i></a>
-                @endcan
+                {!! Form::model($weight, ['route' => ['adminPanel.driver_weights.updateDriverWeight', $weight->id], 'method' => 'patch']) !!}
+
+                {!! Form::text('weight', null, ['class' => 'form-control d-inline','placeholder' => 'Weight']) !!}
+
+                {!! Form::submit('Update', ['class' => 'form-control btn btn-primary mt-4 d-inline']) !!}
+
+                {!! Form::close() !!}
             </td>
         </tr>
         @endforeach
@@ -116,11 +84,7 @@
                             4: {
                                 'title': 'Rescheduled',
                                 'class': ' label-light-primary'
-                            },
-                            5: {
-                                'title': 'InProgress',
-                                'class': ' label-light-success'
-                            },
+                            }
                         };
                         return '<span class="label font-weight-bold label-lg' + status[row.Status].class + ' label-inline">' + status[row.Status].title + '</span>';
                     },

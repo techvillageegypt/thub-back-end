@@ -50,7 +50,7 @@
 
 
 
-                <div class="card card-custom gutter-b col-2 mx-5 float-left" style="height: 220px">
+                <div class="card card-custom gutter-b col-3 mx-5 float-left" style="height: 220px">
                     <div class="card-body text-center">
                         <span class="svg-icon svg-icon-primary svg-icon-5x">
                             <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo1\dist/../src/media/svg/icons\General\User.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -67,7 +67,7 @@
                     </div>
                 </div>
 
-                <div class="card card-custom gutter-b col-2 mx-5 float-left" style="height: 220px">
+                <div class="card card-custom gutter-b col-3 mx-5 float-left" style="height: 220px">
                     <div class="card-body text-center">
                         <span class="svg-icon svg-icon-5x svg-icon-success">
                             <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Group.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -84,7 +84,7 @@
                     </div>
                 </div>
 
-                <div class="card card-custom gutter-b col-2 mx-5 float-left" style="height: 220px">
+                <div class="card card-custom gutter-b col-3 mx-5 float-left" style="height: 220px">
                     <div class="card-body text-center">
                         <span class="svg-icon svg-icon-info svg-icon-5x">
                             <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo1\dist/../src/media/svg/icons\Shopping\Cart1.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -101,7 +101,7 @@
                     </div>
                 </div>
 
-                <div class="card card-custom gutter-b col-2 mx-5 float-left" style="height: 220px">
+                <div class="card card-custom gutter-b col-3 mx-5 float-left" style="height: 220px">
                     <div class="card-body text-center">
                         <span class="svg-icon svg-icon-danger svg-icon-5x">
                             <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo1\dist/../src/media/svg/icons\General\Heart.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -117,7 +117,7 @@
                     </div>
                 </div>
 
-                <div class="card card-custom gutter-b col-2 mx-5 float-left" style="height: 220px">
+                <div class="card card-custom gutter-b col-3 mx-5 float-left" style="height: 220px">
                     <div class="card-body text-center">
                         <span class="svg-icon svg-icon-dark svg-icon-5x">
                             <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo1\dist/../src/media/svg/icons\Clothes\T-Shirt.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -130,6 +130,23 @@
                         <div class="text-dark font-weight-bolder font-size-h2 mt-3">{{$data['products_count']}}</div>
 
                         <a href="{{route('adminPanel.products.index')}}" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-5">Products Count</a>
+                    </div>
+                </div>
+
+                <div class="card card-custom gutter-b col-3 mx-5 float-left" style="height: 220px">
+                    <div class="card-body text-center">
+                        <span class="svg-icon svg-icon-primary svg-icon-5x">
+                            <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo1\dist/../src/media/svg/icons\Clothes\T-Shirt.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <rect x="0" y="0" width="24" height="24" />
+                                    <path d="M5.5,2 L18.5,2 C19.3284271,2 20,2.67157288 20,3.5 L20,6.5 C20,7.32842712 19.3284271,8 18.5,8 L5.5,8 C4.67157288,8 4,7.32842712 4,6.5 L4,3.5 C4,2.67157288 4.67157288,2 5.5,2 Z M11,4 C10.4477153,4 10,4.44771525 10,5 C10,5.55228475 10.4477153,6 11,6 L13,6 C13.5522847,6 14,5.55228475 14,5 C14,4.44771525 13.5522847,4 13,4 L11,4 Z" fill="#000000" opacity="0.3" />
+                                    <path d="M5.5,9 L18.5,9 C19.3284271,9 20,9.67157288 20,10.5 L20,13.5 C20,14.3284271 19.3284271,15 18.5,15 L5.5,15 C4.67157288,15 4,14.3284271 4,13.5 L4,10.5 C4,9.67157288 4.67157288,9 5.5,9 Z M11,11 C10.4477153,11 10,11.4477153 10,12 C10,12.5522847 10.4477153,13 11,13 L13,13 C13.5522847,13 14,12.5522847 14,12 C14,11.4477153 13.5522847,11 13,11 L11,11 Z M5.5,16 L18.5,16 C19.3284271,16 20,16.6715729 20,17.5 L20,20.5 C20,21.3284271 19.3284271,22 18.5,22 L5.5,22 C4.67157288,22 4,21.3284271 4,20.5 L4,17.5 C4,16.6715729 4.67157288,16 5.5,16 Z M11,18 C10.4477153,18 10,18.4477153 10,19 C10,19.5522847 10.4477153,20 11,20 L13,20 C13.5522847,20 14,19.5522847 14,19 C14,18.4477153 13.5522847,18 13,18 L11,18 Z" fill="#000000" />
+                                </g>
+                            </svg>
+                            <!--end::Svg Icon--></span>
+                        <div class="text-dark font-weight-bolder font-size-h2 mt-3">{{$data['total_daily_weight']}}</div>
+
+                        <a href="{{route('adminPanel.driver_weights.index')}}" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-5">Daily Weight</a>
                     </div>
                 </div>
 
@@ -343,16 +360,18 @@
     var pichedupDonations       = {{$data['pichedup_donations_count']}};
     var deliveredDonations      = {{$data['delivered_donations_count']}};
     var notPickedupDonations    = {{$data['not_ickedup_donations_count']}};
+    var rescheduleDonations     = {{$data['reschedule_donations_count']}};
+    var inProgressDonations     = {{$data['inProgress_donations_count']}};
 
 	var _demo12 = function () {
 		const apexChart = "#chart_12";
 		var options = {
-			series: [newDonations, pichedupDonations, deliveredDonations, notPickedupDonations],
+			series: [newDonations, pichedupDonations, deliveredDonations, notPickedupDonations, rescheduleDonations, inProgressDonations],
 			chart: {
 				width: 380,
 				type: 'pie',
 			},
-			labels: ['New', 'Piched Up', 'Delivered', 'Not Picked Up'],
+			labels: ['New', 'Piched Up', 'Delivered', 'Not Picked Up', 'Reschedule', 'InProgress'],
 			responsive: [{
 				breakpoint: 480,
 				options: {
@@ -364,7 +383,7 @@
 					}
 				}
 			}],
-			colors: [primary, warning,success , danger]
+			colors: [primary, warning, success, danger, info, success]
 		};
 
 		var chart = new ApexCharts(document.querySelector(apexChart), options);

@@ -167,9 +167,13 @@ class ShopController extends Controller
             ->where('id', '!=', $data['product']->id)
             ->limit(20)
             ->get();
-
-        $data['related_products'] = $products->random($products->count() - 1);
-        $data['related_products']->all();
+        if ($products->count() > 1) {
+            $data['related_products'] = $products->random($products->count() - 1);
+            $data['related_products']->all();
+        } else {
+            $data['related_products'] = Product::with('photos')->limit(20)->get()->random(Product::with('photos')->limit(20)->get()->count() - 1);
+            $data['related_products']->all();
+        }
 
         return response()->json($data);
     }

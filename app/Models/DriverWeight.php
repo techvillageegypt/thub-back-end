@@ -19,4 +19,10 @@ class DriverWeight extends Model
         'date',
         'weight',
     ];
+
+
+    public function driver()
+    {
+        return $this->belongsTo(Driver::class, 'driver_id', 'id');
+    }
 }

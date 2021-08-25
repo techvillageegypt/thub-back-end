@@ -27,7 +27,7 @@ class DonationController extends Controller
 
     public function assign_driver(Donation $donation)
     {
-        $donation->update(['driver_id' => request('driver_id')]);
+        $donation->update(['driver_id' => request('driver_id'), 'status' => 5]);
         $driver = Driver::find(request('driver_id'));
 
         OneSignal::sendNotificationToUser(

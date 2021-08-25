@@ -76,6 +76,8 @@ Route::group(
             Route::resource('drivers', DriverController::class);
             Route::patch('/deactivate/{driver}', 'DriverController@deactivate')->name('drivers.deactivate');
 
+            Route::get('driver-weight', 'DriverWeightController@index')->name('driver_weights.index');
+            Route::patch('driver-update-weight/{id}', 'DriverWeightController@updateDriverWeight')->name('driver_weights.updateDriverWeight');
 
             Route::prefix('customers')->as('customers.')->group(function () {
                 Route::get('/', 'CustomerController@index')->name('index');
