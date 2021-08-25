@@ -18,6 +18,7 @@
                             <option value="1">Picked Up</option>
                             <option value="2">Delivered</option>
                             <option value="3">Not Picked Up</option>
+                            <option value="4">Rescheduled</option>
                         </select>
                     </div>
                 </div>
@@ -110,7 +111,7 @@
                             3: {
                                 'title': 'Not Delivered',
                                 'class': ' label-light-danger'
-                            }
+                            },
                             4: {
                                 'title': 'Rescheduled',
                                 'class': ' label-light-primary'
