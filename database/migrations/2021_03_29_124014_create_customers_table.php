@@ -50,6 +50,7 @@ class CreateCustomersTable extends Migration
             $table->string('apartment_number')->nullable();
             $table->unsignedTinyInteger('status')->default(0)->comment('0 => New, 1 => Picked up, 2 => Delevered');
             $table->text('driver_notes')->nullable();
+            $table->text('customer_notes')->nullable();
             $table->unsignedInteger('weight')->nullable();
 
             $table->timestamps();

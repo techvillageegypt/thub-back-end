@@ -38,6 +38,7 @@ class CreateDriversTable extends Migration
             $table->unsignedInteger('weight')->nullable();
 
             // $table->foreign('driver_id')->references('id')->on('drivers')->onDelete('cascade');
+
         });
     }
 

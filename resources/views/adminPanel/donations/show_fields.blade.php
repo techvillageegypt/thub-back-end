@@ -66,6 +66,12 @@
     <b>{{ $donation->driver_notes}}</b>
 </div>
 
+<!-- customer_notes Field -->
+<div class="form-group">
+    {!! Form::label('customer_notes', __('models/donations.fields.customer_notes') . ':') !!}
+    <b>{{ $donation->customer_notes}}</b>
+</div>
+
 <!-- weight Field -->
 <div class="form-group">
     {!! Form::label('weight', __('models/donations.fields.weight') . ':') !!}

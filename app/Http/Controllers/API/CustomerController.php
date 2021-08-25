@@ -118,20 +118,21 @@ class CustomerController extends Controller
         // ]);
 
         $data = request()->validate([
-            'name'              => 'nullable|string|max:191',
-            'address'           => 'nullable|string|max:191',
-            'lat'               => 'nullable|string|max:191',
-            'long'              => 'nullable|string|max:191',
-            'state_id'          => 'nullable|exists:states,id',
-            'housing_type'      => 'nullable|in:1,2',
-            'house_number'      => 'nullable|numeric',
-            'building_number'   => 'nullable|numeric',
-            'apartment_number'  => 'nullable|numeric',
-            'pickup_date'       => 'nullable|date',
-            'photos'            => 'nullable|array',
-            'photos.*'          => 'nullable|image|mimes:png,jpg,jpeg',
-            'donation_types'    => 'required|array',
-            'donation_types.*'  => 'required|exists:donation_types,id',
+            'name'                     => 'nullable|string|max:191',
+            'address'                  => 'nullable|string|max:191',
+            'lat'                      => 'nullable|string|max:191',
+            'long'                     => 'nullable|string|max:191',
+            'housing_type'             => 'nullable|in:1,2',
+            'state_id'                 => 'nullable|exists:states,id',
+            'house_number'             => 'nullable|numeric',
+            'building_number'          => 'nullable|numeric',
+            'apartment_number'         => 'nullable|numeric',
+            'pickup_date'              => 'nullable|date',
+            'customer_notes'           => 'nullable|string|max:191',
+            'photos'                   => 'nullable|array',
+            'photos.*'                 => 'nullable|image|mimes:png,jpg,jpeg',
+            'donation_types'           => 'required|array',
+            'donation_types.*'         => 'required|exists:donation_types,id',
         ]);
 
         $data['customer_id'] = $customer->userable->id;
@@ -149,6 +150,7 @@ class CustomerController extends Controller
                 'lat'               => $data['lat'] ?? null,
                 'long'              => $data['long'] ?? null,
                 'pickup_date'       => $data['pickup_date'] ?? null,
+                'customer_notes'    => $data['customer_notes'] ?? null,
             ]);
         } else {
             $customer->userable->update([
@@ -172,6 +174,7 @@ class CustomerController extends Controller
                 'apartment_number'  => $data['apartment_number'] ?? null,
                 'customer_id'       => $data['customer_id'] ?? null,
                 'pickup_date'       => $data['pickup_date'] ?? null,
+                'customer_notes'    => $data['customer_notes'] ?? null,
             ]);
         }
         if (request('photos')) {
