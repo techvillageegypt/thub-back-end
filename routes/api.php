@@ -92,6 +92,8 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('customer-wallet', 'CustomerController@wallet');
     Route::get('customer-donations', 'CustomerController@donations');
 
+    Route::post('customer-feedback/{Donation}', 'CustomerController@donationFeedback');
+
     // Rate
     Route::post('add-or-update-rate', 'CustomerController@addOrUpdateRate');
 

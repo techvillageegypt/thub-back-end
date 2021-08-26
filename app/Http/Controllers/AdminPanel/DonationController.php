@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\AdminPanel;
 
-use App\Http\Controllers\Controller;
-use App\Models\Donation;
-use App\Models\Driver;
-use Illuminate\Http\Request;
-use Laracasts\Flash\Flash;
+use App\Exports\DonationsExport;
 use OneSignal;
+use Carbon\Carbon;
+use App\Models\Driver;
+use App\Models\Donation;
+use Laracasts\Flash\Flash;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DonationController extends Controller
 {
@@ -51,5 +54,26 @@ class DonationController extends Controller
         Flash::success('The Donation Order Rescheduled Successfuly');
 
         return back();
+    }
+
+
+    public function dateFilter()
+    {
+
+        $fromDate = (new Carbon(request('donation_from')))->format('y-m-d G:i:s');
+        $toDate = (new Carbon(request('donation_to')))->format('y-m-d G:i:s');
+
+        $donationsQuery = Donation::query();
+        if (request()->filled('donation_from')) {
+            $donationsQuery->whereBetween('pickup_date', [$fromDate, $toDate]);
+        }
+        $donations = $donationsQuery->get();
+
+        return view('adminPanel.donations.index', compact('donations'));
+    }
+
+    public function export()
+    {
+        return Excel::download(new DonationsExport, 'donations.xlsx');
     }
 }

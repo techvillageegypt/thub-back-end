@@ -49,11 +49,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <link href="{{asset('metronic/assets/css/themes/layout/aside/dark.rtl.css?v=7.0.6')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css" />
 
-    <style>
-        * {
-            font-family: 'Tajawal', sans-serif;
-        }
-    </style>
+
 
     <script>
         $(document).ready(function() {
@@ -101,6 +97,19 @@ License: You must have a valid license purchased only from themeforest(the above
 
     @yield('styles')
 
+    <style>
+        /* * {
+            font-family: 'Tajawal', sans-serif;
+        } */
+
+        span.menu-text {
+            font-size: 1.2rem !important;
+        }
+
+        ul.breadcrumb {
+            font-size: 1.5rem !important;
+        }
+    </style>
 </head>
 <!--end::Head-->
 

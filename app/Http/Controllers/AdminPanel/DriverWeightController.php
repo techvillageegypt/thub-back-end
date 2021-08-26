@@ -22,22 +22,6 @@ class DriverWeightController extends Controller
         return view('adminPanel.driver_weights.index', compact('driver_weights'));
     }
 
-    public function dateFilter()
-    {
-
-        $fromDate = (new Carbon(request('weight_from')))->format('y-m-d G:i:s');
-        $toDate = (new Carbon(request('weight_to')))->format('y-m-d G:i:s');
-
-        // dd($fromDate);
-        $weightsQuery = DriverWeight::query();
-        if (request()->filled('weight_from')) {
-            $weightsQuery->whereBetween('date', [$fromDate, $toDate]);
-        }
-        $driver_weights = $weightsQuery->get();
-
-        return view('adminPanel.driver_weights.index', compact('driver_weights'));
-    }
-
     public function updateDriverWeight($id)
     {
         $driverWeight = DriverWeight::find($id);
@@ -48,6 +32,20 @@ class DriverWeightController extends Controller
         return back();
     }
 
+    public function dateFilter()
+    {
+
+        $fromDate = (new Carbon(request('weight_from')))->format('y-m-d G:i:s');
+        $toDate = (new Carbon(request('weight_to')))->format('y-m-d G:i:s');
+
+        $weightsQuery = DriverWeight::query();
+        if (request()->filled('weight_from')) {
+            $weightsQuery->whereBetween('date', [$fromDate, $toDate]);
+        }
+        $driver_weights = $weightsQuery->get();
+
+        return view('adminPanel.driver_weights.index', compact('driver_weights'));
+    }
 
     public function export()
     {

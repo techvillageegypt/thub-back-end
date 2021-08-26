@@ -48,10 +48,17 @@ class CreateCustomersTable extends Migration
             $table->string('building_number')->nullable();
 
             $table->string('apartment_number')->nullable();
-            $table->unsignedTinyInteger('status')->default(0)->comment('0 => New, 1 => Picked up, 2 => Delevered');
+            $table->unsignedTinyInteger('status')->default(0)->comment('0 => New, 1 => Picked up, 2 => Delivered, 3 => Not Picked up, 4 => Reschedule, 5 => InProgress');
             $table->text('driver_notes')->nullable();
             $table->text('customer_notes')->nullable();
-            $table->unsignedInteger('weight')->nullable();
+
+            $table->unsignedInteger('bags')->nullable();
+            $table->unsignedInteger('plastic_bags')->nullable();
+            $table->unsignedInteger('cartons')->nullable();
+            $table->unsignedInteger('cars')->nullable();
+
+            $table->unsignedTinyInteger('feedback')->nullable();
+            $table->text('feedback_notes')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

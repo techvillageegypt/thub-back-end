@@ -4,9 +4,12 @@ namespace App\Http\Controllers\AdminPanel;
 
 use Flash;
 use Response;
+use Carbon\Carbon;
 use App\Models\Order;
 use App\Models\Driver;
 use Illuminate\Http\Request;
+use App\Exports\OrdersExport;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\AppBaseController;
 use App\Repositories\AdminPanel\OrderRepository;
 use App\Http\Requests\AdminPanel\CreateOrderRequest;
@@ -175,5 +178,26 @@ class OrderController extends AppBaseController
         Flash::success('The Shop Order Assigned Successfuly');
 
         return back();
+    }
+
+
+    public function dateFilter()
+    {
+
+        $fromDate = (new Carbon(request('order_from')))->format('y-m-d G:i:s');
+        $toDate = (new Carbon(request('order_to')))->format('y-m-d G:i:s');
+
+        $ordersQuery = Order::query();
+        if (request()->filled('order_from')) {
+            $ordersQuery->whereBetween('created_at', [$fromDate, $toDate]);
+        }
+        $orders = $ordersQuery->get();
+
+        return view('adminPanel.orders.index', compact('orders'));
+    }
+
+    public function export()
+    {
+        return Excel::download(new OrdersExport, 'orders.xlsx');
     }
 }

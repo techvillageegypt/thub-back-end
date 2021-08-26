@@ -95,6 +95,8 @@ Route::group(
                 Route::patch('/assign-driver/{donation}', 'DonationController@assign_driver')->name('assign_driver');
                 Route::patch('/update-pickup-date/{donation}', 'DonationController@updatePickupDate')->name('updatePickupDate');
             });
+            Route::post('donations-date-filter', 'DonationController@dateFilter')->name('donations.dateFilter');
+            Route::get('donations-export', 'DonationController@export')->name('donations.export');
 
             Route::resource('socialLinks', SocialLinkController::class);
             Route::post('ckeditor/upload', 'CkeditorController@upload')->name('ckeditor.upload');
@@ -130,6 +132,9 @@ Route::group(
 
             Route::resource('orders', OrderController::class);
             Route::patch('/assign-driver/{order}', 'OrderController@assign_driver')->name('orders.assign_driver');
+
+            Route::post('orders-date-filter', 'OrderController@dateFilter')->name('orders.dateFilter');
+            Route::get('orders-export', 'OrderController@export')->name('orders.export');
 
             Route::patch('orders/delevered/{order}', 'OrderController@delevered')->name('orders.delevered');
         });

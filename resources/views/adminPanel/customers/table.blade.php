@@ -32,6 +32,7 @@
             <th>@lang('models/customers.fields.id')</th>
             <th>@lang('models/customers.fields.name')</th>
             <th>@lang('models/customers.fields.phone')</th>
+            <th>@lang('models/customers.fields.created_at')</th>
             <th>@lang('models/customers.fields.address')</th>
             {{-- <th>@lang('models/customers.fields.status')</th> --}}
             <th>@lang('crud.action')</th>
@@ -43,6 +44,7 @@
             <td>{{ $customer->id }}</td>
             <td>{{ $customer->name }}</td>
             <td>{{ $customer->user->phone ?? '' }}</td>
+            <td>{{ $customer->created_at }}</td>
             <td>{{ $customer->address }}</td>
             {{-- <td>{{ $customer->user->status ?? '' }}</td> --}}
             <td nowrap>

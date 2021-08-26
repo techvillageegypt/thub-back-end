@@ -23,5 +23,14 @@ return array(
         'pickup_date'           => 'Pickup Date',
         'created_at'            => 'Created At',
         'updated_at'            => 'Updated At',
+
+
+        'bags'                  => 'Bags',
+        'plastic_bags'          => 'Plastic Bags',
+        'cartons'               => 'Cartons',
+        'cars'                  => 'Cars',
+        'feedback'              => 'Feedback',
+        'feedback_notes'        => 'Feedback Notes',
+
     ),
 );

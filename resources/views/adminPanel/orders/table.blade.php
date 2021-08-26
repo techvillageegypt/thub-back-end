@@ -26,6 +26,41 @@
     </div>
 </div>
 <!--end::Search Form-->
+
+{{-- Date Filter --}}
+{!! Form::open(['route' => 'adminPanel.orders.dateFilter']) !!}
+
+<div class="form-group row">
+    <div class="col-sm-4">
+        <div class="input-group date" id="kt_datetimepicker_1" data-target-input="nearest">
+            <input type="text" class="form-control datetimepicker-input" placeholder="From" data-target="#kt_datetimepicker_1" name="order_from" />
+            <div class=" input-group-append" data-target="#kt_datetimepicker_1" data-toggle="datetimepicker">
+                <span class="input-group-text">
+                    <i class="ki ki-calendar"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="input-group date" id="kt_datetimepicker_2" data-target-input="nearest">
+            <input type="text" class="form-control datetimepicker-input" placeholder="To" data-target="#kt_datetimepicker_2" name="order_to" />
+            <div class="input-group-append" data-target="#kt_datetimepicker_2" data-toggle="datetimepicker">
+                <span class="input-group-text">
+                    <i class="ki ki-calendar"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-4">
+        {!! Form::submit('Filter', ['class' => 'form-control btn btn-primary']) !!}
+    </div>
+</div>
+
+{!! Form::close() !!}
+{{-- End Date Filter --}}
+
 <!--begin: Datatable-->
 <table class="datatable datatable-bordered datatable-head-custom table-hover" id="kt_datatable">
     <thead>
@@ -34,10 +69,10 @@
             <th>@lang('models/orders.fields.name')</th>
             <th>@lang('models/orders.fields.address')</th>
             <th>@lang('models/orders.fields.phone')</th>
+            <th>@lang('models/orders.fields.created_at')</th>
             <th>@lang('models/orders.fields.status')</th>
             <th>@lang('models/orders.fields.payment_method')</th>
             <th>@lang('models/orders.fields.total')</th>
-            <th>@lang('models/orders.fields.created_at')</th>
             <th>@lang('crud.action')</th>
         </tr>
     </thead>
@@ -48,10 +83,10 @@
             <td>{{ $order->name }}</td>
             <td>{{ Str::limit($order->address, 40, '...') }}</td>
             <td>{{ $order->phone }}</td>
+            <td>{{ $order->created_at }}</td>
             <td>{{ $order->status }}</td>
             <td>{{ $order->payment_method }}</td>
             <td>{{ $order->total }} @lang('lang.currency')</td>
-            <td>{{ $order->created_at->diffForHumans() }}</td>
             <td nowrap>
                 <div class='btn-group'>
                     @can('orders view')

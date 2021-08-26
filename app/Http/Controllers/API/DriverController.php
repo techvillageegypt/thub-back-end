@@ -22,6 +22,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DriverWeight;
 use Grimzy\LaravelMysqlSpatial\Types\Point;
 use Illuminate\Support\Facades\DB;
+use OneSignal;
 
 class DriverController extends Controller
 {
@@ -57,10 +58,19 @@ class DriverController extends Controller
     //////////////// Donations //////////////////
     public function picked_up($donation)
     {
-        // request()->validate(['weight' => 'required|numeric']);
+        $validated = request()->validate([
+            'driver_notes'      => 'nullable|string',
+            'bags'              => 'nullable|numeric',
+            'plastic_bags'      => 'nullable|numeric',
+            'cartons'           => 'nullable|numeric',
+            'cars'              => 'nullable|numeric',
+        ]);
+        $validated['status'] = 1;
+
         $donation_data = Donation::find($donation);
 
-        $donation_data->update(['status' => 1, 'driver_notes' => request('driver_notes'), 'weight' => request('weight')]);
+        $donation_data->update($validated);
+
         $donation_data->load('photos', 'types.donationType', 'customer.user', 'state');
 
         return response()->json(['msg' => 'status updated successfuly', $donation_data]);
@@ -102,6 +112,22 @@ class DriverController extends Controller
             'data'      => $donation_data,
             'text'      => __('lang.donation_delivered'),
         ]));
+
+        $notificationData = [
+            'bags'              => $donation_data->bags,
+            'plastic_bags'      => $donation_data->plastic_bags,
+            'cartons'           => $donation_data->cartons,
+            'cars'              => $donation_data->cars,
+        ];
+
+        OneSignal::sendNotificationToUser(
+            __('lang.donation_delivered'),
+            $donation_data->customer->user->device_id,
+            $url = null,
+            $data = $notificationData,
+            $buttons = null,
+            $schedule = null
+        );
 
         return response()->json(['msg' => 'status updated successfuly', $donation_data]);
     }

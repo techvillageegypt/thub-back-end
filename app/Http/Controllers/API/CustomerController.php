@@ -205,6 +205,21 @@ class CustomerController extends Controller
         return $data['donations']->load('photos', 'types.donationType');
     }
 
+    public function donationFeedback($donation)
+    {
+
+        $validated = request()->validate([
+            'feedback'       => 'nullable|numeric',
+            'feedback_notes' => 'nullable|string'
+        ]);
+        $donation_data = Donation::find($donation);
+
+        $donation_data->update($validated);
+        $donation_data->load('photos', 'types.donationType');
+
+        return response()->json(compact('donation_data'));
+    }
+
     //--------------------- End Donation -----------------------//
 
 

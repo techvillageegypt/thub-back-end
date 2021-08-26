@@ -28,6 +28,41 @@
     </div>
 </div>
 <!--end::Search Form-->
+
+{{-- Date Filter --}}
+{!! Form::open(['route' => 'adminPanel.donations.dateFilter']) !!}
+
+<div class="form-group row">
+    <div class="col-sm-4">
+        <div class="input-group date" id="kt_datetimepicker_1" data-target-input="nearest">
+            <input type="text" class="form-control datetimepicker-input" placeholder="From" data-target="#kt_datetimepicker_1" name="donation_from" />
+            <div class=" input-group-append" data-target="#kt_datetimepicker_1" data-toggle="datetimepicker">
+                <span class="input-group-text">
+                    <i class="ki ki-calendar"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="input-group date" id="kt_datetimepicker_2" data-target-input="nearest">
+            <input type="text" class="form-control datetimepicker-input" placeholder="To" data-target="#kt_datetimepicker_2" name="donation_to" />
+            <div class="input-group-append" data-target="#kt_datetimepicker_2" data-toggle="datetimepicker">
+                <span class="input-group-text">
+                    <i class="ki ki-calendar"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-4">
+        {!! Form::submit('Filter', ['class' => 'form-control btn btn-primary']) !!}
+    </div>
+</div>
+
+{!! Form::close() !!}
+{{-- End Date Filter --}}
+
 <!--begin: Datatable-->
 <table class="datatable datatable-bordered datatable-head-custom table-hover" id="kt_datatable">
     <thead>
@@ -36,7 +71,6 @@
             <th>@lang('models/donations.fields.customer')</th>
             <th>@lang('models/donations.fields.phone')</th>
             <th>@lang('models/donations.fields.pickup_date')</th>
-            <th>@lang('models/donations.fields.weight')</th>
             <th>@lang('models/donations.fields.state')</th>
             <th>@lang('models/donations.fields.status')</th>
             <th>@lang('crud.action')</th>
@@ -46,10 +80,9 @@
         @foreach ($donations as $donation)
         <tr>
             <td>{{ $donation->id }}</td>
-            <td>{{ $donation->customer->name ?? '' }}</td>
+            <td>{{ $donation->name ?? $donation->customer->name }}</td>
             <td>{{ $donation->customer->user->phone ?? '' }}</td>
             <td>{{ $donation->pickup_date }}</td>
-            <td>{{ $donation->weight }}</td>
             <td>{{ $donation->state->name ?? '' }}</td>
             <td>{{ $donation->status }}</td>
 

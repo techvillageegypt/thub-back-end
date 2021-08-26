@@ -9,5 +9,6 @@ return array(
         'driver_id' => 'Driver',
         'date' => 'Date',
         'weight' => 'Weight',
+        'update_weight' => 'Update Weight',
     ),
 );

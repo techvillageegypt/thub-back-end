@@ -72,11 +72,55 @@
     <b>{{ $donation->customer_notes}}</b>
 </div>
 
-<!-- weight Field -->
+<!-- bags Field -->
 <div class="form-group">
-    {!! Form::label('weight', __('models/donations.fields.weight') . ':') !!}
-    <b>{{ $donation->weight}}</b>
+    {!! Form::label('bags', __('models/donations.fields.bags') . ':') !!}
+    <b>{{ $donation->bags}}</b>
 </div>
+
+<!-- plastic_bags Field -->
+<div class="form-group">
+    {!! Form::label('plastic_bags', __('models/donations.fields.plastic_bags') . ':') !!}
+    <b>{{ $donation->plastic_bags}}</b>
+</div>
+
+<!-- cartons Field -->
+<div class="form-group">
+    {!! Form::label('cartons', __('models/donations.fields.cartons') . ':') !!}
+    <b>{{ $donation->cartons}}</b>
+</div>
+
+<!-- cars Field -->
+<div class="form-group">
+    {!! Form::label('cars', __('models/donations.fields.cars') . ':') !!}
+    <b>{{ $donation->cars}}</b>
+</div>
+
+<!-- feedback Field -->
+<div class="form-group">
+    {!! Form::label('feedback', __('models/donations.fields.feedback') . ':') !!}
+    @switch($donation->feedback)
+    @case(1)
+    <b>Sad</b> <i class="far fa-frown-open fa-2x pl-2"></i>
+    @break
+    @case(2)
+    <b>Good</b> <i class="far fa-smile fa-2x pl-2"></i>
+    @break
+    @case(3)
+    <b>Excellent</b> <i class="far fa-smile-beam fa-2x pl-2"></i>
+    @break
+    @default
+
+    @endswitch
+    {{-- <b>{{ $donation->feedback}}</b> --}}
+</div>
+
+<!-- feedback_notes Field -->
+<div class="form-group">
+    {!! Form::label('feedback_notes', __('models/donations.fields.feedback_notes') . ':') !!}
+    <b>{{ $donation->feedback_notes}}</b>
+</div>
+
 
 
 <!-- Created At Field -->
@@ -126,6 +170,7 @@
 
         <br>
     </div>
+    @if ($donation->status == 4)
     <div class="col-6">
 
         <h3>Update Pickup Date</h3>
@@ -150,4 +195,5 @@
 
         {!! Form::close() !!}
     </div>
+    @endif
 </div>

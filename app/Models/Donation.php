@@ -26,10 +26,15 @@ class Donation extends Model
         'building_number',
         'apartment_number',
         'pickup_date',
-        'status',  // 0 => New, 1 => Picked up, 2 => Delivered, 3 => Not Picked up
+        'status',  // 0 => New, 1 => Picked up, 2 => Delivered, 3 => Not Picked up, 4 => Reschedule, 5 => InProgress
         'driver_notes',
         'customer_notes',
-        'weight',
+        'bags',
+        'plastic_bags',
+        'cartons',
+        'cars',
+        'feedback',
+        'feedback_notes',
     ];
 
     ############################## Appends ###############################
@@ -38,7 +43,7 @@ class Donation extends Model
 
     public function getStatusTextAttribute()
     {
-        switch ($this->attributes['status']) {
+        switch ($this->status) {
             case 0:
                 return 'New';
                 break;

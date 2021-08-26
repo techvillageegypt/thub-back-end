@@ -1,3 +1,4 @@
+{{-- Date Filter --}}
 {!! Form::open(['route' => 'adminPanel.driver_weights.dateFilter']) !!}
 
 <div class="form-group row">
@@ -14,7 +15,7 @@
 
     <div class="col-sm-4">
         <div class="input-group date" id="kt_datetimepicker_2" data-target-input="nearest">
-            <input type="text" class="form-control datetimepicker-input" placeholder="To" data-target="#kt_datetimepicker_1" name="weight_to" />
+            <input type="text" class="form-control datetimepicker-input" placeholder="To" data-target="#kt_datetimepicker_2" name="weight_to" />
             <div class="input-group-append" data-target="#kt_datetimepicker_2" data-toggle="datetimepicker">
                 <span class="input-group-text">
                     <i class="ki ki-calendar"></i>
@@ -29,6 +30,7 @@
 </div>
 
 {!! Form::close() !!}
+{{-- End Date Filter --}}
 
 
 <!--begin: Datatable-->
@@ -40,7 +42,7 @@
             <th>@lang('models/driverWeights.fields.driver_id')</th>
             <th>@lang('models/driverWeights.fields.date')</th>
             <th>@lang('models/driverWeights.fields.weight')</th>
-            <th>@lang('crud.action')</th>
+            <th>@lang('models/driverWeights.fields.update_weight')</th>
         </tr>
     </thead>
     <tbody>
