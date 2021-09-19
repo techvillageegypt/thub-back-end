@@ -40,14 +40,14 @@ class MainController extends Controller
     {
 
 
-        OneSignal::sendNotificationToAll(
-            "Some Message",
-            $url = null,
-            $data = null,
-            $buttons = null,
-            $schedule = null,
-            'ionsgsdngsdoinfweonfweonfserofnesefoiei'
-        );
+        // OneSignal::sendNotificationToAll(
+        //     "Some Message",
+        //     $url = null,
+        //     $data = null,
+        //     $buttons = null,
+        //     $schedule = null,
+        //     'ionsgsdngsdoinfweonfweonfserofnesefoiei'
+        // );
 
         return ('Done');
     }

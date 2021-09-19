@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('test', 'MainController@test');
 
+
 // Authentication
 // Route::post('forgotPassword', '\App\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail');
 
