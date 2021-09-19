@@ -67,10 +67,19 @@ class MainController extends Controller
         //     echo $e->getMessage();
         // }
 
-        $phone  = '569919179';
-        $msg     = "'test msg'";
+        // $phone  = '569919179';
+        // $msg     = "test msg";
 
-        $this->sendSms($phone, $msg, env('APP_NAME'));
+        // $this->sendSms($phone, $msg, env('APP_NAME'));
+
+        // Send OTP To User.
+        $code = '1a2b';
+        $phone  = '569919179';
+        $msg     = " $code is your verification code.
+        {*code*}";
+        // dd($msg);
+        $this->sendOtp($phone, $msg);
+        // End Send OTP To User.
         
         return ('Done');
     }

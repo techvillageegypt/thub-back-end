@@ -31,7 +31,7 @@ trait SmsTrait
 
 
 
-    public function sendOtp($phone, $msg, $from) {
+    public function sendOtp($phone, $msg) {
            // get your REST API keys from MXT https://mxt.smsglobal.com/integrations
         \SMSGlobal\Credentials::set(env('SMSGLOBAL_APP_KEY'), env('SMSGLOBAL_APP_SECRET'));
 
@@ -39,7 +39,7 @@ trait SmsTrait
 
         try {
             // $response = $otp->send('DESTINATION_NUMBER', '{*code*} is your SMSGlobal verification code.');
-            $response = $otp->send($phone, $msg);
+            $response = $otp->send($phone, $msg, 'Thub');
             print_r($response);
         } catch (\Exception $e) {
             echo $e->getMessage();
