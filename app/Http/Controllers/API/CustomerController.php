@@ -15,10 +15,11 @@ use App\Helpers\HelperFunctionTrait;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductRate;
+use App\Helpers\SmsTrait;
 
 class CustomerController extends Controller
 {
-    use HelperFunctionTrait;
+    use HelperFunctionTrait, SmsTrait;
 
     public function test()
     {
@@ -53,6 +54,13 @@ class CustomerController extends Controller
         $user = auth('api')->user();
 
         $user->update(['verify_code' => $this->randomCode(4)]);
+
+        // Send OTP To User.
+        $phone  = $user->phone;
+        $msg     = "Your verification code is: {*$user->verify_code*}.";
+
+        $this->sendSms($phone, $msg, env('APP_NAME'));
+        // End Send OTP To User.
 
         return response()->json(['msg' => 'A confirmation code has been sent, check your inbox', 'code' => $user->verify_code]);
     }

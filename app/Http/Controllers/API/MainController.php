@@ -32,10 +32,13 @@ use App\Models\Notification;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Helpers\SmsTrait;
 use OneSignal;
 
 class MainController extends Controller
 {
+    use SmsTrait;
+
     public function test()
     {
 
@@ -49,6 +52,26 @@ class MainController extends Controller
         //     'ionsgsdngsdoinfweonfweonfserofnesefoiei'
         // );
 
+
+        // require_once __DIR__ . '/vendor/autoload.php';
+
+        // // get your REST API keys from MXT https://mxt.smsglobal.com/integrations
+        // \SMSGlobal\Credentials::set('YOUR_API_KEY', 'YOUR_SECRET_KEY');
+
+        // $sms = new \SMSGlobal\Resource\Sms();
+
+        // try {
+        //     $response = $sms->sendToOne('DESTINATION_NUMBER', 'This is a test message.');
+        //     print_r($response['messages'][0]);
+        // } catch (\Exception $e) {
+        //     echo $e->getMessage();
+        // }
+
+        $phone  = '569919179';
+        $msg     = "'test msg'";
+
+        $this->sendSms($phone, $msg, env('APP_NAME'));
+        
         return ('Done');
     }
 

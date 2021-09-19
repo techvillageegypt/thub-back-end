@@ -14,10 +14,11 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Auth\Events\Registered;
 use phpDocumentor\Reflection\DocBlock\Tags\Uses;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Helpers\SmsTrait;
 
 class AuthController extends Controller
 {
-    use HelperFunctionTrait, AuthenticatesUsers;
+    use HelperFunctionTrait, AuthenticatesUsers, SmsTrait;
 
     // Start user
 
@@ -40,6 +41,13 @@ class AuthController extends Controller
             });
             $user->update(['verify_code' => $this->randomCode(4)]);
         }
+
+        // Send OTP To User.
+        $phone  = $user->phone;
+        $msg     = "Your verification code is: {*$user->verify_code*}.";
+
+        $this->sendSms($phone, $msg, env('APP_NAME'));
+        // End Send OTP To User.
 
         return response()->json(['msg' => 'A confirmation code has been sent, check your inbox', 'code' => $user->verify_code]);
     }
@@ -71,36 +79,6 @@ class AuthController extends Controller
     }
 
     // End user
-
-    // Start Driver
-
-    // public function login_or_register_driver(Request $request)
-    // {
-    //     $phone = $request->validate(['phone' => 'required|numeric']);
-
-    //     $driver = User::where($phone)->firstOr(function () {
-    //         response()->json(['msg' => 'Wrong Phone Please Check Your Data']);
-    //     });
-
-    //     return response()->json(['msg' => 'Use Your verification To Complete Login Process']);
-    // }
-
-    // public function verify_code_driver(Request $request)
-    // {
-    //     $inputs = $request->validate(['phone' => 'required|numeric', 'verify_code' => 'required|min:4|max:5']);
-
-    //     $driver = User::firstWhere($inputs);
-
-    //     if (empty($driver)) {
-    //         return response()->json(['msg' => 'Verify code is not correct'], 403);
-    //     }
-
-    //     $token = auth('api')->tokenById($driver->id);
-
-    //     return response()->json(compact('driver', 'token'));
-    // }
-
-    // End Driver
 
 
     public function logout()
