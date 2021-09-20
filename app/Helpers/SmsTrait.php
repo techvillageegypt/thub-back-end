@@ -10,43 +10,20 @@ use App\Events\Chat as EventsChat;
 trait SmsTrait
 {
 
-    public function sendSms($phone, $msg, $from) {
-        // dd('send');
-        // get your REST API keys from MXT https://mxt.smsglobal.com/integrations
-        // \SMSGlobal\Credentials::set('YOUR_API_KEY', 'YOUR_SECRET_KEY');
+    public function sendSms($phone, $msg) {
+
         \SMSGlobal\Credentials::set(env('SMSGLOBAL_APP_KEY'), env('SMSGLOBAL_APP_SECRET'));
-    
         $sms = new \SMSGlobal\Resource\Sms();
-    
         try {
             $response = $sms->sendToOne($phone, $msg);
-            print_r($response['messages'][0]);
+            $response['messages'][0]['status'] == "Failed" ? $response = response()->json(['msg' => 'Faild Message'],400) :  $response = response()->json(['msg' => 'A confirmation code has been sent, check your inbox']);
+
         } catch (\Exception $e) {
-            echo $e->getMessage();
+            $response = response()->json(['msg' => 'invalid Number'],400);
         }
 
-        // return $response;
+        return $response;
 
     }
 
-
-
-    public function sendOtp($phone, $msg) {
-           // get your REST API keys from MXT https://mxt.smsglobal.com/integrations
-        \SMSGlobal\Credentials::set(env('SMSGLOBAL_APP_KEY'), env('SMSGLOBAL_APP_SECRET'));
-
-        $otp = new \SMSGlobal\Resource\Otp();
-
-        try {
-            // $response = $otp->send('DESTINATION_NUMBER', '{*code*} is your SMSGlobal verification code.');
-            $response = $otp->send($phone, $msg, 'Thub');
-            print_r($response);
-        } catch (\Exception $e) {
-            echo $e->getMessage();
-        }
-
-    }
-
-
-  
 }

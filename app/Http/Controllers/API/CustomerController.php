@@ -55,15 +55,15 @@ class CustomerController extends Controller
 
         $user->update(['verify_code' => $this->randomCode(4)]);
 
-        // Send OTP To User.
-        $phone  = $user->phone;
-        $msg     = " $user->verify_code is your verification code.
-        {*code*}";
+      // Send SMS To User.
+      $phone  = $user->phone;
+      $msg     = "$user->verify_code is your verification code.";
 
-        $this->sendOtp($phone, $msg, env('APP_NAME'));
-        // End Send OTP To User.
+      $smsResponse = $this->sendSms($phone, $msg);
+      // End Send SMS To User.
 
-        return response()->json(['msg' => 'A confirmation code has been sent, check your inbox', 'code' => $user->verify_code]);
+      return $smsResponse;
+
     }
 
     public function verify_phone(Request $request)
